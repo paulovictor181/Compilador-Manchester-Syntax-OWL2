@@ -15,7 +15,7 @@ def read_file(file_name):
 def process_file():
     file_name = filedialog.askopenfilename(
         title="Selecione um arquivo",
-        filetypes=(("Arquivos de texto", "*.txt"))
+        filetypes=(("Arquivos de texto", "*.txt"), ("Todos os Arquivos", "*.*"))
     )
     if not file_name:
         return
