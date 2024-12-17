@@ -214,7 +214,7 @@ python3 -m venv nomeDoAmbiente
 Ative o ambiente virtual:
 
 ```
-source venv/bin/activate
+source nomeDoAmbiente/bin/activate
 ```
 
 Instale o PLY usando o `pip`:
