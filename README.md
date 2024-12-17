@@ -205,6 +205,12 @@ sudo apt update
 sudo apt install python3-pip
 ```
 
+Instale o venv usando:
+
+```
+sudo apt install python3.12-venv
+```
+
 Entre na pasta do projeto e execute o seguinte comanda para iniciar ambiente virtual:
 
 ```
@@ -223,10 +229,10 @@ Instale o PLY usando o `pip`:
 pip install ply
 ```
 
-Instale o Tkinter usando o `pip`:
+Instale o Tkinter usando:
 
 ```
-pip install tkinter
+sudo apt-get install python3-tk
 ```
 
 ### Comandos para rodar o projeto
