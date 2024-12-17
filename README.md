@@ -208,7 +208,7 @@ sudo apt install python3-pip
 Entre na pasta do projeto e execute o seguinte comanda para iniciar ambiente virtual:
 
 ```
-python -m venv nomeDoAmbiente
+python3 -m venv nomeDoAmbiente
 ```
 
 Ative o ambiente virtual:
@@ -223,10 +223,16 @@ Instale o PLY usando o `pip`:
 pip install ply
 ```
 
+Instale o Tkinter usando o `pip`:
+
+```
+pip install tkinter
+```
+
 ### Comandos para rodar o projeto
 
 ```
-python main.py
+python3 main.py
 ```
 
 ### Ferramentas para rodar e analisar o projeto
