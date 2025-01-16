@@ -153,5 +153,5 @@ def t_error(t):
 # Função para inicializar o lexer
 def build_lexer():
     lexer = lex.lex()
-    lexer.errors = errors
+    lexer.errors = []  # Lista para armazenar os erros léxicos
     return lexer

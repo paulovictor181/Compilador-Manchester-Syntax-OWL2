@@ -2,22 +2,58 @@ import ply.yacc as yacc
 from lexer import tokens 
 
 def p_classes(p):
-    '''classes : classe_definida 
-               | classe_definida classes'''
+    '''classes : defined_class 
+               | defined_class classes
+               | primitive_class 
+               | primitive_class classes'''
     if len(p) == 2:
         p[0] = [p[1]]  # Apenas uma classe
     else:
         p[0] = [p[1]] + p[2]  # Adiciona a nova classe à lista de classes
 
+def p_primitive_class(p):
+    '''primitive_class : CLASS CLASS_IDENTIFIER subclass_section disjoint_section individuals_section'''
+    p[0] = {
+        "type": "primitive_class",
+        "name": p[2],
+        "subclass_of": p[3],
+        "disjoint_classes": p[4],
+        "individuals": p[5],
+    }
 
-def p_classe_definida(p):
-    '''classe_definida : CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptions individuals_section
+def p_subclass_section(p):
+    '''subclass_section : SUBCLASSOF def_descriptions
+                        | empty'''
+    if len(p) == 3:
+        p[0] = p[2]  # Propriedades de SubClassOf
+    else:
+        p[0] = []  # Seção vazia
+
+def p_disjoint_section(p):
+    '''disjoint_section : DISJOINTCLASSES disjoint_classes_list
+                        | empty'''
+    if len(p) == 3:
+        p[0] = p[2]  # Lista de classes disjuntas
+    else:
+        p[0] = []  # Seção vazia
+
+def p_disjoint_classes_list(p):
+    '''disjoint_classes_list : CLASS_IDENTIFIER
+                             | CLASS_IDENTIFIER COMMA disjoint_classes_list'''
+    if len(p) == 2:
+        p[0] = [p[1]]  # Apenas uma classe
+    else:
+        p[0] = [p[1]] + p[3]  # Adiciona a classe à lista
+
+
+def p_defined_class(p):
+    '''defined_class : CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptions individuals_section
                        | CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptions'''
 
     if len(p) == 8:
-        p[0] = ('classe_definida', p[2], p[4], p[6])  # Classe com indivíduos
+        p[0] = ('defined_class', p[2], p[4], p[6])  # Classe com indivíduos
     else:
-        p[0] = ('classe_definida', p[2], p[4])  # Classe sem indivíduos
+        p[0] = ('defined_class', p[2], p[4])  # Classe sem indivíduos
 
 def p_def_descriptions(p):
     '''def_descriptions : CLASS_IDENTIFIER
@@ -53,7 +89,7 @@ def p_def_descriptions(p):
     elif len(p) == 4 and p[1] == '(':  # Exemplo: (def_descriptions)
         p[0] = p[2]
 
-# Adicionando uma produção para lidar com a comparação no contexto de restrição de propriedades
+
 def p_comparison(p):
     '''comparison : EQUAL CARDINALITY
                   | GREATER_THAN CARDINALITY
@@ -101,10 +137,11 @@ def p_empty(p):
     pass
 
 def p_error(p):
-    error_message = f"Erro de sintaxe no token {p.value} na linha {p.lineno}"
-    print(error_message)
-    errors.append(error_message)
-
+    if p:
+        error_message = f"Erro Sintático: Linha {p.lineno}: Token inesperado '{p.value}'"
+        errors.append(error_message)
+    else:
+        errors.append("Erro Sintático: Fim inesperado do arquivo")
 
 # Construir o parser
 parser = yacc.yacc()

@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ALL AND CARDINALITY CLASS CLASS_IDENTIFIER CLOSE_BRACKET CLOSE_CURLY CLOSE_PAREN COMMA DISJOINTCLASSES EQUAL EQUIVALENTTO EXACTLY GREATER_THAN INDIVIDUALS INDIVIDUAL_NAME LESS_THAN MAX MIN NAMESPACE NOT OPEN_BRACKET OPEN_CURLY OPEN_PAREN OR PROPERTY_IDENTIFIER PROPERTY_IDENTIFIER_SIMPLE SOME SUBCLASSOF THAT TYPE VALUEclasses : classe_definida \n               | classe_definida classesclasse_definida : CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptions individuals_section\n                       | CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptionsdef_descriptions : CLASS_IDENTIFIER\n                        | namespace_type\n                        | CLASS_IDENTIFIER AND def_descriptions\n                        | CLASS_IDENTIFIER OR def_descriptions\n                        | PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER\n                        | PROPERTY_IDENTIFIER SOME namespace_type\n                        | PROPERTY_IDENTIFIER SOME namespace_type OPEN_BRACKET comparison CLOSE_BRACKET\n                        | PROPERTY_IDENTIFIER ALL CLASS_IDENTIFIER\n                        | PROPERTY_IDENTIFIER ALL namespace_type\n                        | PROPERTY_IDENTIFIER VALUE CLASS_IDENTIFIER\n                        | PROPERTY_IDENTIFIER VALUE namespace_type\n                        | PROPERTY_IDENTIFIER MIN CARDINALITY CLASS_IDENTIFIER\n                        | PROPERTY_IDENTIFIER MIN CARDINALITY namespace_type\n                        | PROPERTY_IDENTIFIER MAX CARDINALITY CLASS_IDENTIFIER\n                        | PROPERTY_IDENTIFIER MAX CARDINALITY namespace_type\n                        | PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER\n                        | PROPERTY_IDENTIFIER EXACTLY CARDINALITY namespace_type\n                        | OPEN_PAREN def_descriptions CLOSE_PARENcomparison : EQUAL CARDINALITY\n                  | GREATER_THAN CARDINALITY\n                  | LESS_THAN CARDINALITY\n                  | GREATER_THAN EQUAL CARDINALITY\n                  | LESS_THAN EQUAL CARDINALITYnamespace_type : NAMESPACE TYPEindividuals_section : INDIVIDUALS individuals\n                           | emptyindividuals : INDIVIDUAL_NAME\n                   | INDIVIDUAL_NAME COMMA individuals\n                   empty :'
+_lr_signature = 'ALL AND CARDINALITY CLASS CLASS_IDENTIFIER CLOSE_BRACKET CLOSE_CURLY CLOSE_PAREN COMMA DISJOINTCLASSES EQUAL EQUIVALENTTO EXACTLY GREATER_THAN INDIVIDUALS INDIVIDUAL_NAME LESS_THAN MAX MIN NAMESPACE NOT OPEN_BRACKET OPEN_CURLY OPEN_PAREN OR PROPERTY_IDENTIFIER PROPERTY_IDENTIFIER_SIMPLE SOME SUBCLASSOF THAT TYPE VALUEclasses : defined_class \n               | defined_class classes\n               | primitive_class \n               | primitive_class classesprimitive_class : CLASS CLASS_IDENTIFIER subclass_section disjoint_section individuals_sectionsubclass_section : SUBCLASSOF def_descriptions\n                        | emptydisjoint_section : DISJOINTCLASSES disjoint_classes_list\n                        | emptydisjoint_classes_list : CLASS_IDENTIFIER\n                             | CLASS_IDENTIFIER COMMA disjoint_classes_listdefined_class : CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptions individuals_section\n                       | CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptionsdef_descriptions : CLASS_IDENTIFIER\n                        | namespace_type\n                        | CLASS_IDENTIFIER AND def_descriptions\n                        | CLASS_IDENTIFIER OR def_descriptions\n                        | PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER\n                        | PROPERTY_IDENTIFIER SOME namespace_type\n                        | PROPERTY_IDENTIFIER SOME namespace_type OPEN_BRACKET comparison CLOSE_BRACKET\n                        | PROPERTY_IDENTIFIER ALL CLASS_IDENTIFIER\n                        | PROPERTY_IDENTIFIER ALL namespace_type\n                        | PROPERTY_IDENTIFIER VALUE CLASS_IDENTIFIER\n                        | PROPERTY_IDENTIFIER VALUE namespace_type\n                        | PROPERTY_IDENTIFIER MIN CARDINALITY CLASS_IDENTIFIER\n                        | PROPERTY_IDENTIFIER MIN CARDINALITY namespace_type\n                        | PROPERTY_IDENTIFIER MAX CARDINALITY CLASS_IDENTIFIER\n                        | PROPERTY_IDENTIFIER MAX CARDINALITY namespace_type\n                        | PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER\n                        | PROPERTY_IDENTIFIER EXACTLY CARDINALITY namespace_type\n                        | OPEN_PAREN def_descriptions CLOSE_PARENcomparison : EQUAL CARDINALITY\n                  | GREATER_THAN CARDINALITY\n                  | LESS_THAN CARDINALITY\n                  | GREATER_THAN EQUAL CARDINALITY\n                  | LESS_THAN EQUAL CARDINALITYnamespace_type : NAMESPACE TYPEindividuals_section : INDIVIDUALS individuals\n                           | emptyindividuals : INDIVIDUAL_NAME\n                   | INDIVIDUAL_NAME COMMA individuals\n                   empty :'
     
-_lr_action_items = {'CLASS':([0,2,9,10,11,17,19,27,28,29,30,31,32,33,34,35,36,37,41,44,45,46,47,48,49,50,55,],[3,3,-5,-4,-6,-3,-30,-28,-7,-8,-29,-31,-9,-10,-12,-13,-14,-15,-22,-16,-17,-18,-19,-20,-21,-32,-11,]),'$end':([1,2,4,9,10,11,17,19,27,28,29,30,31,32,33,34,35,36,37,41,44,45,46,47,48,49,50,55,],[0,-1,-2,-5,-4,-6,-3,-30,-28,-7,-8,-29,-31,-9,-10,-12,-13,-14,-15,-22,-16,-17,-18,-19,-20,-21,-32,-11,]),'CLASS_IDENTIFIER':([3,6,8,13,15,16,20,21,22,38,39,40,],[5,7,9,9,9,9,32,34,36,44,46,48,]),'EQUIVALENTTO':([5,],[6,]),'AND':([7,9,],[8,15,]),'PROPERTY_IDENTIFIER':([8,13,15,16,],[12,12,12,12,]),'OPEN_PAREN':([8,13,15,16,],[13,13,13,13,]),'NAMESPACE':([8,13,15,16,20,21,22,38,39,40,],[14,14,14,14,14,14,14,14,14,14,]),'INDIVIDUALS':([9,10,11,27,28,29,32,33,34,35,36,37,41,44,45,46,47,48,49,55,],[-5,18,-6,-28,-7,-8,-9,-10,-12,-13,-14,-15,-22,-16,-17,-18,-19,-20,-21,-11,]),'CLOSE_PAREN':([9,11,26,27,28,29,32,33,34,35,36,37,41,44,45,46,47,48,49,55,],[-5,-6,41,-28,-7,-8,-9,-10,-12,-13,-14,-15,-22,-16,-17,-18,-19,-20,-21,-11,]),'OR':([9,],[16,]),'SOME':([12,],[20,]),'ALL':([12,],[21,]),'VALUE':([12,],[22,]),'MIN':([12,],[23,]),'MAX':([12,],[24,]),'EXACTLY':([12,],[25,]),'TYPE':([14,],[27,]),'INDIVIDUAL_NAME':([18,42,],[31,31,]),'CARDINALITY':([23,24,25,52,53,54,58,60,],[38,39,40,56,57,59,61,62,]),'OPEN_BRACKET':([27,33,],[-28,43,]),'COMMA':([31,],[42,]),'EQUAL':([43,53,54,],[52,58,60,]),'GREATER_THAN':([43,],[53,]),'LESS_THAN':([43,],[54,]),'CLOSE_BRACKET':([51,56,57,59,61,62,],[55,-23,-24,-25,-26,-27,]),}
+_lr_action_items = {'CLASS':([0,2,3,7,9,11,13,15,16,17,18,23,25,26,27,37,38,39,40,42,43,44,45,46,47,48,49,53,54,56,58,59,60,61,62,63,64,69,],[4,4,4,-42,-42,-7,-42,-9,-6,-14,-15,-5,-39,-8,-10,-37,-13,-38,-40,-16,-17,-18,-19,-21,-22,-23,-24,-31,-12,-11,-25,-26,-27,-28,-29,-30,-41,-20,]),'$end':([1,2,3,5,6,7,9,11,13,15,16,17,18,23,25,26,27,37,38,39,40,42,43,44,45,46,47,48,49,53,54,56,58,59,60,61,62,63,64,69,],[0,-1,-3,-2,-4,-42,-42,-7,-42,-9,-6,-14,-15,-5,-39,-8,-10,-37,-13,-38,-40,-16,-17,-18,-19,-21,-22,-23,-24,-31,-12,-11,-25,-26,-27,-28,-29,-30,-41,-20,]),'CLASS_IDENTIFIER':([4,8,10,14,20,22,28,29,30,31,32,41,50,51,52,],[7,12,17,27,17,17,17,17,44,46,48,27,58,60,62,]),'EQUIVALENTTO':([7,],[8,]),'SUBCLASSOF':([7,],[10,]),'DISJOINTCLASSES':([7,9,11,16,17,18,37,42,43,44,45,46,47,48,49,53,58,59,60,61,62,63,69,],[-42,14,-7,-6,-14,-15,-37,-16,-17,-18,-19,-21,-22,-23,-24,-31,-25,-26,-27,-28,-29,-30,-20,]),'INDIVIDUALS':([7,9,11,13,15,16,17,18,26,27,37,38,42,43,44,45,46,47,48,49,53,56,58,59,60,61,62,63,69,],[-42,-42,-7,24,-9,-6,-14,-15,-8,-10,-37,24,-16,-17,-18,-19,-21,-22,-23,-24,-31,-11,-25,-26,-27,-28,-29,-30,-20,]),'PROPERTY_IDENTIFIER':([10,20,22,28,29,],[19,19,19,19,19,]),'OPEN_PAREN':([10,20,22,28,29,],[20,20,20,20,20,]),'NAMESPACE':([10,20,22,28,29,30,31,32,50,51,52,],[21,21,21,21,21,21,21,21,21,21,21,]),'AND':([12,17,],[22,28,]),'CLOSE_PAREN':([17,18,36,37,42,43,44,45,46,47,48,49,53,58,59,60,61,62,63,69,],[-14,-15,53,-37,-16,-17,-18,-19,-21,-22,-23,-24,-31,-25,-26,-27,-28,-29,-30,-20,]),'OR':([17,],[29,]),'SOME':([19,],[30,]),'ALL':([19,],[31,]),'VALUE':([19,],[32,]),'MIN':([19,],[33,]),'MAX':([19,],[34,]),'EXACTLY':([19,],[35,]),'TYPE':([21,],[37,]),'INDIVIDUAL_NAME':([24,55,],[40,40,]),'COMMA':([27,40,],[41,55,]),'CARDINALITY':([33,34,35,66,67,68,72,74,],[50,51,52,70,71,73,75,76,]),'OPEN_BRACKET':([37,45,],[-37,57,]),'EQUAL':([57,67,68,],[66,72,74,]),'GREATER_THAN':([57,],[67,]),'LESS_THAN':([57,],[68,]),'CLOSE_BRACKET':([65,70,71,73,75,76,],[69,-32,-33,-34,-35,-36,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'classes':([0,2,],[1,4,]),'classe_definida':([0,2,],[2,2,]),'def_descriptions':([8,13,15,16,],[10,26,28,29,]),'namespace_type':([8,13,15,16,20,21,22,38,39,40,],[11,11,11,11,33,35,37,45,47,49,]),'individuals_section':([10,],[17,]),'empty':([10,],[19,]),'individuals':([18,42,],[30,50,]),'comparison':([43,],[51,]),}
+_lr_goto_items = {'classes':([0,2,3,],[1,5,6,]),'defined_class':([0,2,3,],[2,2,2,]),'primitive_class':([0,2,3,],[3,3,3,]),'subclass_section':([7,],[9,]),'empty':([7,9,13,38,],[11,15,25,25,]),'disjoint_section':([9,],[13,]),'def_descriptions':([10,20,22,28,29,],[16,36,38,42,43,]),'namespace_type':([10,20,22,28,29,30,31,32,50,51,52,],[18,18,18,18,18,45,47,49,59,61,63,]),'individuals_section':([13,38,],[23,54,]),'disjoint_classes_list':([14,41,],[26,56,]),'individuals':([24,55,],[39,64,]),'comparison':([57,],[65,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,37 +27,46 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> classes","S'",1,None,None,None),
-  ('classes -> classe_definida','classes',1,'p_classes','parser.py',5),
-  ('classes -> classe_definida classes','classes',2,'p_classes','parser.py',6),
-  ('classe_definida -> CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptions individuals_section','classe_definida',7,'p_classe_definida','parser.py',14),
-  ('classe_definida -> CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptions','classe_definida',6,'p_classe_definida','parser.py',15),
-  ('def_descriptions -> CLASS_IDENTIFIER','def_descriptions',1,'p_def_descriptions','parser.py',23),
-  ('def_descriptions -> namespace_type','def_descriptions',1,'p_def_descriptions','parser.py',24),
-  ('def_descriptions -> CLASS_IDENTIFIER AND def_descriptions','def_descriptions',3,'p_def_descriptions','parser.py',25),
-  ('def_descriptions -> CLASS_IDENTIFIER OR def_descriptions','def_descriptions',3,'p_def_descriptions','parser.py',26),
-  ('def_descriptions -> PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER','def_descriptions',3,'p_def_descriptions','parser.py',27),
-  ('def_descriptions -> PROPERTY_IDENTIFIER SOME namespace_type','def_descriptions',3,'p_def_descriptions','parser.py',28),
-  ('def_descriptions -> PROPERTY_IDENTIFIER SOME namespace_type OPEN_BRACKET comparison CLOSE_BRACKET','def_descriptions',6,'p_def_descriptions','parser.py',29),
-  ('def_descriptions -> PROPERTY_IDENTIFIER ALL CLASS_IDENTIFIER','def_descriptions',3,'p_def_descriptions','parser.py',30),
-  ('def_descriptions -> PROPERTY_IDENTIFIER ALL namespace_type','def_descriptions',3,'p_def_descriptions','parser.py',31),
-  ('def_descriptions -> PROPERTY_IDENTIFIER VALUE CLASS_IDENTIFIER','def_descriptions',3,'p_def_descriptions','parser.py',32),
-  ('def_descriptions -> PROPERTY_IDENTIFIER VALUE namespace_type','def_descriptions',3,'p_def_descriptions','parser.py',33),
-  ('def_descriptions -> PROPERTY_IDENTIFIER MIN CARDINALITY CLASS_IDENTIFIER','def_descriptions',4,'p_def_descriptions','parser.py',34),
-  ('def_descriptions -> PROPERTY_IDENTIFIER MIN CARDINALITY namespace_type','def_descriptions',4,'p_def_descriptions','parser.py',35),
-  ('def_descriptions -> PROPERTY_IDENTIFIER MAX CARDINALITY CLASS_IDENTIFIER','def_descriptions',4,'p_def_descriptions','parser.py',36),
-  ('def_descriptions -> PROPERTY_IDENTIFIER MAX CARDINALITY namespace_type','def_descriptions',4,'p_def_descriptions','parser.py',37),
-  ('def_descriptions -> PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER','def_descriptions',4,'p_def_descriptions','parser.py',38),
-  ('def_descriptions -> PROPERTY_IDENTIFIER EXACTLY CARDINALITY namespace_type','def_descriptions',4,'p_def_descriptions','parser.py',39),
-  ('def_descriptions -> OPEN_PAREN def_descriptions CLOSE_PAREN','def_descriptions',3,'p_def_descriptions','parser.py',40),
-  ('comparison -> EQUAL CARDINALITY','comparison',2,'p_comparison','parser.py',58),
-  ('comparison -> GREATER_THAN CARDINALITY','comparison',2,'p_comparison','parser.py',59),
-  ('comparison -> LESS_THAN CARDINALITY','comparison',2,'p_comparison','parser.py',60),
-  ('comparison -> GREATER_THAN EQUAL CARDINALITY','comparison',3,'p_comparison','parser.py',61),
-  ('comparison -> LESS_THAN EQUAL CARDINALITY','comparison',3,'p_comparison','parser.py',62),
-  ('namespace_type -> NAMESPACE TYPE','namespace_type',2,'p_namespace_type','parser.py',76),
-  ('individuals_section -> INDIVIDUALS individuals','individuals_section',2,'p_individuals_section','parser.py',81),
-  ('individuals_section -> empty','individuals_section',1,'p_individuals_section','parser.py',82),
-  ('individuals -> INDIVIDUAL_NAME','individuals',1,'p_individuals','parser.py',90),
-  ('individuals -> INDIVIDUAL_NAME COMMA individuals','individuals',3,'p_individuals','parser.py',91),
-  ('empty -> <empty>','empty',0,'p_empty','parser.py',100),
+  ('classes -> defined_class','classes',1,'p_classes','parser.py',5),
+  ('classes -> defined_class classes','classes',2,'p_classes','parser.py',6),
+  ('classes -> primitive_class','classes',1,'p_classes','parser.py',7),
+  ('classes -> primitive_class classes','classes',2,'p_classes','parser.py',8),
+  ('primitive_class -> CLASS CLASS_IDENTIFIER subclass_section disjoint_section individuals_section','primitive_class',5,'p_primitive_class','parser.py',15),
+  ('subclass_section -> SUBCLASSOF def_descriptions','subclass_section',2,'p_subclass_section','parser.py',25),
+  ('subclass_section -> empty','subclass_section',1,'p_subclass_section','parser.py',26),
+  ('disjoint_section -> DISJOINTCLASSES disjoint_classes_list','disjoint_section',2,'p_disjoint_section','parser.py',33),
+  ('disjoint_section -> empty','disjoint_section',1,'p_disjoint_section','parser.py',34),
+  ('disjoint_classes_list -> CLASS_IDENTIFIER','disjoint_classes_list',1,'p_disjoint_classes_list','parser.py',41),
+  ('disjoint_classes_list -> CLASS_IDENTIFIER COMMA disjoint_classes_list','disjoint_classes_list',3,'p_disjoint_classes_list','parser.py',42),
+  ('defined_class -> CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptions individuals_section','defined_class',7,'p_defined_class','parser.py',50),
+  ('defined_class -> CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptions','defined_class',6,'p_defined_class','parser.py',51),
+  ('def_descriptions -> CLASS_IDENTIFIER','def_descriptions',1,'p_def_descriptions','parser.py',59),
+  ('def_descriptions -> namespace_type','def_descriptions',1,'p_def_descriptions','parser.py',60),
+  ('def_descriptions -> CLASS_IDENTIFIER AND def_descriptions','def_descriptions',3,'p_def_descriptions','parser.py',61),
+  ('def_descriptions -> CLASS_IDENTIFIER OR def_descriptions','def_descriptions',3,'p_def_descriptions','parser.py',62),
+  ('def_descriptions -> PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER','def_descriptions',3,'p_def_descriptions','parser.py',63),
+  ('def_descriptions -> PROPERTY_IDENTIFIER SOME namespace_type','def_descriptions',3,'p_def_descriptions','parser.py',64),
+  ('def_descriptions -> PROPERTY_IDENTIFIER SOME namespace_type OPEN_BRACKET comparison CLOSE_BRACKET','def_descriptions',6,'p_def_descriptions','parser.py',65),
+  ('def_descriptions -> PROPERTY_IDENTIFIER ALL CLASS_IDENTIFIER','def_descriptions',3,'p_def_descriptions','parser.py',66),
+  ('def_descriptions -> PROPERTY_IDENTIFIER ALL namespace_type','def_descriptions',3,'p_def_descriptions','parser.py',67),
+  ('def_descriptions -> PROPERTY_IDENTIFIER VALUE CLASS_IDENTIFIER','def_descriptions',3,'p_def_descriptions','parser.py',68),
+  ('def_descriptions -> PROPERTY_IDENTIFIER VALUE namespace_type','def_descriptions',3,'p_def_descriptions','parser.py',69),
+  ('def_descriptions -> PROPERTY_IDENTIFIER MIN CARDINALITY CLASS_IDENTIFIER','def_descriptions',4,'p_def_descriptions','parser.py',70),
+  ('def_descriptions -> PROPERTY_IDENTIFIER MIN CARDINALITY namespace_type','def_descriptions',4,'p_def_descriptions','parser.py',71),
+  ('def_descriptions -> PROPERTY_IDENTIFIER MAX CARDINALITY CLASS_IDENTIFIER','def_descriptions',4,'p_def_descriptions','parser.py',72),
+  ('def_descriptions -> PROPERTY_IDENTIFIER MAX CARDINALITY namespace_type','def_descriptions',4,'p_def_descriptions','parser.py',73),
+  ('def_descriptions -> PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER','def_descriptions',4,'p_def_descriptions','parser.py',74),
+  ('def_descriptions -> PROPERTY_IDENTIFIER EXACTLY CARDINALITY namespace_type','def_descriptions',4,'p_def_descriptions','parser.py',75),
+  ('def_descriptions -> OPEN_PAREN def_descriptions CLOSE_PAREN','def_descriptions',3,'p_def_descriptions','parser.py',76),
+  ('comparison -> EQUAL CARDINALITY','comparison',2,'p_comparison','parser.py',94),
+  ('comparison -> GREATER_THAN CARDINALITY','comparison',2,'p_comparison','parser.py',95),
+  ('comparison -> LESS_THAN CARDINALITY','comparison',2,'p_comparison','parser.py',96),
+  ('comparison -> GREATER_THAN EQUAL CARDINALITY','comparison',3,'p_comparison','parser.py',97),
+  ('comparison -> LESS_THAN EQUAL CARDINALITY','comparison',3,'p_comparison','parser.py',98),
+  ('namespace_type -> NAMESPACE TYPE','namespace_type',2,'p_namespace_type','parser.py',112),
+  ('individuals_section -> INDIVIDUALS individuals','individuals_section',2,'p_individuals_section','parser.py',117),
+  ('individuals_section -> empty','individuals_section',1,'p_individuals_section','parser.py',118),
+  ('individuals -> INDIVIDUAL_NAME','individuals',1,'p_individuals','parser.py',126),
+  ('individuals -> INDIVIDUAL_NAME COMMA individuals','individuals',3,'p_individuals','parser.py',127),
+  ('empty -> <empty>','empty',0,'p_empty','parser.py',136),
 ]

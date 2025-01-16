@@ -36,24 +36,24 @@ def process_file():
     resultado_tokens.delete(1.0, tk.END)
     resultado_tokens.insert(tk.END, "\n".join(tokens))
 
-    # Exibe os erros encontrados
-    resultado_erros.delete(1.0, tk.END)
+    # Exibe erros léxicos
+    resultado_erros_lexicos.delete(1.0, tk.END)
     if lexer.errors:
-        resultado_erros.insert(tk.END, "\n".join(lexer.errors))
+        resultado_erros_lexicos.insert(tk.END, "\n".join(lexer.errors))
     else:
-        resultado_erros.insert(tk.END, "Nenhum erro Lexico encontrado.")
+        resultado_erros_lexicos.insert(tk.END, "Nenhum erro léxico encontrado.")
 
     lexer.errors.clear()
 
-    # Aqui você pode adicionar a chamada ao seu analisador sintático
+    # Análise sintática
     sintatico_erros = parse_input(code)
 
     # Exibe erros sintáticos
+    resultado_erros_sintaticos.delete(1.0, tk.END)
     if sintatico_erros:
-        resultado_erros.insert(tk.END, "\nErros sintáticos encontrados:\n")
-        resultado_erros.insert(tk.END, "\n".join(sintatico_erros))
+        resultado_erros_sintaticos.insert(tk.END, "\n".join(sintatico_erros))
     else:
-        resultado_erros.insert(tk.END, "\nNenhum erro sintático encontrado.")
+        resultado_erros_sintaticos.insert(tk.END, "Nenhum erro sintático encontrado.")
 
 
 # Criar a janela principal
@@ -65,12 +65,22 @@ botao_selecionar = tk.Button(janela, text="Selecionar Arquivo", command=process_
 botao_selecionar.pack(pady=10)
 
 # Área de texto para exibir os tokens
+label_tokens = tk.Label(janela, text="Tokens Encontrados:")
+label_tokens.pack()
 resultado_tokens = tk.Text(janela, wrap=tk.WORD, height=10, width=60)
-resultado_tokens.pack(padx=10, pady=10)
+resultado_tokens.pack(padx=10, pady=5)
 
-# Área de texto para exibir os erros
-resultado_erros = tk.Text(janela, wrap=tk.WORD, height=10, width=60)
-resultado_erros.pack(padx=10, pady=10)
+# Área de texto para exibir os erros léxicos
+label_erros_lexicos = tk.Label(janela, text="Erros Léxicos:")
+label_erros_lexicos.pack()
+resultado_erros_lexicos = tk.Text(janela, wrap=tk.WORD, height=10, width=60)
+resultado_erros_lexicos.pack(padx=10, pady=5)
+
+# Área de texto para exibir os erros sintáticos
+label_erros_sintaticos = tk.Label(janela, text="Erros Sintáticos:")
+label_erros_sintaticos.pack()
+resultado_erros_sintaticos = tk.Text(janela, wrap=tk.WORD, height=10, width=60)
+resultado_erros_sintaticos.pack(padx=10, pady=5)
 
 # Executar a aplicação
 janela.mainloop()
