@@ -29,29 +29,34 @@ def process_file():
     lexer.input(code)
 
     tokens = []
+    lex_errors = []
+
+    # Processar os tokens e capturar erros léxicos
     for token in lexer:
         tokens.append(f"Token({token.type}, '{token.value}', Linha {token.lineno})")
+    lex_errors.extend(lexer.errors)
 
-    # Exibe os tokens encontrados
+    # **Ajuste: Não limpar os erros léxicos aqui**
+    # lexer.errors.clear()
+
+    # Processar erros sintáticos
+    sint_errors = parse_input(code, lexer)  # Passar o lexer para o parser para garantir o contexto
+
+    # Exibir tokens
     resultado_tokens.delete(1.0, tk.END)
-    resultado_tokens.insert(tk.END, "\n".join(tokens))
+    resultado_tokens.insert(tk.END, "\n".join(tokens) if tokens else "Nenhum token encontrado.")
 
-    # Exibe erros léxicos
+    # Exibir erros léxicos
     resultado_erros_lexicos.delete(1.0, tk.END)
-    if lexer.errors:
-        resultado_erros_lexicos.insert(tk.END, "\n".join(lexer.errors))
+    if lex_errors:
+        resultado_erros_lexicos.insert(tk.END, "\n".join(lex_errors))
     else:
         resultado_erros_lexicos.insert(tk.END, "Nenhum erro léxico encontrado.")
 
-    lexer.errors.clear()
-
-    # Análise sintática
-    sintatico_erros = parse_input(code)
-
-    # Exibe erros sintáticos
+    # Exibir erros sintáticos
     resultado_erros_sintaticos.delete(1.0, tk.END)
-    if sintatico_erros:
-        resultado_erros_sintaticos.insert(tk.END, "\n".join(sintatico_erros))
+    if sint_errors:
+        resultado_erros_sintaticos.insert(tk.END, "\n".join(sint_errors))
     else:
         resultado_erros_sintaticos.insert(tk.END, "Nenhum erro sintático encontrado.")
 

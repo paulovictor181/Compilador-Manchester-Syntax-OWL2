@@ -145,9 +145,8 @@ def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
-# Tratamento de errors
 def t_error(t):
-    errors.append(f"Erro Lexico: Linha {t.lineno}: Caractere inválido '{t.value[0]}'")
+    t.lexer.errors.append(f"Erro Lexico: Linha {t.lineno}: Caractere inválido '{t.value[0]}'")
     t.lexer.skip(1)
 
 # Função para inicializar o lexer

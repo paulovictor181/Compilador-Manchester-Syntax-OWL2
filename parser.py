@@ -1,6 +1,8 @@
 import ply.yacc as yacc
 from lexer import tokens 
 
+errors = []
+
 def p_classes(p):
     '''classes : defined_class 
                | defined_class classes
@@ -143,12 +145,12 @@ def p_error(p):
     else:
         errors.append("Erro Sintático: Fim inesperado do arquivo")
 
-# Construir o parser
-parser = yacc.yacc()
-
-# No parser.py
-def parse_input(input_string):
+def parse_input(input_string, lexer):
     global errors  # Usando uma variável global para armazenar erros
     errors = []  # Limpa erros anteriores
-    parser.parse(input_string)
+    # Resetar o contador de linhas do lexer para que o parser comece com a linha correta
+    lexer.lineno = 1
+    lexer.input(input_string)
+    parser = yacc.yacc()
+    parser.parse(input_string, lexer=lexer)
     return errors
