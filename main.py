@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from lexer import build_lexer
+from paser import parse_input
 
 
 def read_file(file_name):
@@ -44,12 +45,15 @@ def process_file():
 
     lexer.errors.clear()
 
+    # Aqui você pode adicionar a chamada ao seu analisador sintático
+    sintatico_erros = parse_input(code)
 
-
-
-
-
-
+    # Exibe erros sintáticos
+    if sintatico_erros:
+        resultado_erros.insert(tk.END, "\nErros sintáticos encontrados:\n")
+        resultado_erros.insert(tk.END, "\n".join(sintatico_erros))
+    else:
+        resultado_erros.insert(tk.END, "\nNenhum erro sintático encontrado.")
 
 
 # Criar a janela principal

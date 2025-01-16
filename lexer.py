@@ -13,11 +13,11 @@ reserved = {
     'not': 'NOT',
     'and': 'AND',
     'or': 'OR',
-    'Class:': 'CLASS',
-    'EquivalentTo:': 'EQUIVALENTTO',
-    'Individuals:': 'INDIVIDUALS',
-    'SubClassOf:': 'SUBCLASSOF',
-    'DisjointClasses:': 'DISJOINTCLASSES',
+    'Class': 'CLASS',
+    'EquivalentTo': 'EQUIVALENTTO',
+    'Individuals': 'INDIVIDUALS',
+    'SubClassOf': 'SUBCLASSOF',
+    'DisjointClasses': 'DISJOINTCLASSES',
 }
 
 VALID_TYPES = [
@@ -75,7 +75,9 @@ tokens = [
     'CLOSE_PAREN',
     'LESS_THAN',
     'GREATER_THAN',
-    'COMMA'
+    'COMMA',
+    'EQUAL',
+    'TWO_POINT'
 ] + list(reserved.values())
 
 
@@ -91,16 +93,18 @@ t_OPEN_PAREN     = r'\('
 t_CLOSE_PAREN    = r'\)'
 t_LESS_THAN      = r'\<'
 t_GREATER_THAN   = r'\>'
+t_EQUAL          = r'\='
+t_TWO_POINT      = r'\:'
 t_COMMA          = r','
 
 
 def t_RESERVED(t):
-    r'(some|all|value|min|max|exactly|that|not|and|or|Class:|EquivalentTo:|Individuals:|SubClassOf:|DisjointClasses:)'
+    r'(some|all|value|min|max|exactly|that|not|and|or|Class|EquivalentTo|Individuals|SubClassOf|DisjointClasses)'
     t.type = reserved[t.value]  # Mapeia o token reservado
     return t
 
 def t_NAMESPACE(t):
-    r'(owl|rdfs|xsd|rdf):'
+    r'(owl|rdfs|xsd|rdf)'
     t.type = 'NAMESPACE'
     return t
 
