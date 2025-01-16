@@ -60,10 +60,10 @@ VALID_TYPES = [
 
 # Lista de tokens
 tokens = [
+    'INDIVIDUAL_NAME',
     'CLASS_IDENTIFIER',
     'PROPERTY_IDENTIFIER',
     'PROPERTY_IDENTIFIER_SIMPLE',
-    'INDIVIDUAL_NAME',
     'CARDINALITY',
     'NAMESPACE',
     'TYPE',
@@ -95,7 +95,6 @@ t_GREATER_THAN   = r'\>'
 t_EQUAL          = r'\='
 t_COMMA          = r','
 
-
 def t_RESERVED(t):
     r'(some|all|value|min|max|exactly|that|not|and|or|Class:|EquivalentTo:|Individuals:|SubClassOf:|DisjointClasses:)'
     t.type = reserved[t.value]  # Mapeia o token reservado
@@ -120,7 +119,7 @@ def t_PROPERTY_IDENTIFIER_SIMPLE(t):
     return t
 
 def t_INDIVIDUAL_NAME(t):
-    r'[A-Z][a-z]+[0-9]'
+    r'[A-Z][a-z]*(?:[A-Z][a-z]*)*[0-9]+'
     return t
 
 def t_CLASS_IDENTIFIER(t):
@@ -138,7 +137,7 @@ def t_TYPE(t):
         t.type = 'TYPE'
         return t
     else:
-        errors.append(f"Erro na linha {t.lineno}: Palavra inválida '{t.value}'")
+        errors.append(f"Erro Lexico: Erro na linha {t.lineno}: TYPE inválido '{t.value}'")
         t.lexer.skip(1)  # Pular o caractere inválido
 
 # Contagem de linhas
@@ -148,7 +147,7 @@ def t_newline(t):
 
 # Tratamento de errors
 def t_error(t):
-    errors.append(f"Linha {t.lineno}: Caractere inválido '{t.value[0]}'")
+    errors.append(f"Erro Lexico: Linha {t.lineno}: Caractere inválido '{t.value[0]}'")
     t.lexer.skip(1)
 
 # Função para inicializar o lexer

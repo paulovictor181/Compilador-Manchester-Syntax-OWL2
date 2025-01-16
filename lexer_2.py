@@ -75,7 +75,8 @@ tokens = [
     'CLOSE_PAREN',
     'LESS_THAN',
     'GREATER_THAN',
-    'COMMA'
+    'COMMA',
+    'EQUAL'
 ] + list(reserved.values())
 
 
@@ -83,6 +84,7 @@ tokens = [
 t_ignore = ' \t'
 
 # Regular expression rules for simple tokens
+t_EQUAL          = r'\='
 t_OPEN_BRACKET   = r'\['
 t_CLOSE_BRACKET  = r'\]'
 t_OPEN_CURLY     = r'\{'
@@ -91,7 +93,7 @@ t_OPEN_PAREN     = r'\('
 t_CLOSE_PAREN    = r'\)'
 t_LESS_THAN      = r'\<'
 t_GREATER_THAN   = r'\>'
-t_COMMA          = r','
+t_COMMA          = r'\,'
 
 
 def t_RESERVED(t):

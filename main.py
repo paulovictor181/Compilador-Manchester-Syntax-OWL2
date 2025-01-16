@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from lexer import build_lexer
-from paser import parse_input
+from parser import parse_input
 
 
 def read_file(file_name):
