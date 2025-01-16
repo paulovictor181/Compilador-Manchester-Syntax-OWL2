@@ -75,8 +75,7 @@ tokens = [
     'CLOSE_PAREN',
     'LESS_THAN',
     'GREATER_THAN',
-    'COMMA',
-    'EQUAL',
+    'COMMA'
 ] + list(reserved.values())
 
 
@@ -92,7 +91,6 @@ t_OPEN_PAREN     = r'\('
 t_CLOSE_PAREN    = r'\)'
 t_LESS_THAN      = r'\<'
 t_GREATER_THAN   = r'\>'
-t_EQUAL          = r'\='
 t_COMMA          = r','
 
 
@@ -138,8 +136,7 @@ def t_TYPE(t):
         t.type = 'TYPE'
         return t
     else:
-        errors.append(f"Erro na linha {t.lineno}: Palavra inválida '{t.value}'")
-        t.lexer.skip(1)  # Pular o caractere inválido
+        print(f"Erro na linha {t.lineno}: Palavra inválida '{t.value}'")
 
 # Contagem de linhas
 def t_newline(t):

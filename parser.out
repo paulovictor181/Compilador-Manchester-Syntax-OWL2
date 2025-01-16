@@ -1,1 +1,366 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    CLOSE_BRACKET
+    CLOSE_CURLY
+    COMMA
+    DISJOINTCLASSES
+    EQUAL
+    GREATER_THAN
+    INDIVIDUALS
+    INDIVIDUAL_NAME
+    LESS_THAN
+    NAMESPACE
+    NOT
+    OPEN_BRACKET
+    OPEN_CURLY
+    PROPERTY_IDENTIFIER_SIMPLE
+    SUBCLASSOF
+    THAT
+    TYPE
+
+Grammar
+
+Rule 0     S' -> classe
+Rule 1     classe -> CLASS CLASS_IDENTIFIER EQUIVALENTTO def_descriptions
+Rule 2     def_descriptions -> CLASS_IDENTIFIER
+Rule 3     def_descriptions -> CLASS_IDENTIFIER AND def_descriptions
+Rule 4     def_descriptions -> CLASS_IDENTIFIER OR def_descriptions
+Rule 5     def_descriptions -> PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER
+Rule 6     def_descriptions -> PROPERTY_IDENTIFIER ALL CLASS_IDENTIFIER
+Rule 7     def_descriptions -> PROPERTY_IDENTIFIER VALUE CLASS_IDENTIFIER
+Rule 8     def_descriptions -> PROPERTY_IDENTIFIER MIN CARDINALITY CLASS_IDENTIFIER
+Rule 9     def_descriptions -> PROPERTY_IDENTIFIER MAX CARDINALITY CLASS_IDENTIFIER
+Rule 10    def_descriptions -> PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER
+Rule 11    def_descriptions -> OPEN_PAREN def_descriptions CLOSE_PAREN
+
+Terminals, with rules where they appear
+
+ALL                  : 6
+AND                  : 3
+CARDINALITY          : 8 9 10
+CLASS                : 1
+CLASS_IDENTIFIER     : 1 2 3 4 5 6 7 8 9 10
+CLOSE_BRACKET        : 
+CLOSE_CURLY          : 
+CLOSE_PAREN          : 11
+COMMA                : 
+DISJOINTCLASSES      : 
+EQUAL                : 
+EQUIVALENTTO         : 1
+EXACTLY              : 10
+GREATER_THAN         : 
+INDIVIDUALS          : 
+INDIVIDUAL_NAME      : 
+LESS_THAN            : 
+MAX                  : 9
+MIN                  : 8
+NAMESPACE            : 
+NOT                  : 
+OPEN_BRACKET         : 
+OPEN_CURLY           : 
+OPEN_PAREN           : 11
+OR                   : 4
+PROPERTY_IDENTIFIER  : 5 6 7 8 9 10
+PROPERTY_IDENTIFIER_SIMPLE : 
+SOME                 : 5
+SUBCLASSOF           : 
+THAT                 : 
+TYPE                 : 
+VALUE                : 7
+error                : 
+
+Nonterminals, with rules where they appear
+
+classe               : 0
+def_descriptions     : 1 3 4 11
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . classe
+    (1) classe -> . CLASS CLASS_IDENTIFIER EQUIVALENTTO def_descriptions
+
+    CLASS           shift and go to state 2
+
+    classe                         shift and go to state 1
+
+state 1
+
+    (0) S' -> classe .
+
+
+
+state 2
+
+    (1) classe -> CLASS . CLASS_IDENTIFIER EQUIVALENTTO def_descriptions
+
+    CLASS_IDENTIFIER shift and go to state 3
+
+
+state 3
+
+    (1) classe -> CLASS CLASS_IDENTIFIER . EQUIVALENTTO def_descriptions
+
+    EQUIVALENTTO    shift and go to state 4
+
+
+state 4
+
+    (1) classe -> CLASS CLASS_IDENTIFIER EQUIVALENTTO . def_descriptions
+    (2) def_descriptions -> . CLASS_IDENTIFIER
+    (3) def_descriptions -> . CLASS_IDENTIFIER AND def_descriptions
+    (4) def_descriptions -> . CLASS_IDENTIFIER OR def_descriptions
+    (5) def_descriptions -> . PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER
+    (6) def_descriptions -> . PROPERTY_IDENTIFIER ALL CLASS_IDENTIFIER
+    (7) def_descriptions -> . PROPERTY_IDENTIFIER VALUE CLASS_IDENTIFIER
+    (8) def_descriptions -> . PROPERTY_IDENTIFIER MIN CARDINALITY CLASS_IDENTIFIER
+    (9) def_descriptions -> . PROPERTY_IDENTIFIER MAX CARDINALITY CLASS_IDENTIFIER
+    (10) def_descriptions -> . PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER
+    (11) def_descriptions -> . OPEN_PAREN def_descriptions CLOSE_PAREN
+
+    CLASS_IDENTIFIER shift and go to state 5
+    PROPERTY_IDENTIFIER shift and go to state 7
+    OPEN_PAREN      shift and go to state 8
+
+    def_descriptions               shift and go to state 6
+
+state 5
+
+    (2) def_descriptions -> CLASS_IDENTIFIER .
+    (3) def_descriptions -> CLASS_IDENTIFIER . AND def_descriptions
+    (4) def_descriptions -> CLASS_IDENTIFIER . OR def_descriptions
+
+    $end            reduce using rule 2 (def_descriptions -> CLASS_IDENTIFIER .)
+    CLOSE_PAREN     reduce using rule 2 (def_descriptions -> CLASS_IDENTIFIER .)
+    AND             shift and go to state 9
+    OR              shift and go to state 10
+
+
+state 6
+
+    (1) classe -> CLASS CLASS_IDENTIFIER EQUIVALENTTO def_descriptions .
+
+    $end            reduce using rule 1 (classe -> CLASS CLASS_IDENTIFIER EQUIVALENTTO def_descriptions .)
+
+
+state 7
+
+    (5) def_descriptions -> PROPERTY_IDENTIFIER . SOME CLASS_IDENTIFIER
+    (6) def_descriptions -> PROPERTY_IDENTIFIER . ALL CLASS_IDENTIFIER
+    (7) def_descriptions -> PROPERTY_IDENTIFIER . VALUE CLASS_IDENTIFIER
+    (8) def_descriptions -> PROPERTY_IDENTIFIER . MIN CARDINALITY CLASS_IDENTIFIER
+    (9) def_descriptions -> PROPERTY_IDENTIFIER . MAX CARDINALITY CLASS_IDENTIFIER
+    (10) def_descriptions -> PROPERTY_IDENTIFIER . EXACTLY CARDINALITY CLASS_IDENTIFIER
+
+    SOME            shift and go to state 11
+    ALL             shift and go to state 12
+    VALUE           shift and go to state 13
+    MIN             shift and go to state 14
+    MAX             shift and go to state 15
+    EXACTLY         shift and go to state 16
+
+
+state 8
+
+    (11) def_descriptions -> OPEN_PAREN . def_descriptions CLOSE_PAREN
+    (2) def_descriptions -> . CLASS_IDENTIFIER
+    (3) def_descriptions -> . CLASS_IDENTIFIER AND def_descriptions
+    (4) def_descriptions -> . CLASS_IDENTIFIER OR def_descriptions
+    (5) def_descriptions -> . PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER
+    (6) def_descriptions -> . PROPERTY_IDENTIFIER ALL CLASS_IDENTIFIER
+    (7) def_descriptions -> . PROPERTY_IDENTIFIER VALUE CLASS_IDENTIFIER
+    (8) def_descriptions -> . PROPERTY_IDENTIFIER MIN CARDINALITY CLASS_IDENTIFIER
+    (9) def_descriptions -> . PROPERTY_IDENTIFIER MAX CARDINALITY CLASS_IDENTIFIER
+    (10) def_descriptions -> . PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER
+    (11) def_descriptions -> . OPEN_PAREN def_descriptions CLOSE_PAREN
+
+    CLASS_IDENTIFIER shift and go to state 5
+    PROPERTY_IDENTIFIER shift and go to state 7
+    OPEN_PAREN      shift and go to state 8
+
+    def_descriptions               shift and go to state 17
+
+state 9
+
+    (3) def_descriptions -> CLASS_IDENTIFIER AND . def_descriptions
+    (2) def_descriptions -> . CLASS_IDENTIFIER
+    (3) def_descriptions -> . CLASS_IDENTIFIER AND def_descriptions
+    (4) def_descriptions -> . CLASS_IDENTIFIER OR def_descriptions
+    (5) def_descriptions -> . PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER
+    (6) def_descriptions -> . PROPERTY_IDENTIFIER ALL CLASS_IDENTIFIER
+    (7) def_descriptions -> . PROPERTY_IDENTIFIER VALUE CLASS_IDENTIFIER
+    (8) def_descriptions -> . PROPERTY_IDENTIFIER MIN CARDINALITY CLASS_IDENTIFIER
+    (9) def_descriptions -> . PROPERTY_IDENTIFIER MAX CARDINALITY CLASS_IDENTIFIER
+    (10) def_descriptions -> . PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER
+    (11) def_descriptions -> . OPEN_PAREN def_descriptions CLOSE_PAREN
+
+    CLASS_IDENTIFIER shift and go to state 5
+    PROPERTY_IDENTIFIER shift and go to state 7
+    OPEN_PAREN      shift and go to state 8
+
+    def_descriptions               shift and go to state 18
+
+state 10
+
+    (4) def_descriptions -> CLASS_IDENTIFIER OR . def_descriptions
+    (2) def_descriptions -> . CLASS_IDENTIFIER
+    (3) def_descriptions -> . CLASS_IDENTIFIER AND def_descriptions
+    (4) def_descriptions -> . CLASS_IDENTIFIER OR def_descriptions
+    (5) def_descriptions -> . PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER
+    (6) def_descriptions -> . PROPERTY_IDENTIFIER ALL CLASS_IDENTIFIER
+    (7) def_descriptions -> . PROPERTY_IDENTIFIER VALUE CLASS_IDENTIFIER
+    (8) def_descriptions -> . PROPERTY_IDENTIFIER MIN CARDINALITY CLASS_IDENTIFIER
+    (9) def_descriptions -> . PROPERTY_IDENTIFIER MAX CARDINALITY CLASS_IDENTIFIER
+    (10) def_descriptions -> . PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER
+    (11) def_descriptions -> . OPEN_PAREN def_descriptions CLOSE_PAREN
+
+    CLASS_IDENTIFIER shift and go to state 5
+    PROPERTY_IDENTIFIER shift and go to state 7
+    OPEN_PAREN      shift and go to state 8
+
+    def_descriptions               shift and go to state 19
+
+state 11
+
+    (5) def_descriptions -> PROPERTY_IDENTIFIER SOME . CLASS_IDENTIFIER
+
+    CLASS_IDENTIFIER shift and go to state 20
+
+
+state 12
+
+    (6) def_descriptions -> PROPERTY_IDENTIFIER ALL . CLASS_IDENTIFIER
+
+    CLASS_IDENTIFIER shift and go to state 21
+
+
+state 13
+
+    (7) def_descriptions -> PROPERTY_IDENTIFIER VALUE . CLASS_IDENTIFIER
+
+    CLASS_IDENTIFIER shift and go to state 22
+
+
+state 14
+
+    (8) def_descriptions -> PROPERTY_IDENTIFIER MIN . CARDINALITY CLASS_IDENTIFIER
+
+    CARDINALITY     shift and go to state 23
+
+
+state 15
+
+    (9) def_descriptions -> PROPERTY_IDENTIFIER MAX . CARDINALITY CLASS_IDENTIFIER
+
+    CARDINALITY     shift and go to state 24
+
+
+state 16
+
+    (10) def_descriptions -> PROPERTY_IDENTIFIER EXACTLY . CARDINALITY CLASS_IDENTIFIER
+
+    CARDINALITY     shift and go to state 25
+
+
+state 17
+
+    (11) def_descriptions -> OPEN_PAREN def_descriptions . CLOSE_PAREN
+
+    CLOSE_PAREN     shift and go to state 26
+
+
+state 18
+
+    (3) def_descriptions -> CLASS_IDENTIFIER AND def_descriptions .
+
+    $end            reduce using rule 3 (def_descriptions -> CLASS_IDENTIFIER AND def_descriptions .)
+    CLOSE_PAREN     reduce using rule 3 (def_descriptions -> CLASS_IDENTIFIER AND def_descriptions .)
+
+
+state 19
+
+    (4) def_descriptions -> CLASS_IDENTIFIER OR def_descriptions .
+
+    $end            reduce using rule 4 (def_descriptions -> CLASS_IDENTIFIER OR def_descriptions .)
+    CLOSE_PAREN     reduce using rule 4 (def_descriptions -> CLASS_IDENTIFIER OR def_descriptions .)
+
+
+state 20
+
+    (5) def_descriptions -> PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER .
+
+    $end            reduce using rule 5 (def_descriptions -> PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER .)
+    CLOSE_PAREN     reduce using rule 5 (def_descriptions -> PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER .)
+
+
+state 21
+
+    (6) def_descriptions -> PROPERTY_IDENTIFIER ALL CLASS_IDENTIFIER .
+
+    $end            reduce using rule 6 (def_descriptions -> PROPERTY_IDENTIFIER ALL CLASS_IDENTIFIER .)
+    CLOSE_PAREN     reduce using rule 6 (def_descriptions -> PROPERTY_IDENTIFIER ALL CLASS_IDENTIFIER .)
+
+
+state 22
+
+    (7) def_descriptions -> PROPERTY_IDENTIFIER VALUE CLASS_IDENTIFIER .
+
+    $end            reduce using rule 7 (def_descriptions -> PROPERTY_IDENTIFIER VALUE CLASS_IDENTIFIER .)
+    CLOSE_PAREN     reduce using rule 7 (def_descriptions -> PROPERTY_IDENTIFIER VALUE CLASS_IDENTIFIER .)
+
+
+state 23
+
+    (8) def_descriptions -> PROPERTY_IDENTIFIER MIN CARDINALITY . CLASS_IDENTIFIER
+
+    CLASS_IDENTIFIER shift and go to state 27
+
+
+state 24
+
+    (9) def_descriptions -> PROPERTY_IDENTIFIER MAX CARDINALITY . CLASS_IDENTIFIER
+
+    CLASS_IDENTIFIER shift and go to state 28
+
+
+state 25
+
+    (10) def_descriptions -> PROPERTY_IDENTIFIER EXACTLY CARDINALITY . CLASS_IDENTIFIER
+
+    CLASS_IDENTIFIER shift and go to state 29
+
+
+state 26
+
+    (11) def_descriptions -> OPEN_PAREN def_descriptions CLOSE_PAREN .
+
+    $end            reduce using rule 11 (def_descriptions -> OPEN_PAREN def_descriptions CLOSE_PAREN .)
+    CLOSE_PAREN     reduce using rule 11 (def_descriptions -> OPEN_PAREN def_descriptions CLOSE_PAREN .)
+
+
+state 27
+
+    (8) def_descriptions -> PROPERTY_IDENTIFIER MIN CARDINALITY CLASS_IDENTIFIER .
+
+    $end            reduce using rule 8 (def_descriptions -> PROPERTY_IDENTIFIER MIN CARDINALITY CLASS_IDENTIFIER .)
+    CLOSE_PAREN     reduce using rule 8 (def_descriptions -> PROPERTY_IDENTIFIER MIN CARDINALITY CLASS_IDENTIFIER .)
+
+
+state 28
+
+    (9) def_descriptions -> PROPERTY_IDENTIFIER MAX CARDINALITY CLASS_IDENTIFIER .
+
+    $end            reduce using rule 9 (def_descriptions -> PROPERTY_IDENTIFIER MAX CARDINALITY CLASS_IDENTIFIER .)
+    CLOSE_PAREN     reduce using rule 9 (def_descriptions -> PROPERTY_IDENTIFIER MAX CARDINALITY CLASS_IDENTIFIER .)
+
+
+state 29
+
+    (10) def_descriptions -> PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER .
+
+    $end            reduce using rule 10 (def_descriptions -> PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER .)
+    CLOSE_PAREN     reduce using rule 10 (def_descriptions -> PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER .)
+

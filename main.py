@@ -41,7 +41,7 @@ def process_file():
     if lexer.errors:
         resultado_erros.insert(tk.END, "\n".join(lexer.errors))
     else:
-        resultado_erros.insert(tk.END, "Nenhum erro encontrado.")
+        resultado_erros.insert(tk.END, "Nenhum erro Lexico encontrado.")
 
     lexer.errors.clear()
 
