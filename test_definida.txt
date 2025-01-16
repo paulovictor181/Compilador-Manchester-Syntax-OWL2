@@ -1,5 +1,5 @@
 Class: CheesyPizza
-***eqivalentto:
+EquivalentTo:
 Pizza and (hasTopping some CheeseTopping)
 Individuals:
 CheesyPizza1

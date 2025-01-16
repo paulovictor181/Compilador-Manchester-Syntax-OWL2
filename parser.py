@@ -1,8 +1,9 @@
 import ply.yacc as yacc
-from lexer import tokens 
+from lexer import tokens
 
 errors = []
 
+# Seções de Classes
 def p_classes(p):
     '''classes : defined_class 
                | defined_class classes
@@ -23,6 +24,7 @@ def p_primitive_class(p):
         "individuals": p[5],
     }
 
+# Seções específicas de Subclass e Disjoint
 def p_subclass_section(p):
     '''subclass_section : SUBCLASSOF def_descriptions
                         | empty'''
@@ -47,7 +49,7 @@ def p_disjoint_classes_list(p):
     else:
         p[0] = [p[1]] + p[3]  # Adiciona a classe à lista
 
-
+# Classes Definidas (DEFINED)
 def p_defined_class(p):
     '''defined_class : CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptions individuals_section
                        | CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptions'''
@@ -57,6 +59,7 @@ def p_defined_class(p):
     else:
         p[0] = ('defined_class', p[2], p[4])  # Classe sem indivíduos
 
+# Definindo descrições de Classes
 def p_def_descriptions(p):
     '''def_descriptions : CLASS_IDENTIFIER
                         | namespace_type
@@ -75,7 +78,9 @@ def p_def_descriptions(p):
                         | PROPERTY_IDENTIFIER MAX CARDINALITY namespace_type
                         | PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER
                         | PROPERTY_IDENTIFIER EXACTLY CARDINALITY namespace_type
-                        | OPEN_PAREN def_descriptions CLOSE_PAREN'''
+                        | OPEN_PAREN def_descriptions CLOSE_PAREN
+                        | PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER COMMA def_descriptions'''  # Aqui a vírgula será transformada em AND
+
     if len(p) == 2:  # Exemplo: CLASS_IDENTIFIER
         p[0] = ('description', p[1])
     elif len(p) == 3:  # Exemplo: namespace_type (NAMESPACE TYPE)
@@ -90,8 +95,10 @@ def p_def_descriptions(p):
         p[0] = ('cardinality', p[1], p[2], p[3], p[4], p[5])
     elif len(p) == 4 and p[1] == '(':  # Exemplo: (def_descriptions)
         p[0] = p[2]
+    elif len(p) == 4 and p[2] == ',':  # Vírgula tratada como AND
+        p[0] = ('logical_op', p[1], 'AND', p[3])  # Aqui a vírgula se transforma em AND
 
-
+# Comparação
 def p_comparison(p):
     '''comparison : EQUAL CARDINALITY
                   | GREATER_THAN CARDINALITY
@@ -109,12 +116,12 @@ def p_comparison(p):
     elif p[1] == '<=':
         p[0] = ('less_equal', p[2])
 
-
+# Tipo de Namespace
 def p_namespace_type(p):
     '''namespace_type : NAMESPACE TYPE'''
     p[0] = ('namespace_type', p[1], p[2])  # Associa o NAMESPACE com o TYPE
 
-
+# Seção de Indivíduos
 def p_individuals_section(p):
     '''individuals_section : INDIVIDUALS individuals
                            | empty'''
@@ -123,21 +130,20 @@ def p_individuals_section(p):
     else:
         p[0] = []  # Seção vazia
 
-
 def p_individuals(p):
     '''individuals : INDIVIDUAL_NAME
-                   | INDIVIDUAL_NAME COMMA individuals
-                   '''
+                   | INDIVIDUAL_NAME COMMA individuals'''
     if len(p) == 2:
         p[0] = [p[1]]  # Apenas um indivíduo
     else:
-        p[0] = [p[1]] + p[3]  # Adiciona o indivíduo atual à lista
+        p[0] = [p[1]] + p[3]  # Adiciona o indivíduo à lista
 
-
+# Função para lidar com seções vazias
 def p_empty(p):
     'empty :'
     pass
 
+# Tratamento de erros
 def p_error(p):
     if p:
         error_message = f"Erro Sintático: Linha {p.lineno}: Token inesperado '{p.value}'"
@@ -145,6 +151,7 @@ def p_error(p):
     else:
         errors.append("Erro Sintático: Fim inesperado do arquivo")
 
+# Função para parse
 def parse_input(input_string, lexer):
     global errors  # Usando uma variável global para armazenar erros
     errors = []  # Limpa erros anteriores
