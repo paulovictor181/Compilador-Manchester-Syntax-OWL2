@@ -9,6 +9,7 @@ Esse projeto tem como objetivo construir um compilador para reconhecimento da li
 * [Analisador sintático](#analisador-sintático)
 * [Analisador semântico](#analisador-semântico)
 * [Ply](##Ply)
+* [Yacc](##Yacc)
 * [Requisitos](##Requisitos/Como-usar)
 
 
@@ -172,7 +173,7 @@ def t_error(t):
     t.lexer.skip(1)
 ```
 
-### Yacc
+## Yacc
 
 O módulo ply.yacc implementa o componente de análise do PLY. O nome "yacc" significa "Yet Another Compiler Compiler" e é emprestado da ferramenta Unix de mesmo nome.
 
