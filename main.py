@@ -36,11 +36,8 @@ def process_file():
         tokens.append(f"Token({token.type}, '{token.value}', Linha {token.lineno})")
     lex_errors.extend(lexer.errors)
 
-    # **Ajuste: Não limpar os erros léxicos aqui**
-    # lexer.errors.clear()
-
-    # Processar erros sintáticos
-    sint_errors = parse_input(code, lexer)  # Passar o lexer para o parser para garantir o contexto
+    # Processar erros sintáticos e capturar o que foi processado pelo parser
+    parsed_result, sint_errors = parse_input(code, lexer)
 
     # Exibir tokens
     resultado_tokens.delete(1.0, tk.END)
@@ -59,6 +56,13 @@ def process_file():
         resultado_erros_sintaticos.insert(tk.END, "\n".join(sint_errors))
     else:
         resultado_erros_sintaticos.insert(tk.END, "Nenhum erro sintático encontrado.")
+    
+    # Exibir o que foi processado pelo parser (estruturas sintáticas)
+    resultado_parser.delete(1.0, tk.END)
+    if parsed_result:
+        resultado_parser.insert(tk.END, "\n".join(str(item) for item in parsed_result))
+    else:
+        resultado_parser.insert(tk.END, "Nenhuma estrutura sintática processada.")
 
 
 # Criar a janela principal
@@ -86,6 +90,13 @@ label_erros_sintaticos = tk.Label(janela, text="Erros Sintáticos:")
 label_erros_sintaticos.pack()
 resultado_erros_sintaticos = tk.Text(janela, wrap=tk.WORD, height=10, width=60)
 resultado_erros_sintaticos.pack(padx=10, pady=5)
+
+# Área de texto para exibir o que foi processado pelo parser
+label_parser_result = tk.Label(janela, text="Estruturas Sintáticas Processadas:")
+label_parser_result.pack()
+resultado_parser = tk.Text(janela, wrap=tk.WORD, height=10, width=60)
+resultado_parser.pack(padx=10, pady=5)
+
 
 # Executar a aplicação
 janela.mainloop()

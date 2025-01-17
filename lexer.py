@@ -4,6 +4,7 @@ errors = []
 
 reserved = {
     'some': 'SOME',
+    'only': 'ONLY',
     'all': 'ALL',
     'value': 'VALUE',
     'min': 'MIN',
@@ -18,6 +19,7 @@ reserved = {
     'Individuals:': 'INDIVIDUALS',
     'SubClassOf:': 'SUBCLASSOF',
     'DisjointClasses:': 'DISJOINTCLASSES',
+    'DisjointWith:': 'DISJOINtWITH'
 }
 
 VALID_TYPES = [
@@ -96,8 +98,8 @@ t_EQUAL          = r'\='
 t_COMMA          = r','
 
 def t_RESERVED(t):
-    r'(some|all|value|min|max|exactly|that|not|and|or|Class:|EquivalentTo:|Individuals:|SubClassOf:|DisjointClasses:)'
-    t.type = reserved[t.value]  # Mapeia o token reservado
+    r'(some|only|all|value|min|max|exactly|that|not|and|or|Class:|EquivalentTo:|Individuals:|SubClassOf:|DisjointClasses:|DisjointWith:)'
+    t.type = reserved[t.value] 
     return t
 
 def t_NAMESPACE(t):

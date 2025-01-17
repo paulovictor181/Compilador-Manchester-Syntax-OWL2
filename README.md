@@ -172,6 +172,127 @@ def t_error(t):
     t.lexer.skip(1)
 ```
 
+### Yacc
+
+O módulo ply.yacc implementa o componente de análise do PLY. O nome "yacc" significa "Yet Another Compiler Compiler" e é emprestado da ferramenta Unix de mesmo nome.
+
+### Yacc exemplo
+
+Suponha que você queira fazer uma gramática para expressões aritméticas simples: 
+
+```
+import ply.yacc as yacc
+
+# Obtenha o mapa de token do lexer. Isso é obrigatório. 
+de calclex importar tokens 
+
+def p_expression_plus(p):
+    'expression : expression PLUS term'
+    p[0] = p[1] + p[3]
+
+def p_expression_minus(p):
+    'expression : expression MINUS term'
+    p[0] = p[1] - p[3]
+
+def p_expression_term(p):
+    'expression : term'
+    p[0] = p[1]
+
+def p_term_times(p):
+    'term : term TIMES factor'
+    p[0] = p[1] * p[3]
+
+def p_term_div(p):
+    'term : term DIVIDE factor'
+    p[0] = p[1] / p[3]
+
+def p_term_factor(p):
+    'term : factor'
+    p[0] = p[1]
+
+def p_factor_num(p):
+    'factor : NUMBER'
+    p[0] = p[1]
+
+def p_factor_expr(p):
+    'factor : LPAREN expression RPAREN'
+    p[0] = p[2]
+
+# Regra de erro para erros de sintaxe 
+def p_error(p):
+    print("Syntax error in input!")
+
+# Build the parser
+parser = yacc.yacc()
+
+while True:
+   try:
+       s = raw_input('calc > ')
+   except EOFError:
+       break
+   if not s: continue
+   result = parser.parse(s)
+   print(result)
+
+```
+
+Neste exemplo, cada regra gramatical é definida por uma função Python onde a docstring para essa função contém a especificação gramatical livre de contexto apropriada. As instruções que compõem o corpo da função implementam as ações semânticas da regra. Cada função aceita um único argumento p que é uma sequência contendo os valores de cada símbolo gramatical na regra correspondente. Os valores de p[i] são mapeados para símbolos gramaticais conforme mostrado aqui:
+
+```
+    def p_expression_plus(p):
+        'expression : expression PLUS term'
+        #   ^            ^        ^    ^
+        #  p[0]         p[1]     p[2] p[3]
+
+        p[0] = p[1] + p[3]
+```
+
+### Combinando funções de regras gramaticais (Rules) 
+Quando as regras gramaticais são semelhantes, elas podem ser combinadas em uma única função. Por exemplo, considere as duas regras em nosso exemplo anterior:
+
+```
+    def p_expression_plus(p):
+        'expression : expression PLUS term'
+        p[0] = p[1] + p[3]
+
+    def p_expression_minus(t):
+        'expression : expression MINUS term'
+        p[0] = p[1] - p[3]
+```
+
+Em vez de escrever duas funções, você pode escrever uma única função como esta:
+
+
+```
+    def p_expression(p):
+        '''expression : expression PLUS term
+                    | expression MINUS term'''
+        if p[2] == '+':
+            p[0] = p[1] + p[3]
+        elif p[2] == '-':
+            p[0] = p[1] - p[3]
+```
+
+### Produções Vazias
+yacc.py pode manipular produções vazias definindo uma regra como esta:
+```
+    def p_empty(p):
+        'empty :'
+        pass
+```
+Agora, para usar a produção vazia, basta usar 'empty' como símbolo. Por exemplo:
+```
+    def p_optitem(p):
+        'optitem : item'
+        '        | empty'
+        ...
+```
+
+
+### O arquivo parser.out
+
+O yacc.py usa o algoritmo de análise sintática LR(1), que lê a entrada da esquerda para a direita e faz uma derivação à direita. Durante a análise, podem ocorrer conflitos shift/reduce (quando o parser não sabe se deve deslocar ou reduzir) e reduce/reduce (quando há múltiplas opções de redução para o mesmo conjunto de tokens). Quando esses conflitos acontecem, o yacc.py gera um arquivo de depuração chamado parser.out, que contém informações detalhadas sobre os conflitos, facilitando a depuração e o ajuste da gramática.
+
 ## Requisitos/Como usar
 
 Para rodar o projeto é recomendado a utilização do WSL ou uso direto do Linux, pois a maioria das distros já possuem o Python3 instalado.
