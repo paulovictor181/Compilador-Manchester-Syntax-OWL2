@@ -9,8 +9,6 @@ def p_classes(p):
                | defined_class classes
                | primitive_class 
                | primitive_class classes
-               | closure_axiom 
-               | closure_axiom classes
                '''
     if len(p) == 2:
         p[0] = [p[1]]  # Apenas uma classe
@@ -62,56 +60,51 @@ def p_defined_class(p):
         p[0] = ('defined_class', p[2], p[4])
 
 
-def p_closure_axiom(p):
+"""def p_closure_axiom(p):
     '''closure_axiom : PROPERTY_IDENTIFIER ONLY OPEN_PAREN def_descriptions CLOSE_PAREN'''
     p[0] = ('closure_axiom', p[1], p[4])  
-
+"""
 
 def p_def_descriptions(p):
     '''def_descriptions : CLASS_IDENTIFIER
                         | namespace_type
                         | CLASS_IDENTIFIER AND def_descriptions
                         | CLASS_IDENTIFIER OR def_descriptions
-                        | PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER
-                        | PROPERTY_IDENTIFIER SOME namespace_type
-                        | PROPERTY_IDENTIFIER SOME namespace_type OPEN_BRACKET comparison CLOSE_BRACKET
-                        | PROPERTY_IDENTIFIER ALL CLASS_IDENTIFIER
-                        | PROPERTY_IDENTIFIER ALL namespace_type
-                        | PROPERTY_IDENTIFIER VALUE CLASS_IDENTIFIER
-                        | PROPERTY_IDENTIFIER VALUE namespace_type
-                        | PROPERTY_IDENTIFIER MIN CARDINALITY CLASS_IDENTIFIER
-                        | PROPERTY_IDENTIFIER MIN CARDINALITY namespace_type
-                        | PROPERTY_IDENTIFIER MAX CARDINALITY CLASS_IDENTIFIER
-                        | PROPERTY_IDENTIFIER MAX CARDINALITY namespace_type
-                        | PROPERTY_IDENTIFIER EXACTLY CARDINALITY CLASS_IDENTIFIER
-                        | PROPERTY_IDENTIFIER EXACTLY CARDINALITY namespace_type
+                        | quantifier_aux def_descriptions
                         | OPEN_PAREN def_descriptions CLOSE_PAREN
                         | PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER COMMA def_descriptions
                         | PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER COMMA PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER
                         | PROPERTY_IDENTIFIER ONLY OPEN_PAREN def_descriptions CLOSE_PAREN'''  
+    
+    p[0] = p[1]
 
-    if len(p) == 2:  
-        p[0] = ('description', p[1])
-    elif len(p) == 3:
-        p[0] = ('namespace_type_description', p[1], p[2])
-    elif len(p) == 4 and p[2] in ('AND', 'OR'): 
-        p[0] = ('logical_op', p[1], p[2], p[3])
-    elif len(p) == 4: 
-        p[0] = ('quantifier', p[1], p[2], p[3])
-    elif len(p) == 5:  
-        p[0] = ('cardinality', p[1], p[2], p[3], p[4])
-    elif len(p) == 6: 
-        p[0] = ('cardinality', p[1], p[2], p[3], p[4], p[5])
-    elif len(p) == 4 and p[1] == '(': 
-        p[0] = p[2]
-    elif len(p) == 4 and p[2] == ',':  
-        p[0] = ('logical_op', p[1], 'AND', p[3]) 
-    elif len(p) == 5 and p[2] == 'ONLY': 
-        p[0] = ('closure_axiom', p[1], p[3])
+
+def p_quantifier_aux(p):
+    '''quantifier_aux : PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+                      | PROPERTY_IDENTIFIER quantifier namespace_type
+                      | OPEN_PAREN quantifier_aux CLOSE_PAREN
+    '''
+    p[0] = {
+        'property': p[1],
+        'quantifier': p[2],
+        'target': p[3]
+    }
 
 # Comparação
-def p_comparison(p):
-    '''comparison : EQUAL CARDINALITY
+def p_quantifier(p):
+    '''quantifier : SOME
+                  | ALL
+                  | VALUE
+                  | MAX
+                  | MIN
+                  | EXACTLY
+                  | THAT
+                  '''    
+    p[0] = p[1]
+
+# Comparação
+def p_sizecheck(p):
+    '''sizecheck : EQUAL CARDINALITY
                   | GREATER_THAN CARDINALITY
                   | LESS_THAN CARDINALITY
                   | GREATER_THAN EQUAL CARDINALITY
@@ -129,7 +122,8 @@ def p_comparison(p):
 
 # Tipo de Namespace
 def p_namespace_type(p):
-    '''namespace_type : NAMESPACE TYPE'''
+    '''namespace_type : NAMESPACE TYPE
+                      | NAMESPACE TYPE OPEN_PAREN sizecheck CLOSE_PAREN'''
     p[0] = ('namespace_type', p[1], p[2]) 
 
 # Seção de Indivíduos
