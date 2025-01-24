@@ -51,8 +51,8 @@ def p_disjoint_classes_list(p):
 
 
 def p_defined_class(p):
-    '''defined_class : CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptions individuals_section
-                       | CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER AND def_descriptions'''
+    '''defined_class : CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER comma_and def_descriptions individuals_section
+                       | CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER comma_and def_descriptions'''
 
     if len(p) == 8:
         p[0] = ('defined_class', p[2], p[4], p[6]) 
@@ -67,14 +67,11 @@ def p_defined_class(p):
 
 def p_def_descriptions(p):
     '''def_descriptions : CLASS_IDENTIFIER
-                        | namespace_type
-                        | CLASS_IDENTIFIER AND def_descriptions
                         | CLASS_IDENTIFIER OR def_descriptions
-                        | quantifier_aux def_descriptions
-                        | OPEN_PAREN def_descriptions CLOSE_PAREN
-                        | PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER COMMA def_descriptions
-                        | PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER COMMA PROPERTY_IDENTIFIER SOME CLASS_IDENTIFIER
-                        | PROPERTY_IDENTIFIER ONLY OPEN_PAREN def_descriptions CLOSE_PAREN'''  
+                        | CLASS_IDENTIFIER comma_and def_descriptions
+                        | quantifier_aux
+                        | quantifier_aux comma_and def_descriptions
+'''  
     
     p[0] = p[1]
 
@@ -123,7 +120,7 @@ def p_sizecheck(p):
 # Tipo de Namespace
 def p_namespace_type(p):
     '''namespace_type : NAMESPACE TYPE
-                      | NAMESPACE TYPE OPEN_PAREN sizecheck CLOSE_PAREN'''
+                      | NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET'''
     p[0] = ('namespace_type', p[1], p[2]) 
 
 # Seção de Indivíduos
@@ -142,6 +139,11 @@ def p_individuals(p):
         p[0] = [p[1]]  # Apenas um indivíduo
     else:
         p[0] = [p[1]] + p[3]  # Adiciona o indivíduo à lista
+
+def p_comma_and(p):
+        '''comma_and : COMMA
+                     | AND'''
+        p[0] = [p[1]]
 
 # Função para lidar com seções vazias
 def p_empty(p):
