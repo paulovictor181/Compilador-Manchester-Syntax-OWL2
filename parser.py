@@ -51,13 +51,19 @@ def p_disjoint_classes_list(p):
 
 
 def p_defined_class(p):
-    '''defined_class : CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER comma_and def_descriptions individuals_section
-                       | CLASS CLASS_IDENTIFIER EQUIVALENTTO CLASS_IDENTIFIER comma_and def_descriptions'''
+    '''defined_class : CLASS CLASS_IDENTIFIER equivalentto_section CLASS_IDENTIFIER comma_and def_descriptions subclass_section individuals_section
+                       | CLASS CLASS_IDENTIFIER equivalentto_section CLASS_IDENTIFIER comma_and def_descriptions'''
 
     if len(p) == 8:
         p[0] = ('defined_class', p[2], p[4], p[6]) 
     else:
         p[0] = ('defined_class', p[2], p[4])
+
+def p_enum_class(p):
+    '''enum_class : OPEN_CURLY individuals CLOSE_CURLY
+                |'''
+    p[0] = ('enum_class', p[1], p[4])  
+
 
 
 """def p_closure_axiom(p):
@@ -65,14 +71,20 @@ def p_defined_class(p):
     p[0] = ('closure_axiom', p[1], p[4])  
 """
 
+def p_equivalentto_section(p):
+    '''equivalentto_section : EQUIVALENTTO
+                            | enum_class
+    '''
+    p[0] = p[1]
+
+
 def p_def_descriptions(p):
     '''def_descriptions : CLASS_IDENTIFIER
                         | CLASS_IDENTIFIER OR def_descriptions
                         | CLASS_IDENTIFIER comma_and def_descriptions
                         | quantifier_aux
                         | quantifier_aux comma_and def_descriptions
-'''  
-    
+    '''  
     p[0] = p[1]
 
 
