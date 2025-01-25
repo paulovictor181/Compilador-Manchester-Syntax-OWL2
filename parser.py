@@ -27,6 +27,8 @@ def p_primitive_class(p):
 
 def p_subclass_section(p):
     '''subclass_section : SUBCLASSOF def_descriptions
+                        | SUBCLASSOF enum_class
+                        | SUBCLASSOF covered_class
                         | empty'''
     if len(p) == 3:
         p[0] = p[2]  
@@ -51,19 +53,54 @@ def p_disjoint_classes_list(p):
 
 
 def p_defined_class(p):
-    '''defined_class : CLASS CLASS_IDENTIFIER equivalentto_section CLASS_IDENTIFIER comma_and def_descriptions subclass_section individuals_section
-                       | CLASS CLASS_IDENTIFIER equivalentto_section CLASS_IDENTIFIER comma_and def_descriptions'''
+    '''defined_class : CLASS CLASS_IDENTIFIER equivalentto_section subclass_section individuals_section
+                       | CLASS CLASS_IDENTIFIER equivalentto_section'''
 
-    if len(p) == 8:
-        p[0] = ('defined_class', p[2], p[4], p[6]) 
+    if len(p) == 6:
+        p[0] = {
+            "type": "defined_class",
+            "name": p[2],
+            "equivalent_to": p[3],
+            "subclass_of": p[4],
+            "individuals": p[5],
+        }
     else:
-        p[0] = ('defined_class', p[2], p[4])
+        p[0] = {
+            "type": "defined_class",
+            "name": p[2],
+            "equivalent_to": p[3],
+            "subclass_of": None,
+            "individuals": None,
+        }
 
 def p_enum_class(p):
-    '''enum_class : OPEN_CURLY individuals CLOSE_CURLY
-                |'''
-    p[0] = ('enum_class', p[1], p[4])  
+    '''enum_class : OPEN_CURLY individuals CLOSE_CURLY'''
+    if len(p) == 4:
+        p[0] = {
+            "type": "enum_class",
+            "status": "Preenchida",
+            "individuals": p[2],
+        }
+    else:
+        p[0] = {
+            "type": "enum_class",
+            "status": "Vazia",
+        }
 
+def p_covered_class(p):
+    '''covered_class : CLASS_IDENTIFIER OR covered_class
+                     | CLASS_IDENTIFIER
+                '''
+    if len(p) == 3:
+        p[0] = {
+            "type": "covered_class",
+            "Classes": p[3],
+        }
+    else:
+        p[0] = {
+            "type": "covered_class",
+            "Classe": p[1],
+        }
 
 
 """def p_closure_axiom(p):
@@ -72,10 +109,11 @@ def p_enum_class(p):
 """
 
 def p_equivalentto_section(p):
-    '''equivalentto_section : EQUIVALENTTO
-                            | enum_class
+    '''equivalentto_section : EQUIVALENTTO CLASS_IDENTIFIER comma_and def_descriptions
+                            | EQUIVALENTTO enum_class
+                            | EQUIVALENTTO covered_class
     '''
-    p[0] = p[1]
+    p[0] = p[2]
 
 
 def p_def_descriptions(p):
