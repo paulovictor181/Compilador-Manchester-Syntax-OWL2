@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ALL AND CARDINALITY CLASS CLASS_IDENTIFIER CLOSE_BRACKET CLOSE_CURLY CLOSE_PAREN COMMA DISJOINTCLASSES DISJOINtWITH EQUAL EQUIVALENTTO EXACTLY GREATER_THAN INDIVIDUALS INDIVIDUAL_NAME LESS_THAN MAX MIN NAMESPACE NOT ONLY OPEN_BRACKET OPEN_CURLY OPEN_PAREN OR PROPERTY_IDENTIFIER PROPERTY_IDENTIFIER_SIMPLE SOME SUBCLASSOF THAT TYPE VALUEclasses : defined_class \n               | defined_class classes\n               | primitive_class \n               | primitive_class classes\n               primitive_class : CLASS CLASS_IDENTIFIER subclass_section disjoint_section individuals_sectionsubclass_section : SUBCLASSOF def_descriptions\n                        | SUBCLASSOF enum_class\n                        | SUBCLASSOF covered_class\n                        | emptydisjoint_section : DISJOINTCLASSES disjoint_classes_list\n                        | emptydisjoint_classes_list : CLASS_IDENTIFIER\n                             | CLASS_IDENTIFIER COMMA disjoint_classes_listdefined_class : CLASS CLASS_IDENTIFIER equivalentto_section subclass_section individuals_section\n                       | CLASS CLASS_IDENTIFIER equivalentto_sectionenum_class : OPEN_CURLY individuals CLOSE_CURLYcovered_class : CLASS_IDENTIFIER OR covered_class\n                     | CLASS_IDENTIFIER\n                equivalentto_section : EQUIVALENTTO CLASS_IDENTIFIER comma_and def_descriptions\n                            | EQUIVALENTTO enum_class\n                            | EQUIVALENTTO covered_class\n    def_descriptions : CLASS_IDENTIFIER\n                        | CLASS_IDENTIFIER OR def_descriptions\n                        | CLASS_IDENTIFIER comma_and def_descriptions\n                        | quantifier_aux\n                        | quantifier_aux comma_and def_descriptions\n    quantifier_aux : PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER\n                      | PROPERTY_IDENTIFIER quantifier namespace_type\n                      | OPEN_PAREN quantifier_aux CLOSE_PAREN\n    quantifier : SOME\n                  | ALL\n                  | VALUE\n                  | MAX\n                  | MIN\n                  | EXACTLY\n                  | THAT\n                  sizecheck : EQUAL CARDINALITY\n                  | GREATER_THAN CARDINALITY\n                  | LESS_THAN CARDINALITY\n                  | GREATER_THAN EQUAL CARDINALITY\n                  | LESS_THAN EQUAL CARDINALITYnamespace_type : NAMESPACE TYPE\n                      | NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKETindividuals_section : INDIVIDUALS individuals\n                           | emptyindividuals : INDIVIDUAL_NAME\n                   | INDIVIDUAL_NAME COMMA individualscomma_and : COMMA\n                     | ANDempty :'
+_lr_signature = 'ALL AND CARDINALITY CLASS CLASS_IDENTIFIER CLOSE_BRACKET CLOSE_CURLY CLOSE_PAREN COMMA DISJOINTCLASSES DISJOINtWITH EQUAL EQUIVALENTTO EXACTLY GREATER_THAN INDIVIDUALS INDIVIDUAL_NAME LESS_THAN MAX MIN NAMESPACE NOT ONLY OPEN_BRACKET OPEN_CURLY OPEN_PAREN OR PROPERTY_IDENTIFIER PROPERTY_IDENTIFIER_SIMPLE SOME SUBCLASSOF THAT TYPE VALUEclasses : defined_class \n               | defined_class classes\n               | primitive_class \n               | primitive_class classes\n               primitive_class : CLASS CLASS_IDENTIFIER subclass_section closure_axiom disjoint_section individuals_sectionsubclass_section : SUBCLASSOF def_descriptions\n                        | SUBCLASSOF enum_class\n                        | SUBCLASSOF covered_class\n                        | emptydisjoint_section : DISJOINTCLASSES disjoint_classes_list\n                        | emptydisjoint_classes_list : CLASS_IDENTIFIER\n                             | CLASS_IDENTIFIER COMMA disjoint_classes_listdefined_class : CLASS CLASS_IDENTIFIER equivalentto_section subclass_section individuals_section\n                       | CLASS CLASS_IDENTIFIER equivalentto_sectionenum_class : OPEN_CURLY individuals CLOSE_CURLYcovered_class : CLASS_IDENTIFIER OR covered_class\n                     | CLASS_IDENTIFIER\n                closure_axiom : ONLY OPEN_PAREN def_descriptions CLOSE_PARENaux_fechamento : OPEN_PAREN PROPERTY_IDENTIFIER aux_fechamento\n                      | OR PROPERTY_IDENTIFIER aux_fechamento\n                      | PROPERTY_IDENTIFIER CLOSE_PARENani_fechamento : VALUE CLASS_IDENTIFIER CLOSE_PAREN\n                      | VALUE CLASS_IDENTIFIER CLOSE_PAREN ani_fechamento\n                      | CLOSE_PARENani_abertura : OPEN_PAREN PROPERTY_IDENTIFIER SOME PROPERTY_IDENTIFIER\n                    | SOME aninhadaaninhada : ani_abertura ani_fechamento\n           equivalentto_section : EQUIVALENTTO CLASS_IDENTIFIER comma_and def_descriptions\n                            | EQUIVALENTTO enum_class\n                            | EQUIVALENTTO covered_class\n                            | EQUIVALENTTO aninhada\n    def_descriptions : CLASS_IDENTIFIER\n                        | CLASS_IDENTIFIER OR def_descriptions\n                        | CLASS_IDENTIFIER comma_and def_descriptions\n                        | quantifier_aux\n                        | quantifier_aux comma_and def_descriptions\n    quantifier_aux : PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER\n                      | PROPERTY_IDENTIFIER quantifier namespace_type\n                      | OPEN_PAREN quantifier_aux CLOSE_PAREN\n    quantifier : SOME\n                  | ALL\n                  | VALUE\n                  | MAX\n                  | MIN\n                  | EXACTLY\n                  | THAT\n                  sizecheck : EQUAL CARDINALITY\n                  | GREATER_THAN CARDINALITY\n                  | LESS_THAN CARDINALITY\n                  | GREATER_THAN EQUAL CARDINALITY\n                  | LESS_THAN EQUAL CARDINALITYnamespace_type : NAMESPACE TYPE\n                      | NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKETindividuals_section : INDIVIDUALS individuals\n                           | emptyindividuals : INDIVIDUAL_NAME\n                   | INDIVIDUAL_NAME COMMA individualscomma_and : COMMA\n                     | ANDempty :'
     
-_lr_action_items = {'CLASS':([0,2,3,7,8,9,12,13,14,16,17,18,19,21,22,23,24,25,28,30,31,32,33,39,52,54,55,56,57,58,60,61,62,63,64,66,67,69,70,76,],[4,4,4,-50,-15,-50,-9,-50,-50,-11,-18,-20,-21,-6,-7,-8,-18,-25,-14,-45,-5,-10,-12,-46,-44,-22,-19,-18,-17,-16,-23,-24,-26,-27,-28,-29,-13,-47,-42,-43,]),'$end':([1,2,3,5,6,7,8,9,12,13,14,16,17,18,19,21,22,23,24,25,28,30,31,32,33,39,52,54,55,56,57,58,60,61,62,63,64,66,67,69,70,76,],[0,-1,-3,-2,-4,-50,-15,-50,-9,-50,-50,-11,-18,-20,-21,-6,-7,-8,-18,-25,-14,-45,-5,-10,-12,-46,-44,-22,-19,-18,-17,-16,-23,-24,-26,-27,-28,-29,-13,-47,-42,-43,]),'CLASS_IDENTIFIER':([4,10,11,15,34,35,36,37,40,41,42,43,44,45,46,47,48,49,50,53,68,],[7,17,24,33,54,56,-48,-49,24,54,54,63,-30,-31,-32,-33,-34,-35,-36,33,54,]),'EQUIVALENTTO':([7,],[10,]),'SUBCLASSOF':([7,8,17,18,19,25,54,55,56,57,58,60,61,62,63,64,66,70,76,],[11,11,-18,-20,-21,-25,-22,-19,-18,-17,-16,-23,-24,-26,-27,-28,-29,-42,-43,]),'DISJOINTCLASSES':([7,9,12,21,22,23,24,25,54,57,58,60,61,62,63,64,66,70,76,],[-50,15,-9,-6,-7,-8,-18,-25,-22,-17,-16,-23,-24,-26,-27,-28,-29,-42,-43,]),'INDIVIDUALS':([7,8,9,12,13,14,16,17,18,19,21,22,23,24,25,32,33,54,55,56,57,58,60,61,62,63,64,66,67,70,76,],[-50,-50,-50,-9,29,29,-11,-18,-20,-21,-6,-7,-8,-18,-25,-10,-12,-22,-19,-18,-17,-16,-23,-24,-26,-27,-28,-29,-13,-42,-43,]),'OPEN_CURLY':([10,11,],[20,20,]),'PROPERTY_IDENTIFIER':([11,27,34,36,37,40,41,42,68,],[26,26,26,-48,-49,26,26,26,26,]),'OPEN_PAREN':([11,27,34,36,37,40,41,42,68,],[27,27,27,-48,-49,27,27,27,27,]),'OR':([17,24,54,56,],[35,40,68,35,]),'COMMA':([17,24,25,33,39,54,63,64,66,70,76,],[36,36,36,53,59,36,-27,-28,-29,-42,-43,]),'AND':([17,24,25,54,63,64,66,70,76,],[37,37,37,37,-27,-28,-29,-42,-43,]),'INDIVIDUAL_NAME':([20,29,59,],[39,39,39,]),'SOME':([26,],[44,]),'ALL':([26,],[45,]),'VALUE':([26,],[46,]),'MAX':([26,],[47,]),'MIN':([26,],[48,]),'EXACTLY':([26,],[49,]),'THAT':([26,],[50,]),'CLOSE_CURLY':([38,39,69,],[58,-46,-47,]),'NAMESPACE':([43,44,45,46,47,48,49,50,],[65,-30,-31,-32,-33,-34,-35,-36,]),'CLOSE_PAREN':([51,63,64,66,70,76,],[66,-27,-28,-29,-42,-43,]),'TYPE':([65,],[70,]),'OPEN_BRACKET':([70,],[71,]),'EQUAL':([71,74,75,],[73,79,81,]),'GREATER_THAN':([71,],[74,]),'LESS_THAN':([71,],[75,]),'CLOSE_BRACKET':([72,77,78,80,82,83,],[76,-37,-38,-39,-40,-41,]),'CARDINALITY':([73,74,75,79,81,],[77,78,80,82,83,]),}
+_lr_action_items = {'CLASS':([0,2,3,8,12,13,14,16,17,18,19,24,25,26,27,28,31,33,34,36,43,44,46,61,62,63,64,66,67,68,69,70,74,75,76,77,78,80,82,84,85,87,88,89,95,],[4,4,4,-15,-9,-61,-61,-18,-30,-31,-32,-6,-7,-8,-18,-36,-14,-56,-61,-11,-57,-28,-25,-55,-5,-10,-12,-33,-29,-18,-17,-16,-34,-35,-37,-38,-39,-40,-19,-58,-23,-53,-13,-24,-54,]),'$end':([1,2,3,5,6,8,12,13,14,16,17,18,19,24,25,26,27,28,31,33,34,36,43,44,46,61,62,63,64,66,67,68,69,70,74,75,76,77,78,80,82,84,85,87,88,89,95,],[0,-1,-3,-2,-4,-15,-9,-61,-61,-18,-30,-31,-32,-6,-7,-8,-18,-36,-14,-56,-61,-11,-57,-28,-25,-55,-5,-10,-12,-33,-29,-18,-17,-16,-34,-35,-37,-38,-39,-40,-19,-58,-23,-53,-13,-24,-54,]),'CLASS_IDENTIFIER':([4,10,11,35,37,38,39,40,41,45,49,50,51,52,53,54,55,56,57,58,59,81,83,],[7,16,27,64,66,66,68,-59,-60,72,27,66,66,77,-41,-42,-43,-44,-45,-46,-47,64,66,]),'EQUIVALENTTO':([7,],[10,]),'SUBCLASSOF':([7,8,16,17,18,19,28,44,46,66,67,68,69,70,74,75,76,77,78,80,85,87,89,95,],[11,11,-18,-30,-31,-32,-36,-28,-25,-33,-29,-18,-17,-16,-34,-35,-37,-38,-39,-40,-23,-53,-24,-54,]),'ONLY':([7,9,12,24,25,26,27,28,66,69,70,74,75,76,77,78,80,87,95,],[-61,15,-9,-6,-7,-8,-18,-36,-33,-17,-16,-34,-35,-37,-38,-39,-40,-53,-54,]),'INDIVIDUALS':([8,12,13,14,16,17,18,19,24,25,26,27,28,34,36,44,46,63,64,66,67,68,69,70,74,75,76,77,78,80,82,85,87,88,89,95,],[-61,-9,32,-61,-18,-30,-31,-32,-6,-7,-8,-18,-36,32,-11,-28,-25,-10,-12,-33,-29,-18,-17,-16,-34,-35,-37,-38,-39,-40,-19,-23,-53,-13,-24,-54,]),'OPEN_CURLY':([10,11,],[20,20,]),'OPEN_PAREN':([10,11,15,23,30,37,38,40,41,49,50,51,83,],[22,30,37,22,30,30,30,-59,-60,30,30,30,30,]),'SOME':([10,23,29,47,],[23,23,53,73,]),'PROPERTY_IDENTIFIER':([11,22,30,37,38,40,41,49,50,51,73,83,],[29,47,29,29,29,-59,-60,29,29,29,86,29,]),'DISJOINTCLASSES':([14,82,],[35,-19,]),'OR':([16,27,66,68,],[39,49,83,39,]),'COMMA':([16,27,28,43,64,66,77,78,80,87,95,],[40,40,40,71,81,40,-38,-39,-40,-53,-54,]),'AND':([16,27,28,66,77,78,80,87,95,],[41,41,41,41,-38,-39,-40,-53,-54,]),'INDIVIDUAL_NAME':([20,32,71,],[43,43,43,]),'VALUE':([21,29,44,46,48,85,86,89,],[45,55,-28,-25,-27,45,-26,-24,]),'CLOSE_PAREN':([21,28,44,46,48,60,65,66,72,74,75,76,77,78,80,85,86,87,89,95,],[46,-36,-28,-25,-27,80,82,-33,85,-34,-35,-37,-38,-39,-40,46,-26,-53,-24,-54,]),'ALL':([29,],[54,]),'MAX':([29,],[56,]),'MIN':([29,],[57,]),'EXACTLY':([29,],[58,]),'THAT':([29,],[59,]),'CLOSE_CURLY':([42,43,84,],[70,-57,-58,]),'NAMESPACE':([52,53,54,55,56,57,58,59,],[79,-41,-42,-43,-44,-45,-46,-47,]),'TYPE':([79,],[87,]),'OPEN_BRACKET':([87,],[90,]),'EQUAL':([90,93,94,],[92,98,100,]),'GREATER_THAN':([90,],[93,]),'LESS_THAN':([90,],[94,]),'CLOSE_BRACKET':([91,96,97,99,101,102,],[95,-48,-49,-50,-51,-52,]),'CARDINALITY':([92,93,94,98,100,],[96,97,99,101,102,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'classes':([0,2,3,],[1,5,6,]),'defined_class':([0,2,3,],[2,2,2,]),'primitive_class':([0,2,3,],[3,3,3,]),'equivalentto_section':([7,],[8,]),'subclass_section':([7,8,],[9,13,]),'empty':([7,8,9,13,14,],[12,12,16,30,30,]),'disjoint_section':([9,],[14,]),'enum_class':([10,11,],[18,22,]),'covered_class':([10,11,35,40,],[19,23,57,57,]),'def_descriptions':([11,34,40,41,42,68,],[21,55,60,61,62,60,]),'quantifier_aux':([11,27,34,40,41,42,68,],[25,51,25,25,25,25,25,]),'individuals_section':([13,14,],[28,31,]),'disjoint_classes_list':([15,53,],[32,67,]),'comma_and':([17,24,25,54,],[34,41,42,41,]),'individuals':([20,29,59,],[38,52,69,]),'quantifier':([26,],[43,]),'namespace_type':([43,],[64,]),'sizecheck':([71,],[72,]),}
+_lr_goto_items = {'classes':([0,2,3,],[1,5,6,]),'defined_class':([0,2,3,],[2,2,2,]),'primitive_class':([0,2,3,],[3,3,3,]),'equivalentto_section':([7,],[8,]),'subclass_section':([7,8,],[9,13,]),'empty':([7,8,13,14,34,],[12,12,33,36,33,]),'closure_axiom':([9,],[14,]),'enum_class':([10,11,],[17,25,]),'covered_class':([10,11,39,49,],[18,26,69,69,]),'aninhada':([10,23,],[19,48,]),'ani_abertura':([10,23,],[21,21,]),'def_descriptions':([11,37,38,49,50,51,83,],[24,65,67,74,75,76,74,]),'quantifier_aux':([11,30,37,38,49,50,51,83,],[28,60,28,28,28,28,28,28,]),'individuals_section':([13,34,],[31,62,]),'disjoint_section':([14,],[34,]),'comma_and':([16,27,28,66,],[38,50,51,50,]),'individuals':([20,32,71,],[42,61,84,]),'ani_fechamento':([21,85,],[44,89,]),'quantifier':([29,],[52,]),'disjoint_classes_list':([35,81,],[63,88,]),'namespace_type':([52,],[78,]),'sizecheck':([90,],[91,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -31,7 +31,7 @@ _lr_productions = [
   ('classes -> defined_class classes','classes',2,'p_classes','parser.py',9),
   ('classes -> primitive_class','classes',1,'p_classes','parser.py',10),
   ('classes -> primitive_class classes','classes',2,'p_classes','parser.py',11),
-  ('primitive_class -> CLASS CLASS_IDENTIFIER subclass_section disjoint_section individuals_section','primitive_class',5,'p_primitive_class','parser.py',19),
+  ('primitive_class -> CLASS CLASS_IDENTIFIER subclass_section closure_axiom disjoint_section individuals_section','primitive_class',6,'p_primitive_class','parser.py',19),
   ('subclass_section -> SUBCLASSOF def_descriptions','subclass_section',2,'p_subclass_section','parser.py',29),
   ('subclass_section -> SUBCLASSOF enum_class','subclass_section',2,'p_subclass_section','parser.py',30),
   ('subclass_section -> SUBCLASSOF covered_class','subclass_section',2,'p_subclass_section','parser.py',31),
@@ -42,39 +42,50 @@ _lr_productions = [
   ('disjoint_classes_list -> CLASS_IDENTIFIER COMMA disjoint_classes_list','disjoint_classes_list',3,'p_disjoint_classes_list','parser.py',48),
   ('defined_class -> CLASS CLASS_IDENTIFIER equivalentto_section subclass_section individuals_section','defined_class',5,'p_defined_class','parser.py',56),
   ('defined_class -> CLASS CLASS_IDENTIFIER equivalentto_section','defined_class',3,'p_defined_class','parser.py',57),
-  ('enum_class -> OPEN_CURLY individuals CLOSE_CURLY','enum_class',3,'p_enum_class','parser.py',77),
-  ('covered_class -> CLASS_IDENTIFIER OR covered_class','covered_class',3,'p_covered_class','parser.py',91),
-  ('covered_class -> CLASS_IDENTIFIER','covered_class',1,'p_covered_class','parser.py',92),
-  ('equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER comma_and def_descriptions','equivalentto_section',4,'p_equivalentto_section','parser.py',112),
-  ('equivalentto_section -> EQUIVALENTTO enum_class','equivalentto_section',2,'p_equivalentto_section','parser.py',113),
-  ('equivalentto_section -> EQUIVALENTTO covered_class','equivalentto_section',2,'p_equivalentto_section','parser.py',114),
-  ('def_descriptions -> CLASS_IDENTIFIER','def_descriptions',1,'p_def_descriptions','parser.py',120),
-  ('def_descriptions -> CLASS_IDENTIFIER OR def_descriptions','def_descriptions',3,'p_def_descriptions','parser.py',121),
-  ('def_descriptions -> CLASS_IDENTIFIER comma_and def_descriptions','def_descriptions',3,'p_def_descriptions','parser.py',122),
-  ('def_descriptions -> quantifier_aux','def_descriptions',1,'p_def_descriptions','parser.py',123),
-  ('def_descriptions -> quantifier_aux comma_and def_descriptions','def_descriptions',3,'p_def_descriptions','parser.py',124),
-  ('quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER','quantifier_aux',3,'p_quantifier_aux','parser.py',130),
-  ('quantifier_aux -> PROPERTY_IDENTIFIER quantifier namespace_type','quantifier_aux',3,'p_quantifier_aux','parser.py',131),
-  ('quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN','quantifier_aux',3,'p_quantifier_aux','parser.py',132),
-  ('quantifier -> SOME','quantifier',1,'p_quantifier','parser.py',142),
-  ('quantifier -> ALL','quantifier',1,'p_quantifier','parser.py',143),
-  ('quantifier -> VALUE','quantifier',1,'p_quantifier','parser.py',144),
-  ('quantifier -> MAX','quantifier',1,'p_quantifier','parser.py',145),
-  ('quantifier -> MIN','quantifier',1,'p_quantifier','parser.py',146),
-  ('quantifier -> EXACTLY','quantifier',1,'p_quantifier','parser.py',147),
-  ('quantifier -> THAT','quantifier',1,'p_quantifier','parser.py',148),
-  ('sizecheck -> EQUAL CARDINALITY','sizecheck',2,'p_sizecheck','parser.py',154),
-  ('sizecheck -> GREATER_THAN CARDINALITY','sizecheck',2,'p_sizecheck','parser.py',155),
-  ('sizecheck -> LESS_THAN CARDINALITY','sizecheck',2,'p_sizecheck','parser.py',156),
-  ('sizecheck -> GREATER_THAN EQUAL CARDINALITY','sizecheck',3,'p_sizecheck','parser.py',157),
-  ('sizecheck -> LESS_THAN EQUAL CARDINALITY','sizecheck',3,'p_sizecheck','parser.py',158),
-  ('namespace_type -> NAMESPACE TYPE','namespace_type',2,'p_namespace_type','parser.py',172),
-  ('namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET','namespace_type',5,'p_namespace_type','parser.py',173),
-  ('individuals_section -> INDIVIDUALS individuals','individuals_section',2,'p_individuals_section','parser.py',178),
-  ('individuals_section -> empty','individuals_section',1,'p_individuals_section','parser.py',179),
-  ('individuals -> INDIVIDUAL_NAME','individuals',1,'p_individuals','parser.py',186),
-  ('individuals -> INDIVIDUAL_NAME COMMA individuals','individuals',3,'p_individuals','parser.py',187),
-  ('comma_and -> COMMA','comma_and',1,'p_comma_and','parser.py',194),
-  ('comma_and -> AND','comma_and',1,'p_comma_and','parser.py',195),
-  ('empty -> <empty>','empty',0,'p_empty','parser.py',200),
+  ('enum_class -> OPEN_CURLY individuals CLOSE_CURLY','enum_class',3,'p_enum_class','parser.py',86),
+  ('covered_class -> CLASS_IDENTIFIER OR covered_class','covered_class',3,'p_covered_class','parser.py',100),
+  ('covered_class -> CLASS_IDENTIFIER','covered_class',1,'p_covered_class','parser.py',101),
+  ('closure_axiom -> ONLY OPEN_PAREN def_descriptions CLOSE_PAREN','closure_axiom',4,'p_closure_axiom','parser.py',114),
+  ('aux_fechamento -> OPEN_PAREN PROPERTY_IDENTIFIER aux_fechamento','aux_fechamento',3,'p_aux_fechamento','parser.py',119),
+  ('aux_fechamento -> OR PROPERTY_IDENTIFIER aux_fechamento','aux_fechamento',3,'p_aux_fechamento','parser.py',120),
+  ('aux_fechamento -> PROPERTY_IDENTIFIER CLOSE_PAREN','aux_fechamento',2,'p_aux_fechamento','parser.py',121),
+  ('ani_fechamento -> VALUE CLASS_IDENTIFIER CLOSE_PAREN','ani_fechamento',3,'p_ani_fechamento','parser.py',131),
+  ('ani_fechamento -> VALUE CLASS_IDENTIFIER CLOSE_PAREN ani_fechamento','ani_fechamento',4,'p_ani_fechamento','parser.py',132),
+  ('ani_fechamento -> CLOSE_PAREN','ani_fechamento',1,'p_ani_fechamento','parser.py',133),
+  ('ani_abertura -> OPEN_PAREN PROPERTY_IDENTIFIER SOME PROPERTY_IDENTIFIER','ani_abertura',4,'p_ani_abertura','parser.py',144),
+  ('ani_abertura -> SOME aninhada','ani_abertura',2,'p_ani_abertura','parser.py',145),
+  ('aninhada -> ani_abertura ani_fechamento','aninhada',2,'p_aninhada','parser.py',153),
+  ('equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER comma_and def_descriptions','equivalentto_section',4,'p_equivalentto_section','parser.py',162),
+  ('equivalentto_section -> EQUIVALENTTO enum_class','equivalentto_section',2,'p_equivalentto_section','parser.py',163),
+  ('equivalentto_section -> EQUIVALENTTO covered_class','equivalentto_section',2,'p_equivalentto_section','parser.py',164),
+  ('equivalentto_section -> EQUIVALENTTO aninhada','equivalentto_section',2,'p_equivalentto_section','parser.py',165),
+  ('def_descriptions -> CLASS_IDENTIFIER','def_descriptions',1,'p_def_descriptions','parser.py',171),
+  ('def_descriptions -> CLASS_IDENTIFIER OR def_descriptions','def_descriptions',3,'p_def_descriptions','parser.py',172),
+  ('def_descriptions -> CLASS_IDENTIFIER comma_and def_descriptions','def_descriptions',3,'p_def_descriptions','parser.py',173),
+  ('def_descriptions -> quantifier_aux','def_descriptions',1,'p_def_descriptions','parser.py',174),
+  ('def_descriptions -> quantifier_aux comma_and def_descriptions','def_descriptions',3,'p_def_descriptions','parser.py',175),
+  ('quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER','quantifier_aux',3,'p_quantifier_aux','parser.py',181),
+  ('quantifier_aux -> PROPERTY_IDENTIFIER quantifier namespace_type','quantifier_aux',3,'p_quantifier_aux','parser.py',182),
+  ('quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN','quantifier_aux',3,'p_quantifier_aux','parser.py',183),
+  ('quantifier -> SOME','quantifier',1,'p_quantifier','parser.py',193),
+  ('quantifier -> ALL','quantifier',1,'p_quantifier','parser.py',194),
+  ('quantifier -> VALUE','quantifier',1,'p_quantifier','parser.py',195),
+  ('quantifier -> MAX','quantifier',1,'p_quantifier','parser.py',196),
+  ('quantifier -> MIN','quantifier',1,'p_quantifier','parser.py',197),
+  ('quantifier -> EXACTLY','quantifier',1,'p_quantifier','parser.py',198),
+  ('quantifier -> THAT','quantifier',1,'p_quantifier','parser.py',199),
+  ('sizecheck -> EQUAL CARDINALITY','sizecheck',2,'p_sizecheck','parser.py',205),
+  ('sizecheck -> GREATER_THAN CARDINALITY','sizecheck',2,'p_sizecheck','parser.py',206),
+  ('sizecheck -> LESS_THAN CARDINALITY','sizecheck',2,'p_sizecheck','parser.py',207),
+  ('sizecheck -> GREATER_THAN EQUAL CARDINALITY','sizecheck',3,'p_sizecheck','parser.py',208),
+  ('sizecheck -> LESS_THAN EQUAL CARDINALITY','sizecheck',3,'p_sizecheck','parser.py',209),
+  ('namespace_type -> NAMESPACE TYPE','namespace_type',2,'p_namespace_type','parser.py',223),
+  ('namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET','namespace_type',5,'p_namespace_type','parser.py',224),
+  ('individuals_section -> INDIVIDUALS individuals','individuals_section',2,'p_individuals_section','parser.py',229),
+  ('individuals_section -> empty','individuals_section',1,'p_individuals_section','parser.py',230),
+  ('individuals -> INDIVIDUAL_NAME','individuals',1,'p_individuals','parser.py',237),
+  ('individuals -> INDIVIDUAL_NAME COMMA individuals','individuals',3,'p_individuals','parser.py',238),
+  ('comma_and -> COMMA','comma_and',1,'p_comma_and','parser.py',245),
+  ('comma_and -> AND','comma_and',1,'p_comma_and','parser.py',246),
+  ('empty -> <empty>','empty',0,'p_empty','parser.py',251),
 ]

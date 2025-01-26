@@ -16,7 +16,7 @@ def p_classes(p):
         p[0] = [p[1]] + p[2]  # Adiciona a nova classe à lista de classes
 
 def p_primitive_class(p):
-    '''primitive_class : CLASS CLASS_IDENTIFIER subclass_section disjoint_section individuals_section'''
+    '''primitive_class : CLASS CLASS_IDENTIFIER subclass_section closure_axiom disjoint_section individuals_section'''
     p[0] = {
         "type": "primitive_class",
         "name": p[2],
@@ -64,11 +64,20 @@ def p_defined_class(p):
             "subclass_of": p[4],
             "individuals": p[5],
         }
+    elif len(p) == 4:
+        p[0] = {
+            "type": "defined_class",
+            "name": p[2],
+            "equivalent_to": p[3],
+            "subclass_of": None,
+            "individuals": None,
+        }
     else:
         p[0] = {
             "type": "defined_class",
             "name": p[2],
             "equivalent_to": p[3],
+            "aninhada": p[4],
             "subclass_of": None,
             "individuals": None,
         }
@@ -101,17 +110,59 @@ def p_covered_class(p):
             "type": "covered_class",
             "Classe": p[1],
         }
+def p_closure_axiom(p):
+    '''closure_axiom : ONLY OPEN_PAREN def_descriptions CLOSE_PAREN'''
+    p[0] = ('closure_axiom', p[1], p[3])  
 
 
-"""def p_closure_axiom(p):
-    '''closure_axiom : PROPERTY_IDENTIFIER ONLY OPEN_PAREN def_descriptions CLOSE_PAREN'''
-    p[0] = ('closure_axiom', p[1], p[4])  
-"""
+def p_aux_fechamento(p):
+    '''aux_fechamento : OPEN_PAREN PROPERTY_IDENTIFIER aux_fechamento
+                      | OR PROPERTY_IDENTIFIER aux_fechamento
+                      | PROPERTY_IDENTIFIER CLOSE_PAREN'''
+    if len(p) == 4 and p[1] == '(':
+        p[0] = ('aux_fechamento', p[2], p[3])
+    elif len(p) == 4 and p[1] == 'or':
+        p[0] = ('aux_fechamento', 'or', p[2], p[3])
+    else:
+        p[0] = ('aux_fechamento', p[1], p[2])
+
+
+def p_ani_fechamento(p):
+    '''ani_fechamento : VALUE CLASS_IDENTIFIER CLOSE_PAREN
+                      | VALUE CLASS_IDENTIFIER CLOSE_PAREN ani_fechamento
+                      | CLOSE_PAREN'''
+    if len(p) == 4:
+        p[0] = ('ani_fechamento', p[1], p[2])
+    elif len(p) == 5:
+        p[0] = ('ani_fechamento', p[1], p[2], p[4])
+    else:
+        p[0] = ('ani_fechamento', p[1])
+
+
+
+def p_ani_abertura(p):
+    '''ani_abertura : OPEN_PAREN PROPERTY_IDENTIFIER SOME PROPERTY_IDENTIFIER
+                    | SOME aninhada'''
+    if len(p) == 3:
+        p[0] = ('ani_abertura', p[1], p[2])
+    else:
+        p[0] = ('ani_abertura', p[1], p[2])
+
+
+def p_aninhada(p):
+    '''aninhada : ani_abertura ani_fechamento
+           '''
+    if len(p) == 6:
+        p[0] = ('aninhada', p[1], p[3], p[4], p[5])
+    else:
+        p[0] = ('aninhada', p[1], p[2], p[3])
+
 
 def p_equivalentto_section(p):
     '''equivalentto_section : EQUIVALENTTO CLASS_IDENTIFIER comma_and def_descriptions
                             | EQUIVALENTTO enum_class
                             | EQUIVALENTTO covered_class
+                            | EQUIVALENTTO aninhada
     '''
     p[0] = p[2]
 
