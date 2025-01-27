@@ -29,6 +29,7 @@ def p_subclass_section(p):
     '''subclass_section : SUBCLASSOF def_descriptions
                         | SUBCLASSOF enum_class
                         | SUBCLASSOF covered_class
+                        | SUBCLASSOF CLASS_IDENTIFIER 
                         | empty'''
     if len(p) == 3:
         p[0] = p[2]  
@@ -126,31 +127,31 @@ def p_aux_fechamento(p):
     else:
         p[0] = ('aux_fechamento', p[1], p[2])
 
-
-def p_ani_fechamento(p):
-    '''ani_fechamento : VALUE CLASS_IDENTIFIER CLOSE_PAREN
-                      | VALUE CLASS_IDENTIFIER CLOSE_PAREN ani_fechamento
-                      | CLOSE_PAREN'''
-    if len(p) == 4:
-        p[0] = ('ani_fechamento', p[1], p[2])
-    elif len(p) == 5:
-        p[0] = ('ani_fechamento', p[1], p[2], p[4])
-    else:
-        p[0] = ('ani_fechamento', p[1])
+#
+#def p_ani_interno(p):
+#    '''ani_fechamento : VALUE CLASS_IDENTIFIER CLOSE_PAREN
+#                      | VALUE CLASS_IDENTIFIER CLOSE_PAREN ani_fechamento
+#                        '''
+#    if len(p) == 4:
+#        p[0] = ('ani_fechamento', p[1], p[2])
+#    elif len(p) == 5:
+#        p[0] = ('ani_fechamento', p[1], p[2], p[4])
+#    else:
+#        p[0] = ('ani_fechamento', p[1])
 
 
 
 def p_ani_abertura(p):
-    '''ani_abertura : OPEN_PAREN PROPERTY_IDENTIFIER SOME PROPERTY_IDENTIFIER
-                    | SOME aninhada'''
+    '''ani_abertura : comma_and OPEN_PAREN def_descriptions CLOSE_PAREN quantifier ani_abertura
+                    | comma_and OPEN_PAREN def_descriptions CLOSE_PAREN'''
     if len(p) == 3:
-        p[0] = ('ani_abertura', p[1], p[2])
+        p[0] = ('ani_abertura', p[2])
     else:
-        p[0] = ('ani_abertura', p[1], p[2])
+        p[0] = ('ani_abertura', p[2], p[4], p[5] )
 
 
 def p_aninhada(p):
-    '''aninhada : ani_abertura ani_fechamento
+    '''aninhada : CLASS_IDENTIFIER ani_abertura
            '''
     if len(p) == 6:
         p[0] = ('aninhada', p[1], p[3], p[4], p[5])
@@ -168,19 +169,29 @@ def p_equivalentto_section(p):
 
 
 def p_def_descriptions(p):
-    '''def_descriptions : CLASS_IDENTIFIER
-                        | CLASS_IDENTIFIER OR def_descriptions
-                        | CLASS_IDENTIFIER comma_and def_descriptions
+    '''def_descriptions : class_aux
+                        | class_aux def_descriptions 
                         | quantifier_aux
-                        | quantifier_aux comma_and def_descriptions
+                        | quantifier_aux def_descriptions
     '''  
     p[0] = p[1]
 
+
+def p_class_aux(p):
+    '''class_aux : CLASS_IDENTIFIER
+                 | CLASS_IDENTIFIER OR class_aux
+                 | CLASS_IDENTIFIER comma_and class_aux
+                 | OPEN_PAREN class_aux CLOSE_PAREN
+     '''
+    p[0] = {
+        'class': p[1]
+    }
 
 def p_quantifier_aux(p):
     '''quantifier_aux : PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
                       | PROPERTY_IDENTIFIER quantifier namespace_type
                       | OPEN_PAREN quantifier_aux CLOSE_PAREN
+                      | quantifier_aux comma_and quantifier_aux
     '''
     p[0] = {
         'property': p[1],
