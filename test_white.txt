@@ -1,0 +1,4 @@
+Class: LowCaloriePizza
+EquivalentTo:
+Pizza
+and (hasCaloricContent some xsd:integer[< 30])

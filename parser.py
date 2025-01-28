@@ -30,11 +30,14 @@ def p_subclass_section(p):
                         | SUBCLASSOF enum_class
                         | SUBCLASSOF OR covered_class
                         | SUBCLASSOF CLASS_IDENTIFIER 
+                        | SUBCLASSOF CLASS_IDENTIFIER def_descriptions ONLY def_descriptions
                         '''
     if len(p) == 2:
         p[0] = p[2]  
-    else:
-        p[0] = []  
+    elif len(p) == 4:        
+        p[0] = p[4]
+    elif len(p) == 5:
+        p[0] = p[4]
 
 def p_disjoint_section(p):
     '''disjoint_section : DISJOINTCLASSES quantifier_aux
@@ -156,7 +159,7 @@ def p_aux_fechamento(p):
 def p_equivalentto_section(p):
     '''equivalentto_section : EQUIVALENTTO enum_class
                             | EQUIVALENTTO CLASS_IDENTIFIER OR covered_class
-                            | EQUIVALENTTO CLASS_IDENTIFIER def_descriptions
+                            | EQUIVALENTTO CLASS_IDENTIFIER def_descriptions 
     '''
     if len(p) == 4: 
         p[0] =  p[3]
@@ -198,9 +201,9 @@ def p_quantifier_aux(p):
                       | PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
                       | PROPERTY_IDENTIFIER quantifier namespace_type                 
                       | quantifier_aux comma_and quantifier_aux
-                      | PROPERTY_IDENTIFIER quantifier quantifier_aux
                       | CLASS_IDENTIFIER quantifier quantifier_aux
                       | CLASS_IDENTIFIER OR quantifier_aux
+                      | PROPERTY_IDENTIFIER quantifier quantifier_aux
                       | CLASS_IDENTIFIER comma_and quantifier_aux
                       | CLASS_IDENTIFIER
                       | PROPERTY_IDENTIFIER
@@ -251,6 +254,8 @@ def p_namespace_type(p):
     '''namespace_type : NAMESPACE TYPE
                       | NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET'''
     p[0] = ('namespace_type', p[1], p[2]) 
+
+    print('namespace_type')
 
 # Seção de Indivíduos
 def p_individuals_section(p):
