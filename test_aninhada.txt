@@ -1,7 +1,8 @@
 Class: SpicyPizza
 EquivalentTo:
 Pizza
-and (hasTopping some (hasSpiciness value Hot))
+and (hasTopping some 
+(hasSpiciness value Hot))
 
 
 

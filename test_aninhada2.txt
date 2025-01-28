@@ -1,0 +1,7 @@
+Class: CertificationAct
+
+        
+    EquivalentTo: 
+        Relator
+         and (historicallyDependsOn some EvaluationReport)
+         and (mediates some (Certificate some CertificationBody some Evaluated))
