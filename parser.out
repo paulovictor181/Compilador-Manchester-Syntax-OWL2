@@ -15,11 +15,11 @@ Rule 2     classes -> defined_class classes
 Rule 3     classes -> primitive_class
 Rule 4     classes -> primitive_class classes
 Rule 5     primitive_class -> CLASS CLASS_IDENTIFIER subclass_section disjoint_section individuals_section
-Rule 6     subclass_section -> SUBCLASSOF CLASS_IDENTIFIER def_descriptions
-Rule 7     subclass_section -> SUBCLASSOF CLASS_IDENTIFIER enum_class
-Rule 8     subclass_section -> SUBCLASSOF CLASS_IDENTIFIER OR covered_class
+Rule 6     subclass_section -> SUBCLASSOF quantifier_aux
+Rule 7     subclass_section -> SUBCLASSOF enum_class
+Rule 8     subclass_section -> SUBCLASSOF OR covered_class
 Rule 9     subclass_section -> SUBCLASSOF CLASS_IDENTIFIER
-Rule 10    disjoint_section -> DISJOINTCLASSES disjoint_classes_list
+Rule 10    disjoint_section -> DISJOINTCLASSES quantifier_aux
 Rule 11    disjoint_section -> empty
 Rule 12    disjoint_classes_list -> CLASS_IDENTIFIER
 Rule 13    disjoint_classes_list -> CLASS_IDENTIFIER COMMA disjoint_classes_list
@@ -33,108 +33,1612 @@ Rule 20    aux_fechamento -> OR PROPERTY_IDENTIFIER aux_fechamento
 Rule 21    aux_fechamento -> PROPERTY_IDENTIFIER CLOSE_PAREN
 Rule 22    equivalentto_section -> EQUIVALENTTO enum_class
 Rule 23    equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER OR covered_class
-Rule 24    equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER comma_and def_descriptions
-Rule 25    def_descriptions -> aninhada
-Rule 26    def_descriptions -> aninhada def_descriptions
-Rule 27    def_descriptions -> class_aux
-Rule 28    def_descriptions -> class_aux def_descriptions
-Rule 29    def_descriptions -> quantifier_aux
-Rule 30    def_descriptions -> quantifier_aux def_descriptions
-Rule 31    class_aux -> CLASS_IDENTIFIER
-Rule 32    class_aux -> CLASS_IDENTIFIER OR class_aux
-Rule 33    class_aux -> CLASS_IDENTIFIER comma_and class_aux
-Rule 34    class_aux -> OPEN_PAREN class_aux CLOSE_PAREN
-Rule 35    quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
-Rule 36    quantifier_aux -> PROPERTY_IDENTIFIER quantifier namespace_type
-Rule 37    quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN
-Rule 38    quantifier_aux -> OPEN_PAREN aninhada CLOSE_PAREN
-Rule 39    quantifier_aux -> quantifier_aux comma_and quantifier_aux
-Rule 40    quantifier_aux -> PROPERTY_IDENTIFIER quantifier quantifier_aux
-Rule 41    quantifier_aux -> CLASS_IDENTIFIER quantifier quantifier_aux
-Rule 42    quantifier_aux -> CLASS_IDENTIFIER OR quantifier_aux
-Rule 43    quantifier_aux -> CLASS_IDENTIFIER comma_and quantifier_aux
-Rule 44    quantifier_aux -> CLASS_IDENTIFIER
-Rule 45    quantifier -> SOME
-Rule 46    quantifier -> ALL
-Rule 47    quantifier -> VALUE
-Rule 48    quantifier -> MAX
-Rule 49    quantifier -> MIN
-Rule 50    quantifier -> EXACTLY
-Rule 51    quantifier -> THAT
-Rule 52    sizecheck -> EQUAL CARDINALITY
-Rule 53    sizecheck -> GREATER_THAN CARDINALITY
-Rule 54    sizecheck -> LESS_THAN CARDINALITY
-Rule 55    sizecheck -> GREATER_THAN EQUAL CARDINALITY
-Rule 56    sizecheck -> LESS_THAN EQUAL CARDINALITY
-Rule 57    namespace_type -> NAMESPACE TYPE
-Rule 58    namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET
-Rule 59    individuals_section -> INDIVIDUALS individuals
-Rule 60    individuals_section -> empty
-Rule 61    individuals -> INDIVIDUAL_NAME
-Rule 62    individuals -> INDIVIDUAL_NAME COMMA individuals
-Rule 63    comma_and -> COMMA
-Rule 64    comma_and -> AND
-Rule 65    empty -> <empty>
+Rule 24    equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER def_descriptions
+Rule 25    def_descriptions -> quantifier_aux
+Rule 26    aninhada -> PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux CLOSE_PAREN
+Rule 27    quantifier_aux -> comma_and OPEN_PAREN aninhada CLOSE_PAREN
+Rule 28    quantifier_aux -> comma_and quantifier_aux
+Rule 29    quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN
+Rule 30    quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+Rule 31    quantifier_aux -> PROPERTY_IDENTIFIER quantifier namespace_type
+Rule 32    quantifier_aux -> quantifier_aux comma_and quantifier_aux
+Rule 33    quantifier_aux -> PROPERTY_IDENTIFIER quantifier quantifier_aux
+Rule 34    quantifier_aux -> CLASS_IDENTIFIER quantifier quantifier_aux
+Rule 35    quantifier_aux -> CLASS_IDENTIFIER OR quantifier_aux
+Rule 36    quantifier_aux -> CLASS_IDENTIFIER comma_and quantifier_aux
+Rule 37    quantifier_aux -> CLASS_IDENTIFIER
+Rule 38    quantifier_aux -> PROPERTY_IDENTIFIER
+Rule 39    quantifier -> SOME
+Rule 40    quantifier -> ALL
+Rule 41    quantifier -> VALUE
+Rule 42    quantifier -> MAX
+Rule 43    quantifier -> MIN
+Rule 44    quantifier -> EXACTLY
+Rule 45    quantifier -> THAT
+Rule 46    sizecheck -> EQUAL CARDINALITY
+Rule 47    sizecheck -> GREATER_THAN CARDINALITY
+Rule 48    sizecheck -> LESS_THAN CARDINALITY
+Rule 49    sizecheck -> GREATER_THAN EQUAL CARDINALITY
+Rule 50    sizecheck -> LESS_THAN EQUAL CARDINALITY
+Rule 51    namespace_type -> NAMESPACE TYPE
+Rule 52    namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET
+Rule 53    individuals_section -> INDIVIDUALS individuals
+Rule 54    individuals_section -> empty
+Rule 55    individuals -> INDIVIDUAL_NAME
+Rule 56    individuals -> INDIVIDUAL_NAME COMMA individuals
+Rule 57    comma_and -> COMMA
+Rule 58    comma_and -> AND
+Rule 59    empty -> <empty>
 
 Terminals, with rules where they appear
 
-ALL                  : 46
-AND                  : 64
-CARDINALITY          : 52 53 54 55 56
+ALL                  : 40
+AND                  : 58
+CARDINALITY          : 46 47 48 49 50
 CLASS                : 5 14 15
-CLASS_IDENTIFIER     : 5 6 7 8 9 12 13 14 15 17 18 23 24 31 32 33 35 41 42 43 44
-CLOSE_BRACKET        : 58
+CLASS_IDENTIFIER     : 5 9 12 13 14 15 17 18 23 24 30 34 35 36 37
+CLOSE_BRACKET        : 52
 CLOSE_CURLY          : 16
-CLOSE_PAREN          : 21 34 37 38
-COMMA                : 13 62 63
+CLOSE_PAREN          : 21 26 27 29
+COMMA                : 13 56 57
 DISJOINTCLASSES      : 10
 DISJOINtWITH         : 
-EQUAL                : 52 55 56
+EQUAL                : 46 49 50
 EQUIVALENTTO         : 22 23 24
-EXACTLY              : 50
-GREATER_THAN         : 53 55
-INDIVIDUALS          : 59
-INDIVIDUAL_NAME      : 61 62
-LESS_THAN            : 54 56
-MAX                  : 48
-MIN                  : 49
-NAMESPACE            : 57 58
+EXACTLY              : 44
+GREATER_THAN         : 47 49
+INDIVIDUALS          : 53
+INDIVIDUAL_NAME      : 55 56
+LESS_THAN            : 48 50
+MAX                  : 42
+MIN                  : 43
+NAMESPACE            : 51 52
 NOT                  : 
 ONLY                 : 
-OPEN_BRACKET         : 58
+OPEN_BRACKET         : 52
 OPEN_CURLY           : 16
-OPEN_PAREN           : 19 34 37 38
-OR                   : 8 17 20 23 32 42
-PROPERTY_IDENTIFIER  : 19 20 21 35 36 40
+OPEN_PAREN           : 19 26 27 29
+OR                   : 8 17 20 23 35
+PROPERTY_IDENTIFIER  : 19 20 21 26 30 31 33 38
 PROPERTY_IDENTIFIER_SIMPLE : 
-SOME                 : 45
+SOME                 : 39
 SUBCLASSOF           : 6 7 8 9
-THAT                 : 51
-TYPE                 : 57 58
-VALUE                : 47
+THAT                 : 45
+TYPE                 : 51 52
+VALUE                : 41
 error                : 
 
 Nonterminals, with rules where they appear
 
-aninhada             : 25 26 38
+aninhada             : 27
 aux_fechamento       : 19 20
-class_aux            : 27 28 32 33 34
 classes              : 2 4 0
-comma_and            : 24 33 39 43
+comma_and            : 27 28 32 36
 covered_class        : 8 17 23
-def_descriptions     : 6 24 26 28 30
+def_descriptions     : 24
 defined_class        : 1 2
-disjoint_classes_list : 10 13
+disjoint_classes_list : 13
 disjoint_section     : 5
-empty                : 11 60
+empty                : 11 54
 enum_class           : 7 22
 equivalentto_section : 14 15
-individuals          : 16 59 62
+individuals          : 16 53 56
 individuals_section  : 5 14
-namespace_type       : 36
+namespace_type       : 31
 primitive_class      : 3 4
-quantifier           : 35 36 40 41
-quantifier_aux       : 29 30 37 39 39 40 41 42 43
-sizecheck            : 58
+quantifier           : 26 30 31 33 34
+quantifier_aux       : 6 10 25 26 28 29 32 32 33 34 35 36
+sizecheck            : 52
 subclass_section     : 5 14
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . classes
+    (1) classes -> . defined_class
+    (2) classes -> . defined_class classes
+    (3) classes -> . primitive_class
+    (4) classes -> . primitive_class classes
+    (14) defined_class -> . CLASS CLASS_IDENTIFIER equivalentto_section subclass_section individuals_section
+    (15) defined_class -> . CLASS CLASS_IDENTIFIER equivalentto_section
+    (5) primitive_class -> . CLASS CLASS_IDENTIFIER subclass_section disjoint_section individuals_section
+
+    CLASS           shift and go to state 4
+
+    classes                        shift and go to state 1
+    defined_class                  shift and go to state 2
+    primitive_class                shift and go to state 3
+
+state 1
+
+    (0) S' -> classes .
+
+
+
+state 2
+
+    (1) classes -> defined_class .
+    (2) classes -> defined_class . classes
+    (1) classes -> . defined_class
+    (2) classes -> . defined_class classes
+    (3) classes -> . primitive_class
+    (4) classes -> . primitive_class classes
+    (14) defined_class -> . CLASS CLASS_IDENTIFIER equivalentto_section subclass_section individuals_section
+    (15) defined_class -> . CLASS CLASS_IDENTIFIER equivalentto_section
+    (5) primitive_class -> . CLASS CLASS_IDENTIFIER subclass_section disjoint_section individuals_section
+
+    $end            reduce using rule 1 (classes -> defined_class .)
+    CLASS           shift and go to state 4
+
+    defined_class                  shift and go to state 2
+    classes                        shift and go to state 5
+    primitive_class                shift and go to state 3
+
+state 3
+
+    (3) classes -> primitive_class .
+    (4) classes -> primitive_class . classes
+    (1) classes -> . defined_class
+    (2) classes -> . defined_class classes
+    (3) classes -> . primitive_class
+    (4) classes -> . primitive_class classes
+    (14) defined_class -> . CLASS CLASS_IDENTIFIER equivalentto_section subclass_section individuals_section
+    (15) defined_class -> . CLASS CLASS_IDENTIFIER equivalentto_section
+    (5) primitive_class -> . CLASS CLASS_IDENTIFIER subclass_section disjoint_section individuals_section
+
+    $end            reduce using rule 3 (classes -> primitive_class .)
+    CLASS           shift and go to state 4
+
+    primitive_class                shift and go to state 3
+    classes                        shift and go to state 6
+    defined_class                  shift and go to state 2
+
+state 4
+
+    (14) defined_class -> CLASS . CLASS_IDENTIFIER equivalentto_section subclass_section individuals_section
+    (15) defined_class -> CLASS . CLASS_IDENTIFIER equivalentto_section
+    (5) primitive_class -> CLASS . CLASS_IDENTIFIER subclass_section disjoint_section individuals_section
+
+    CLASS_IDENTIFIER shift and go to state 7
+
+
+state 5
+
+    (2) classes -> defined_class classes .
+
+    $end            reduce using rule 2 (classes -> defined_class classes .)
+
+
+state 6
+
+    (4) classes -> primitive_class classes .
+
+    $end            reduce using rule 4 (classes -> primitive_class classes .)
+
+
+state 7
+
+    (14) defined_class -> CLASS CLASS_IDENTIFIER . equivalentto_section subclass_section individuals_section
+    (15) defined_class -> CLASS CLASS_IDENTIFIER . equivalentto_section
+    (5) primitive_class -> CLASS CLASS_IDENTIFIER . subclass_section disjoint_section individuals_section
+    (22) equivalentto_section -> . EQUIVALENTTO enum_class
+    (23) equivalentto_section -> . EQUIVALENTTO CLASS_IDENTIFIER OR covered_class
+    (24) equivalentto_section -> . EQUIVALENTTO CLASS_IDENTIFIER def_descriptions
+    (6) subclass_section -> . SUBCLASSOF quantifier_aux
+    (7) subclass_section -> . SUBCLASSOF enum_class
+    (8) subclass_section -> . SUBCLASSOF OR covered_class
+    (9) subclass_section -> . SUBCLASSOF CLASS_IDENTIFIER
+
+    EQUIVALENTTO    shift and go to state 10
+    SUBCLASSOF      shift and go to state 11
+
+    equivalentto_section           shift and go to state 8
+    subclass_section               shift and go to state 9
+
+state 8
+
+    (14) defined_class -> CLASS CLASS_IDENTIFIER equivalentto_section . subclass_section individuals_section
+    (15) defined_class -> CLASS CLASS_IDENTIFIER equivalentto_section .
+    (6) subclass_section -> . SUBCLASSOF quantifier_aux
+    (7) subclass_section -> . SUBCLASSOF enum_class
+    (8) subclass_section -> . SUBCLASSOF OR covered_class
+    (9) subclass_section -> . SUBCLASSOF CLASS_IDENTIFIER
+
+    CLASS           reduce using rule 15 (defined_class -> CLASS CLASS_IDENTIFIER equivalentto_section .)
+    $end            reduce using rule 15 (defined_class -> CLASS CLASS_IDENTIFIER equivalentto_section .)
+    SUBCLASSOF      shift and go to state 11
+
+    subclass_section               shift and go to state 12
+
+state 9
+
+    (5) primitive_class -> CLASS CLASS_IDENTIFIER subclass_section . disjoint_section individuals_section
+    (10) disjoint_section -> . DISJOINTCLASSES quantifier_aux
+    (11) disjoint_section -> . empty
+    (59) empty -> .
+
+    DISJOINTCLASSES shift and go to state 14
+    INDIVIDUALS     reduce using rule 59 (empty -> .)
+    CLASS           reduce using rule 59 (empty -> .)
+    $end            reduce using rule 59 (empty -> .)
+
+    disjoint_section               shift and go to state 13
+    empty                          shift and go to state 15
+
+state 10
+
+    (22) equivalentto_section -> EQUIVALENTTO . enum_class
+    (23) equivalentto_section -> EQUIVALENTTO . CLASS_IDENTIFIER OR covered_class
+    (24) equivalentto_section -> EQUIVALENTTO . CLASS_IDENTIFIER def_descriptions
+    (16) enum_class -> . OPEN_CURLY individuals CLOSE_CURLY
+
+    CLASS_IDENTIFIER shift and go to state 17
+    OPEN_CURLY      shift and go to state 18
+
+    enum_class                     shift and go to state 16
+
+state 11
+
+    (6) subclass_section -> SUBCLASSOF . quantifier_aux
+    (7) subclass_section -> SUBCLASSOF . enum_class
+    (8) subclass_section -> SUBCLASSOF . OR covered_class
+    (9) subclass_section -> SUBCLASSOF . CLASS_IDENTIFIER
+    (27) quantifier_aux -> . comma_and OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> . comma_and quantifier_aux
+    (29) quantifier_aux -> . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier namespace_type
+    (32) quantifier_aux -> . quantifier_aux comma_and quantifier_aux
+    (33) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier quantifier_aux
+    (34) quantifier_aux -> . CLASS_IDENTIFIER quantifier quantifier_aux
+    (35) quantifier_aux -> . CLASS_IDENTIFIER OR quantifier_aux
+    (36) quantifier_aux -> . CLASS_IDENTIFIER comma_and quantifier_aux
+    (37) quantifier_aux -> . CLASS_IDENTIFIER
+    (38) quantifier_aux -> . PROPERTY_IDENTIFIER
+    (16) enum_class -> . OPEN_CURLY individuals CLOSE_CURLY
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    OR              shift and go to state 21
+    CLASS_IDENTIFIER shift and go to state 22
+    OPEN_PAREN      shift and go to state 24
+    PROPERTY_IDENTIFIER shift and go to state 25
+    OPEN_CURLY      shift and go to state 18
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    quantifier_aux                 shift and go to state 19
+    enum_class                     shift and go to state 20
+    comma_and                      shift and go to state 23
+
+state 12
+
+    (14) defined_class -> CLASS CLASS_IDENTIFIER equivalentto_section subclass_section . individuals_section
+    (53) individuals_section -> . INDIVIDUALS individuals
+    (54) individuals_section -> . empty
+    (59) empty -> .
+
+    INDIVIDUALS     shift and go to state 29
+    CLASS           reduce using rule 59 (empty -> .)
+    $end            reduce using rule 59 (empty -> .)
+
+    individuals_section            shift and go to state 28
+    empty                          shift and go to state 30
+
+state 13
+
+    (5) primitive_class -> CLASS CLASS_IDENTIFIER subclass_section disjoint_section . individuals_section
+    (53) individuals_section -> . INDIVIDUALS individuals
+    (54) individuals_section -> . empty
+    (59) empty -> .
+
+    INDIVIDUALS     shift and go to state 29
+    CLASS           reduce using rule 59 (empty -> .)
+    $end            reduce using rule 59 (empty -> .)
+
+    individuals_section            shift and go to state 31
+    empty                          shift and go to state 30
+
+state 14
+
+    (10) disjoint_section -> DISJOINTCLASSES . quantifier_aux
+    (27) quantifier_aux -> . comma_and OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> . comma_and quantifier_aux
+    (29) quantifier_aux -> . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier namespace_type
+    (32) quantifier_aux -> . quantifier_aux comma_and quantifier_aux
+    (33) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier quantifier_aux
+    (34) quantifier_aux -> . CLASS_IDENTIFIER quantifier quantifier_aux
+    (35) quantifier_aux -> . CLASS_IDENTIFIER OR quantifier_aux
+    (36) quantifier_aux -> . CLASS_IDENTIFIER comma_and quantifier_aux
+    (37) quantifier_aux -> . CLASS_IDENTIFIER
+    (38) quantifier_aux -> . PROPERTY_IDENTIFIER
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    OPEN_PAREN      shift and go to state 24
+    PROPERTY_IDENTIFIER shift and go to state 25
+    CLASS_IDENTIFIER shift and go to state 33
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    quantifier_aux                 shift and go to state 32
+    comma_and                      shift and go to state 23
+
+state 15
+
+    (11) disjoint_section -> empty .
+
+    INDIVIDUALS     reduce using rule 11 (disjoint_section -> empty .)
+    CLASS           reduce using rule 11 (disjoint_section -> empty .)
+    $end            reduce using rule 11 (disjoint_section -> empty .)
+
+
+state 16
+
+    (22) equivalentto_section -> EQUIVALENTTO enum_class .
+
+    SUBCLASSOF      reduce using rule 22 (equivalentto_section -> EQUIVALENTTO enum_class .)
+    CLASS           reduce using rule 22 (equivalentto_section -> EQUIVALENTTO enum_class .)
+    $end            reduce using rule 22 (equivalentto_section -> EQUIVALENTTO enum_class .)
+
+
+state 17
+
+    (23) equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER . OR covered_class
+    (24) equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER . def_descriptions
+    (25) def_descriptions -> . quantifier_aux
+    (27) quantifier_aux -> . comma_and OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> . comma_and quantifier_aux
+    (29) quantifier_aux -> . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier namespace_type
+    (32) quantifier_aux -> . quantifier_aux comma_and quantifier_aux
+    (33) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier quantifier_aux
+    (34) quantifier_aux -> . CLASS_IDENTIFIER quantifier quantifier_aux
+    (35) quantifier_aux -> . CLASS_IDENTIFIER OR quantifier_aux
+    (36) quantifier_aux -> . CLASS_IDENTIFIER comma_and quantifier_aux
+    (37) quantifier_aux -> . CLASS_IDENTIFIER
+    (38) quantifier_aux -> . PROPERTY_IDENTIFIER
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    OR              shift and go to state 34
+    OPEN_PAREN      shift and go to state 24
+    PROPERTY_IDENTIFIER shift and go to state 25
+    CLASS_IDENTIFIER shift and go to state 33
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    def_descriptions               shift and go to state 35
+    quantifier_aux                 shift and go to state 36
+    comma_and                      shift and go to state 23
+
+state 18
+
+    (16) enum_class -> OPEN_CURLY . individuals CLOSE_CURLY
+    (55) individuals -> . INDIVIDUAL_NAME
+    (56) individuals -> . INDIVIDUAL_NAME COMMA individuals
+
+    INDIVIDUAL_NAME shift and go to state 38
+
+    individuals                    shift and go to state 37
+
+state 19
+
+    (6) subclass_section -> SUBCLASSOF quantifier_aux .
+    (32) quantifier_aux -> quantifier_aux . comma_and quantifier_aux
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    DISJOINTCLASSES reduce using rule 6 (subclass_section -> SUBCLASSOF quantifier_aux .)
+    INDIVIDUALS     reduce using rule 6 (subclass_section -> SUBCLASSOF quantifier_aux .)
+    CLASS           reduce using rule 6 (subclass_section -> SUBCLASSOF quantifier_aux .)
+    $end            reduce using rule 6 (subclass_section -> SUBCLASSOF quantifier_aux .)
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    comma_and                      shift and go to state 39
+
+state 20
+
+    (7) subclass_section -> SUBCLASSOF enum_class .
+
+    DISJOINTCLASSES reduce using rule 7 (subclass_section -> SUBCLASSOF enum_class .)
+    INDIVIDUALS     reduce using rule 7 (subclass_section -> SUBCLASSOF enum_class .)
+    CLASS           reduce using rule 7 (subclass_section -> SUBCLASSOF enum_class .)
+    $end            reduce using rule 7 (subclass_section -> SUBCLASSOF enum_class .)
+
+
+state 21
+
+    (8) subclass_section -> SUBCLASSOF OR . covered_class
+    (17) covered_class -> . CLASS_IDENTIFIER OR covered_class
+    (18) covered_class -> . CLASS_IDENTIFIER
+
+    CLASS_IDENTIFIER shift and go to state 41
+
+    covered_class                  shift and go to state 40
+
+state 22
+
+    (9) subclass_section -> SUBCLASSOF CLASS_IDENTIFIER .
+    (34) quantifier_aux -> CLASS_IDENTIFIER . quantifier quantifier_aux
+    (35) quantifier_aux -> CLASS_IDENTIFIER . OR quantifier_aux
+    (36) quantifier_aux -> CLASS_IDENTIFIER . comma_and quantifier_aux
+    (37) quantifier_aux -> CLASS_IDENTIFIER .
+    (39) quantifier -> . SOME
+    (40) quantifier -> . ALL
+    (41) quantifier -> . VALUE
+    (42) quantifier -> . MAX
+    (43) quantifier -> . MIN
+    (44) quantifier -> . EXACTLY
+    (45) quantifier -> . THAT
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+  ! reduce/reduce conflict for DISJOINTCLASSES resolved using rule 9 (subclass_section -> SUBCLASSOF CLASS_IDENTIFIER .)
+  ! reduce/reduce conflict for INDIVIDUALS resolved using rule 9 (subclass_section -> SUBCLASSOF CLASS_IDENTIFIER .)
+  ! reduce/reduce conflict for CLASS resolved using rule 9 (subclass_section -> SUBCLASSOF CLASS_IDENTIFIER .)
+  ! reduce/reduce conflict for $end resolved using rule 9 (subclass_section -> SUBCLASSOF CLASS_IDENTIFIER .)
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+    DISJOINTCLASSES reduce using rule 9 (subclass_section -> SUBCLASSOF CLASS_IDENTIFIER .)
+    INDIVIDUALS     reduce using rule 9 (subclass_section -> SUBCLASSOF CLASS_IDENTIFIER .)
+    CLASS           reduce using rule 9 (subclass_section -> SUBCLASSOF CLASS_IDENTIFIER .)
+    $end            reduce using rule 9 (subclass_section -> SUBCLASSOF CLASS_IDENTIFIER .)
+    OR              shift and go to state 43
+    SOME            shift and go to state 45
+    ALL             shift and go to state 46
+    VALUE           shift and go to state 47
+    MAX             shift and go to state 48
+    MIN             shift and go to state 49
+    EXACTLY         shift and go to state 50
+    THAT            shift and go to state 51
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+  ! COMMA           [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+  ! AND             [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+  ! DISJOINTCLASSES [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+  ! INDIVIDUALS     [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+  ! CLASS           [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+  ! $end            [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+
+    quantifier                     shift and go to state 42
+    comma_and                      shift and go to state 44
+
+state 23
+
+    (27) quantifier_aux -> comma_and . OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> comma_and . quantifier_aux
+    (27) quantifier_aux -> . comma_and OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> . comma_and quantifier_aux
+    (29) quantifier_aux -> . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier namespace_type
+    (32) quantifier_aux -> . quantifier_aux comma_and quantifier_aux
+    (33) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier quantifier_aux
+    (34) quantifier_aux -> . CLASS_IDENTIFIER quantifier quantifier_aux
+    (35) quantifier_aux -> . CLASS_IDENTIFIER OR quantifier_aux
+    (36) quantifier_aux -> . CLASS_IDENTIFIER comma_and quantifier_aux
+    (37) quantifier_aux -> . CLASS_IDENTIFIER
+    (38) quantifier_aux -> . PROPERTY_IDENTIFIER
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    OPEN_PAREN      shift and go to state 52
+    PROPERTY_IDENTIFIER shift and go to state 25
+    CLASS_IDENTIFIER shift and go to state 33
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    comma_and                      shift and go to state 23
+    quantifier_aux                 shift and go to state 53
+
+state 24
+
+    (29) quantifier_aux -> OPEN_PAREN . quantifier_aux CLOSE_PAREN
+    (27) quantifier_aux -> . comma_and OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> . comma_and quantifier_aux
+    (29) quantifier_aux -> . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier namespace_type
+    (32) quantifier_aux -> . quantifier_aux comma_and quantifier_aux
+    (33) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier quantifier_aux
+    (34) quantifier_aux -> . CLASS_IDENTIFIER quantifier quantifier_aux
+    (35) quantifier_aux -> . CLASS_IDENTIFIER OR quantifier_aux
+    (36) quantifier_aux -> . CLASS_IDENTIFIER comma_and quantifier_aux
+    (37) quantifier_aux -> . CLASS_IDENTIFIER
+    (38) quantifier_aux -> . PROPERTY_IDENTIFIER
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    OPEN_PAREN      shift and go to state 24
+    PROPERTY_IDENTIFIER shift and go to state 25
+    CLASS_IDENTIFIER shift and go to state 33
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    quantifier_aux                 shift and go to state 54
+    comma_and                      shift and go to state 23
+
+state 25
+
+    (30) quantifier_aux -> PROPERTY_IDENTIFIER . quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> PROPERTY_IDENTIFIER . quantifier namespace_type
+    (33) quantifier_aux -> PROPERTY_IDENTIFIER . quantifier quantifier_aux
+    (38) quantifier_aux -> PROPERTY_IDENTIFIER .
+    (39) quantifier -> . SOME
+    (40) quantifier -> . ALL
+    (41) quantifier -> . VALUE
+    (42) quantifier -> . MAX
+    (43) quantifier -> . MIN
+    (44) quantifier -> . EXACTLY
+    (45) quantifier -> . THAT
+
+    COMMA           reduce using rule 38 (quantifier_aux -> PROPERTY_IDENTIFIER .)
+    AND             reduce using rule 38 (quantifier_aux -> PROPERTY_IDENTIFIER .)
+    DISJOINTCLASSES reduce using rule 38 (quantifier_aux -> PROPERTY_IDENTIFIER .)
+    INDIVIDUALS     reduce using rule 38 (quantifier_aux -> PROPERTY_IDENTIFIER .)
+    CLASS           reduce using rule 38 (quantifier_aux -> PROPERTY_IDENTIFIER .)
+    $end            reduce using rule 38 (quantifier_aux -> PROPERTY_IDENTIFIER .)
+    SUBCLASSOF      reduce using rule 38 (quantifier_aux -> PROPERTY_IDENTIFIER .)
+    CLOSE_PAREN     reduce using rule 38 (quantifier_aux -> PROPERTY_IDENTIFIER .)
+    SOME            shift and go to state 45
+    ALL             shift and go to state 46
+    VALUE           shift and go to state 47
+    MAX             shift and go to state 48
+    MIN             shift and go to state 49
+    EXACTLY         shift and go to state 50
+    THAT            shift and go to state 51
+
+    quantifier                     shift and go to state 55
+
+state 26
+
+    (57) comma_and -> COMMA .
+
+    OPEN_PAREN      reduce using rule 57 (comma_and -> COMMA .)
+    PROPERTY_IDENTIFIER reduce using rule 57 (comma_and -> COMMA .)
+    CLASS_IDENTIFIER reduce using rule 57 (comma_and -> COMMA .)
+    COMMA           reduce using rule 57 (comma_and -> COMMA .)
+    AND             reduce using rule 57 (comma_and -> COMMA .)
+
+
+state 27
+
+    (58) comma_and -> AND .
+
+    OPEN_PAREN      reduce using rule 58 (comma_and -> AND .)
+    PROPERTY_IDENTIFIER reduce using rule 58 (comma_and -> AND .)
+    CLASS_IDENTIFIER reduce using rule 58 (comma_and -> AND .)
+    COMMA           reduce using rule 58 (comma_and -> AND .)
+    AND             reduce using rule 58 (comma_and -> AND .)
+
+
+state 28
+
+    (14) defined_class -> CLASS CLASS_IDENTIFIER equivalentto_section subclass_section individuals_section .
+
+    CLASS           reduce using rule 14 (defined_class -> CLASS CLASS_IDENTIFIER equivalentto_section subclass_section individuals_section .)
+    $end            reduce using rule 14 (defined_class -> CLASS CLASS_IDENTIFIER equivalentto_section subclass_section individuals_section .)
+
+
+state 29
+
+    (53) individuals_section -> INDIVIDUALS . individuals
+    (55) individuals -> . INDIVIDUAL_NAME
+    (56) individuals -> . INDIVIDUAL_NAME COMMA individuals
+
+    INDIVIDUAL_NAME shift and go to state 38
+
+    individuals                    shift and go to state 56
+
+state 30
+
+    (54) individuals_section -> empty .
+
+    CLASS           reduce using rule 54 (individuals_section -> empty .)
+    $end            reduce using rule 54 (individuals_section -> empty .)
+
+
+state 31
+
+    (5) primitive_class -> CLASS CLASS_IDENTIFIER subclass_section disjoint_section individuals_section .
+
+    CLASS           reduce using rule 5 (primitive_class -> CLASS CLASS_IDENTIFIER subclass_section disjoint_section individuals_section .)
+    $end            reduce using rule 5 (primitive_class -> CLASS CLASS_IDENTIFIER subclass_section disjoint_section individuals_section .)
+
+
+state 32
+
+    (10) disjoint_section -> DISJOINTCLASSES quantifier_aux .
+    (32) quantifier_aux -> quantifier_aux . comma_and quantifier_aux
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    INDIVIDUALS     reduce using rule 10 (disjoint_section -> DISJOINTCLASSES quantifier_aux .)
+    CLASS           reduce using rule 10 (disjoint_section -> DISJOINTCLASSES quantifier_aux .)
+    $end            reduce using rule 10 (disjoint_section -> DISJOINTCLASSES quantifier_aux .)
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    comma_and                      shift and go to state 39
+
+state 33
+
+    (34) quantifier_aux -> CLASS_IDENTIFIER . quantifier quantifier_aux
+    (35) quantifier_aux -> CLASS_IDENTIFIER . OR quantifier_aux
+    (36) quantifier_aux -> CLASS_IDENTIFIER . comma_and quantifier_aux
+    (37) quantifier_aux -> CLASS_IDENTIFIER .
+    (39) quantifier -> . SOME
+    (40) quantifier -> . ALL
+    (41) quantifier -> . VALUE
+    (42) quantifier -> . MAX
+    (43) quantifier -> . MIN
+    (44) quantifier -> . EXACTLY
+    (45) quantifier -> . THAT
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+    OR              shift and go to state 43
+    INDIVIDUALS     reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .)
+    CLASS           reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .)
+    $end            reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .)
+    SUBCLASSOF      reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .)
+    DISJOINTCLASSES reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .)
+    CLOSE_PAREN     reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .)
+    SOME            shift and go to state 45
+    ALL             shift and go to state 46
+    VALUE           shift and go to state 47
+    MAX             shift and go to state 48
+    MIN             shift and go to state 49
+    EXACTLY         shift and go to state 50
+    THAT            shift and go to state 51
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+  ! COMMA           [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+  ! AND             [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+
+    quantifier                     shift and go to state 42
+    comma_and                      shift and go to state 44
+
+state 34
+
+    (23) equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER OR . covered_class
+    (17) covered_class -> . CLASS_IDENTIFIER OR covered_class
+    (18) covered_class -> . CLASS_IDENTIFIER
+
+    CLASS_IDENTIFIER shift and go to state 41
+
+    covered_class                  shift and go to state 57
+
+state 35
+
+    (24) equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER def_descriptions .
+
+    SUBCLASSOF      reduce using rule 24 (equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER def_descriptions .)
+    CLASS           reduce using rule 24 (equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER def_descriptions .)
+    $end            reduce using rule 24 (equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER def_descriptions .)
+
+
+state 36
+
+    (25) def_descriptions -> quantifier_aux .
+    (32) quantifier_aux -> quantifier_aux . comma_and quantifier_aux
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    SUBCLASSOF      reduce using rule 25 (def_descriptions -> quantifier_aux .)
+    CLASS           reduce using rule 25 (def_descriptions -> quantifier_aux .)
+    $end            reduce using rule 25 (def_descriptions -> quantifier_aux .)
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    comma_and                      shift and go to state 39
+
+state 37
+
+    (16) enum_class -> OPEN_CURLY individuals . CLOSE_CURLY
+
+    CLOSE_CURLY     shift and go to state 58
+
+
+state 38
+
+    (55) individuals -> INDIVIDUAL_NAME .
+    (56) individuals -> INDIVIDUAL_NAME . COMMA individuals
+
+    CLOSE_CURLY     reduce using rule 55 (individuals -> INDIVIDUAL_NAME .)
+    CLASS           reduce using rule 55 (individuals -> INDIVIDUAL_NAME .)
+    $end            reduce using rule 55 (individuals -> INDIVIDUAL_NAME .)
+    COMMA           shift and go to state 59
+
+
+state 39
+
+    (32) quantifier_aux -> quantifier_aux comma_and . quantifier_aux
+    (27) quantifier_aux -> . comma_and OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> . comma_and quantifier_aux
+    (29) quantifier_aux -> . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier namespace_type
+    (32) quantifier_aux -> . quantifier_aux comma_and quantifier_aux
+    (33) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier quantifier_aux
+    (34) quantifier_aux -> . CLASS_IDENTIFIER quantifier quantifier_aux
+    (35) quantifier_aux -> . CLASS_IDENTIFIER OR quantifier_aux
+    (36) quantifier_aux -> . CLASS_IDENTIFIER comma_and quantifier_aux
+    (37) quantifier_aux -> . CLASS_IDENTIFIER
+    (38) quantifier_aux -> . PROPERTY_IDENTIFIER
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    OPEN_PAREN      shift and go to state 24
+    PROPERTY_IDENTIFIER shift and go to state 25
+    CLASS_IDENTIFIER shift and go to state 33
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    quantifier_aux                 shift and go to state 60
+    comma_and                      shift and go to state 23
+
+state 40
+
+    (8) subclass_section -> SUBCLASSOF OR covered_class .
+
+    DISJOINTCLASSES reduce using rule 8 (subclass_section -> SUBCLASSOF OR covered_class .)
+    INDIVIDUALS     reduce using rule 8 (subclass_section -> SUBCLASSOF OR covered_class .)
+    CLASS           reduce using rule 8 (subclass_section -> SUBCLASSOF OR covered_class .)
+    $end            reduce using rule 8 (subclass_section -> SUBCLASSOF OR covered_class .)
+
+
+state 41
+
+    (17) covered_class -> CLASS_IDENTIFIER . OR covered_class
+    (18) covered_class -> CLASS_IDENTIFIER .
+
+    OR              shift and go to state 61
+    DISJOINTCLASSES reduce using rule 18 (covered_class -> CLASS_IDENTIFIER .)
+    INDIVIDUALS     reduce using rule 18 (covered_class -> CLASS_IDENTIFIER .)
+    CLASS           reduce using rule 18 (covered_class -> CLASS_IDENTIFIER .)
+    $end            reduce using rule 18 (covered_class -> CLASS_IDENTIFIER .)
+    SUBCLASSOF      reduce using rule 18 (covered_class -> CLASS_IDENTIFIER .)
+
+
+state 42
+
+    (34) quantifier_aux -> CLASS_IDENTIFIER quantifier . quantifier_aux
+    (27) quantifier_aux -> . comma_and OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> . comma_and quantifier_aux
+    (29) quantifier_aux -> . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier namespace_type
+    (32) quantifier_aux -> . quantifier_aux comma_and quantifier_aux
+    (33) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier quantifier_aux
+    (34) quantifier_aux -> . CLASS_IDENTIFIER quantifier quantifier_aux
+    (35) quantifier_aux -> . CLASS_IDENTIFIER OR quantifier_aux
+    (36) quantifier_aux -> . CLASS_IDENTIFIER comma_and quantifier_aux
+    (37) quantifier_aux -> . CLASS_IDENTIFIER
+    (38) quantifier_aux -> . PROPERTY_IDENTIFIER
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    OPEN_PAREN      shift and go to state 24
+    PROPERTY_IDENTIFIER shift and go to state 25
+    CLASS_IDENTIFIER shift and go to state 33
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    quantifier_aux                 shift and go to state 62
+    comma_and                      shift and go to state 23
+
+state 43
+
+    (35) quantifier_aux -> CLASS_IDENTIFIER OR . quantifier_aux
+    (27) quantifier_aux -> . comma_and OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> . comma_and quantifier_aux
+    (29) quantifier_aux -> . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier namespace_type
+    (32) quantifier_aux -> . quantifier_aux comma_and quantifier_aux
+    (33) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier quantifier_aux
+    (34) quantifier_aux -> . CLASS_IDENTIFIER quantifier quantifier_aux
+    (35) quantifier_aux -> . CLASS_IDENTIFIER OR quantifier_aux
+    (36) quantifier_aux -> . CLASS_IDENTIFIER comma_and quantifier_aux
+    (37) quantifier_aux -> . CLASS_IDENTIFIER
+    (38) quantifier_aux -> . PROPERTY_IDENTIFIER
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    OPEN_PAREN      shift and go to state 24
+    PROPERTY_IDENTIFIER shift and go to state 25
+    CLASS_IDENTIFIER shift and go to state 33
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    quantifier_aux                 shift and go to state 63
+    comma_and                      shift and go to state 23
+
+state 44
+
+    (36) quantifier_aux -> CLASS_IDENTIFIER comma_and . quantifier_aux
+    (27) quantifier_aux -> . comma_and OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> . comma_and quantifier_aux
+    (29) quantifier_aux -> . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier namespace_type
+    (32) quantifier_aux -> . quantifier_aux comma_and quantifier_aux
+    (33) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier quantifier_aux
+    (34) quantifier_aux -> . CLASS_IDENTIFIER quantifier quantifier_aux
+    (35) quantifier_aux -> . CLASS_IDENTIFIER OR quantifier_aux
+    (36) quantifier_aux -> . CLASS_IDENTIFIER comma_and quantifier_aux
+    (37) quantifier_aux -> . CLASS_IDENTIFIER
+    (38) quantifier_aux -> . PROPERTY_IDENTIFIER
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    OPEN_PAREN      shift and go to state 24
+    PROPERTY_IDENTIFIER shift and go to state 25
+    CLASS_IDENTIFIER shift and go to state 33
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    comma_and                      shift and go to state 23
+    quantifier_aux                 shift and go to state 64
+
+state 45
+
+    (39) quantifier -> SOME .
+
+    OPEN_PAREN      reduce using rule 39 (quantifier -> SOME .)
+    PROPERTY_IDENTIFIER reduce using rule 39 (quantifier -> SOME .)
+    CLASS_IDENTIFIER reduce using rule 39 (quantifier -> SOME .)
+    COMMA           reduce using rule 39 (quantifier -> SOME .)
+    AND             reduce using rule 39 (quantifier -> SOME .)
+    NAMESPACE       reduce using rule 39 (quantifier -> SOME .)
+
+
+state 46
+
+    (40) quantifier -> ALL .
+
+    OPEN_PAREN      reduce using rule 40 (quantifier -> ALL .)
+    PROPERTY_IDENTIFIER reduce using rule 40 (quantifier -> ALL .)
+    CLASS_IDENTIFIER reduce using rule 40 (quantifier -> ALL .)
+    COMMA           reduce using rule 40 (quantifier -> ALL .)
+    AND             reduce using rule 40 (quantifier -> ALL .)
+    NAMESPACE       reduce using rule 40 (quantifier -> ALL .)
+
+
+state 47
+
+    (41) quantifier -> VALUE .
+
+    OPEN_PAREN      reduce using rule 41 (quantifier -> VALUE .)
+    PROPERTY_IDENTIFIER reduce using rule 41 (quantifier -> VALUE .)
+    CLASS_IDENTIFIER reduce using rule 41 (quantifier -> VALUE .)
+    COMMA           reduce using rule 41 (quantifier -> VALUE .)
+    AND             reduce using rule 41 (quantifier -> VALUE .)
+    NAMESPACE       reduce using rule 41 (quantifier -> VALUE .)
+
+
+state 48
+
+    (42) quantifier -> MAX .
+
+    OPEN_PAREN      reduce using rule 42 (quantifier -> MAX .)
+    PROPERTY_IDENTIFIER reduce using rule 42 (quantifier -> MAX .)
+    CLASS_IDENTIFIER reduce using rule 42 (quantifier -> MAX .)
+    COMMA           reduce using rule 42 (quantifier -> MAX .)
+    AND             reduce using rule 42 (quantifier -> MAX .)
+    NAMESPACE       reduce using rule 42 (quantifier -> MAX .)
+
+
+state 49
+
+    (43) quantifier -> MIN .
+
+    OPEN_PAREN      reduce using rule 43 (quantifier -> MIN .)
+    PROPERTY_IDENTIFIER reduce using rule 43 (quantifier -> MIN .)
+    CLASS_IDENTIFIER reduce using rule 43 (quantifier -> MIN .)
+    COMMA           reduce using rule 43 (quantifier -> MIN .)
+    AND             reduce using rule 43 (quantifier -> MIN .)
+    NAMESPACE       reduce using rule 43 (quantifier -> MIN .)
+
+
+state 50
+
+    (44) quantifier -> EXACTLY .
+
+    OPEN_PAREN      reduce using rule 44 (quantifier -> EXACTLY .)
+    PROPERTY_IDENTIFIER reduce using rule 44 (quantifier -> EXACTLY .)
+    CLASS_IDENTIFIER reduce using rule 44 (quantifier -> EXACTLY .)
+    COMMA           reduce using rule 44 (quantifier -> EXACTLY .)
+    AND             reduce using rule 44 (quantifier -> EXACTLY .)
+    NAMESPACE       reduce using rule 44 (quantifier -> EXACTLY .)
+
+
+state 51
+
+    (45) quantifier -> THAT .
+
+    OPEN_PAREN      reduce using rule 45 (quantifier -> THAT .)
+    PROPERTY_IDENTIFIER reduce using rule 45 (quantifier -> THAT .)
+    CLASS_IDENTIFIER reduce using rule 45 (quantifier -> THAT .)
+    COMMA           reduce using rule 45 (quantifier -> THAT .)
+    AND             reduce using rule 45 (quantifier -> THAT .)
+    NAMESPACE       reduce using rule 45 (quantifier -> THAT .)
+
+
+state 52
+
+    (27) quantifier_aux -> comma_and OPEN_PAREN . aninhada CLOSE_PAREN
+    (29) quantifier_aux -> OPEN_PAREN . quantifier_aux CLOSE_PAREN
+    (26) aninhada -> . PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (27) quantifier_aux -> . comma_and OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> . comma_and quantifier_aux
+    (29) quantifier_aux -> . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier namespace_type
+    (32) quantifier_aux -> . quantifier_aux comma_and quantifier_aux
+    (33) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier quantifier_aux
+    (34) quantifier_aux -> . CLASS_IDENTIFIER quantifier quantifier_aux
+    (35) quantifier_aux -> . CLASS_IDENTIFIER OR quantifier_aux
+    (36) quantifier_aux -> . CLASS_IDENTIFIER comma_and quantifier_aux
+    (37) quantifier_aux -> . CLASS_IDENTIFIER
+    (38) quantifier_aux -> . PROPERTY_IDENTIFIER
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    PROPERTY_IDENTIFIER shift and go to state 66
+    OPEN_PAREN      shift and go to state 24
+    CLASS_IDENTIFIER shift and go to state 33
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    comma_and                      shift and go to state 23
+    aninhada                       shift and go to state 65
+    quantifier_aux                 shift and go to state 54
+
+state 53
+
+    (28) quantifier_aux -> comma_and quantifier_aux .
+    (32) quantifier_aux -> quantifier_aux . comma_and quantifier_aux
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+    DISJOINTCLASSES reduce using rule 28 (quantifier_aux -> comma_and quantifier_aux .)
+    INDIVIDUALS     reduce using rule 28 (quantifier_aux -> comma_and quantifier_aux .)
+    CLASS           reduce using rule 28 (quantifier_aux -> comma_and quantifier_aux .)
+    $end            reduce using rule 28 (quantifier_aux -> comma_and quantifier_aux .)
+    SUBCLASSOF      reduce using rule 28 (quantifier_aux -> comma_and quantifier_aux .)
+    CLOSE_PAREN     reduce using rule 28 (quantifier_aux -> comma_and quantifier_aux .)
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+  ! COMMA           [ reduce using rule 28 (quantifier_aux -> comma_and quantifier_aux .) ]
+  ! AND             [ reduce using rule 28 (quantifier_aux -> comma_and quantifier_aux .) ]
+
+    comma_and                      shift and go to state 39
+
+state 54
+
+    (29) quantifier_aux -> OPEN_PAREN quantifier_aux . CLOSE_PAREN
+    (32) quantifier_aux -> quantifier_aux . comma_and quantifier_aux
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    CLOSE_PAREN     shift and go to state 67
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    comma_and                      shift and go to state 39
+
+state 55
+
+    (30) quantifier_aux -> PROPERTY_IDENTIFIER quantifier . CLASS_IDENTIFIER
+    (31) quantifier_aux -> PROPERTY_IDENTIFIER quantifier . namespace_type
+    (33) quantifier_aux -> PROPERTY_IDENTIFIER quantifier . quantifier_aux
+    (51) namespace_type -> . NAMESPACE TYPE
+    (52) namespace_type -> . NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET
+    (27) quantifier_aux -> . comma_and OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> . comma_and quantifier_aux
+    (29) quantifier_aux -> . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier namespace_type
+    (32) quantifier_aux -> . quantifier_aux comma_and quantifier_aux
+    (33) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier quantifier_aux
+    (34) quantifier_aux -> . CLASS_IDENTIFIER quantifier quantifier_aux
+    (35) quantifier_aux -> . CLASS_IDENTIFIER OR quantifier_aux
+    (36) quantifier_aux -> . CLASS_IDENTIFIER comma_and quantifier_aux
+    (37) quantifier_aux -> . CLASS_IDENTIFIER
+    (38) quantifier_aux -> . PROPERTY_IDENTIFIER
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    CLASS_IDENTIFIER shift and go to state 68
+    NAMESPACE       shift and go to state 71
+    OPEN_PAREN      shift and go to state 24
+    PROPERTY_IDENTIFIER shift and go to state 25
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    namespace_type                 shift and go to state 69
+    quantifier_aux                 shift and go to state 70
+    comma_and                      shift and go to state 23
+
+state 56
+
+    (53) individuals_section -> INDIVIDUALS individuals .
+
+    CLASS           reduce using rule 53 (individuals_section -> INDIVIDUALS individuals .)
+    $end            reduce using rule 53 (individuals_section -> INDIVIDUALS individuals .)
+
+
+state 57
+
+    (23) equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER OR covered_class .
+
+    SUBCLASSOF      reduce using rule 23 (equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER OR covered_class .)
+    CLASS           reduce using rule 23 (equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER OR covered_class .)
+    $end            reduce using rule 23 (equivalentto_section -> EQUIVALENTTO CLASS_IDENTIFIER OR covered_class .)
+
+
+state 58
+
+    (16) enum_class -> OPEN_CURLY individuals CLOSE_CURLY .
+
+    SUBCLASSOF      reduce using rule 16 (enum_class -> OPEN_CURLY individuals CLOSE_CURLY .)
+    CLASS           reduce using rule 16 (enum_class -> OPEN_CURLY individuals CLOSE_CURLY .)
+    $end            reduce using rule 16 (enum_class -> OPEN_CURLY individuals CLOSE_CURLY .)
+    DISJOINTCLASSES reduce using rule 16 (enum_class -> OPEN_CURLY individuals CLOSE_CURLY .)
+    INDIVIDUALS     reduce using rule 16 (enum_class -> OPEN_CURLY individuals CLOSE_CURLY .)
+
+
+state 59
+
+    (56) individuals -> INDIVIDUAL_NAME COMMA . individuals
+    (55) individuals -> . INDIVIDUAL_NAME
+    (56) individuals -> . INDIVIDUAL_NAME COMMA individuals
+
+    INDIVIDUAL_NAME shift and go to state 38
+
+    individuals                    shift and go to state 72
+
+state 60
+
+    (32) quantifier_aux -> quantifier_aux comma_and quantifier_aux .
+    (32) quantifier_aux -> quantifier_aux . comma_and quantifier_aux
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+    DISJOINTCLASSES reduce using rule 32 (quantifier_aux -> quantifier_aux comma_and quantifier_aux .)
+    INDIVIDUALS     reduce using rule 32 (quantifier_aux -> quantifier_aux comma_and quantifier_aux .)
+    CLASS           reduce using rule 32 (quantifier_aux -> quantifier_aux comma_and quantifier_aux .)
+    $end            reduce using rule 32 (quantifier_aux -> quantifier_aux comma_and quantifier_aux .)
+    SUBCLASSOF      reduce using rule 32 (quantifier_aux -> quantifier_aux comma_and quantifier_aux .)
+    CLOSE_PAREN     reduce using rule 32 (quantifier_aux -> quantifier_aux comma_and quantifier_aux .)
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+  ! COMMA           [ reduce using rule 32 (quantifier_aux -> quantifier_aux comma_and quantifier_aux .) ]
+  ! AND             [ reduce using rule 32 (quantifier_aux -> quantifier_aux comma_and quantifier_aux .) ]
+
+    comma_and                      shift and go to state 39
+
+state 61
+
+    (17) covered_class -> CLASS_IDENTIFIER OR . covered_class
+    (17) covered_class -> . CLASS_IDENTIFIER OR covered_class
+    (18) covered_class -> . CLASS_IDENTIFIER
+
+    CLASS_IDENTIFIER shift and go to state 41
+
+    covered_class                  shift and go to state 73
+
+state 62
+
+    (34) quantifier_aux -> CLASS_IDENTIFIER quantifier quantifier_aux .
+    (32) quantifier_aux -> quantifier_aux . comma_and quantifier_aux
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+    DISJOINTCLASSES reduce using rule 34 (quantifier_aux -> CLASS_IDENTIFIER quantifier quantifier_aux .)
+    INDIVIDUALS     reduce using rule 34 (quantifier_aux -> CLASS_IDENTIFIER quantifier quantifier_aux .)
+    CLASS           reduce using rule 34 (quantifier_aux -> CLASS_IDENTIFIER quantifier quantifier_aux .)
+    $end            reduce using rule 34 (quantifier_aux -> CLASS_IDENTIFIER quantifier quantifier_aux .)
+    SUBCLASSOF      reduce using rule 34 (quantifier_aux -> CLASS_IDENTIFIER quantifier quantifier_aux .)
+    CLOSE_PAREN     reduce using rule 34 (quantifier_aux -> CLASS_IDENTIFIER quantifier quantifier_aux .)
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+  ! COMMA           [ reduce using rule 34 (quantifier_aux -> CLASS_IDENTIFIER quantifier quantifier_aux .) ]
+  ! AND             [ reduce using rule 34 (quantifier_aux -> CLASS_IDENTIFIER quantifier quantifier_aux .) ]
+
+    comma_and                      shift and go to state 39
+
+state 63
+
+    (35) quantifier_aux -> CLASS_IDENTIFIER OR quantifier_aux .
+    (32) quantifier_aux -> quantifier_aux . comma_and quantifier_aux
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+    DISJOINTCLASSES reduce using rule 35 (quantifier_aux -> CLASS_IDENTIFIER OR quantifier_aux .)
+    INDIVIDUALS     reduce using rule 35 (quantifier_aux -> CLASS_IDENTIFIER OR quantifier_aux .)
+    CLASS           reduce using rule 35 (quantifier_aux -> CLASS_IDENTIFIER OR quantifier_aux .)
+    $end            reduce using rule 35 (quantifier_aux -> CLASS_IDENTIFIER OR quantifier_aux .)
+    SUBCLASSOF      reduce using rule 35 (quantifier_aux -> CLASS_IDENTIFIER OR quantifier_aux .)
+    CLOSE_PAREN     reduce using rule 35 (quantifier_aux -> CLASS_IDENTIFIER OR quantifier_aux .)
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+  ! COMMA           [ reduce using rule 35 (quantifier_aux -> CLASS_IDENTIFIER OR quantifier_aux .) ]
+  ! AND             [ reduce using rule 35 (quantifier_aux -> CLASS_IDENTIFIER OR quantifier_aux .) ]
+
+    comma_and                      shift and go to state 39
+
+state 64
+
+    (36) quantifier_aux -> CLASS_IDENTIFIER comma_and quantifier_aux .
+    (32) quantifier_aux -> quantifier_aux . comma_and quantifier_aux
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+    DISJOINTCLASSES reduce using rule 36 (quantifier_aux -> CLASS_IDENTIFIER comma_and quantifier_aux .)
+    INDIVIDUALS     reduce using rule 36 (quantifier_aux -> CLASS_IDENTIFIER comma_and quantifier_aux .)
+    CLASS           reduce using rule 36 (quantifier_aux -> CLASS_IDENTIFIER comma_and quantifier_aux .)
+    $end            reduce using rule 36 (quantifier_aux -> CLASS_IDENTIFIER comma_and quantifier_aux .)
+    SUBCLASSOF      reduce using rule 36 (quantifier_aux -> CLASS_IDENTIFIER comma_and quantifier_aux .)
+    CLOSE_PAREN     reduce using rule 36 (quantifier_aux -> CLASS_IDENTIFIER comma_and quantifier_aux .)
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+  ! COMMA           [ reduce using rule 36 (quantifier_aux -> CLASS_IDENTIFIER comma_and quantifier_aux .) ]
+  ! AND             [ reduce using rule 36 (quantifier_aux -> CLASS_IDENTIFIER comma_and quantifier_aux .) ]
+
+    comma_and                      shift and go to state 39
+
+state 65
+
+    (27) quantifier_aux -> comma_and OPEN_PAREN aninhada . CLOSE_PAREN
+
+    CLOSE_PAREN     shift and go to state 74
+
+
+state 66
+
+    (26) aninhada -> PROPERTY_IDENTIFIER . quantifier OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> PROPERTY_IDENTIFIER . quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> PROPERTY_IDENTIFIER . quantifier namespace_type
+    (33) quantifier_aux -> PROPERTY_IDENTIFIER . quantifier quantifier_aux
+    (38) quantifier_aux -> PROPERTY_IDENTIFIER .
+    (39) quantifier -> . SOME
+    (40) quantifier -> . ALL
+    (41) quantifier -> . VALUE
+    (42) quantifier -> . MAX
+    (43) quantifier -> . MIN
+    (44) quantifier -> . EXACTLY
+    (45) quantifier -> . THAT
+
+    CLOSE_PAREN     reduce using rule 38 (quantifier_aux -> PROPERTY_IDENTIFIER .)
+    COMMA           reduce using rule 38 (quantifier_aux -> PROPERTY_IDENTIFIER .)
+    AND             reduce using rule 38 (quantifier_aux -> PROPERTY_IDENTIFIER .)
+    SOME            shift and go to state 45
+    ALL             shift and go to state 46
+    VALUE           shift and go to state 47
+    MAX             shift and go to state 48
+    MIN             shift and go to state 49
+    EXACTLY         shift and go to state 50
+    THAT            shift and go to state 51
+
+    quantifier                     shift and go to state 75
+
+state 67
+
+    (29) quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN .
+
+    COMMA           reduce using rule 29 (quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN .)
+    AND             reduce using rule 29 (quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN .)
+    DISJOINTCLASSES reduce using rule 29 (quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN .)
+    INDIVIDUALS     reduce using rule 29 (quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN .)
+    CLASS           reduce using rule 29 (quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN .)
+    $end            reduce using rule 29 (quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN .)
+    SUBCLASSOF      reduce using rule 29 (quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN .)
+    CLOSE_PAREN     reduce using rule 29 (quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN .)
+
+
+state 68
+
+    (30) quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .
+    (34) quantifier_aux -> CLASS_IDENTIFIER . quantifier quantifier_aux
+    (35) quantifier_aux -> CLASS_IDENTIFIER . OR quantifier_aux
+    (36) quantifier_aux -> CLASS_IDENTIFIER . comma_and quantifier_aux
+    (37) quantifier_aux -> CLASS_IDENTIFIER .
+    (39) quantifier -> . SOME
+    (40) quantifier -> . ALL
+    (41) quantifier -> . VALUE
+    (42) quantifier -> . MAX
+    (43) quantifier -> . MIN
+    (44) quantifier -> . EXACTLY
+    (45) quantifier -> . THAT
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+  ! reduce/reduce conflict for COMMA resolved using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+  ! reduce/reduce conflict for AND resolved using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+  ! reduce/reduce conflict for DISJOINTCLASSES resolved using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+  ! reduce/reduce conflict for INDIVIDUALS resolved using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+  ! reduce/reduce conflict for CLASS resolved using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+  ! reduce/reduce conflict for $end resolved using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+  ! reduce/reduce conflict for SUBCLASSOF resolved using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+  ! reduce/reduce conflict for CLOSE_PAREN resolved using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+    DISJOINTCLASSES reduce using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+    INDIVIDUALS     reduce using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+    CLASS           reduce using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+    $end            reduce using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+    SUBCLASSOF      reduce using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+    CLOSE_PAREN     reduce using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .)
+    OR              shift and go to state 43
+    SOME            shift and go to state 45
+    ALL             shift and go to state 46
+    VALUE           shift and go to state 47
+    MAX             shift and go to state 48
+    MIN             shift and go to state 49
+    EXACTLY         shift and go to state 50
+    THAT            shift and go to state 51
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+  ! COMMA           [ reduce using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .) ]
+  ! AND             [ reduce using rule 30 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER .) ]
+  ! COMMA           [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+  ! AND             [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+  ! DISJOINTCLASSES [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+  ! INDIVIDUALS     [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+  ! CLASS           [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+  ! $end            [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+  ! SUBCLASSOF      [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+  ! CLOSE_PAREN     [ reduce using rule 37 (quantifier_aux -> CLASS_IDENTIFIER .) ]
+
+    quantifier                     shift and go to state 42
+    comma_and                      shift and go to state 44
+
+state 69
+
+    (31) quantifier_aux -> PROPERTY_IDENTIFIER quantifier namespace_type .
+
+    COMMA           reduce using rule 31 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier namespace_type .)
+    AND             reduce using rule 31 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier namespace_type .)
+    DISJOINTCLASSES reduce using rule 31 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier namespace_type .)
+    INDIVIDUALS     reduce using rule 31 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier namespace_type .)
+    CLASS           reduce using rule 31 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier namespace_type .)
+    $end            reduce using rule 31 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier namespace_type .)
+    SUBCLASSOF      reduce using rule 31 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier namespace_type .)
+    CLOSE_PAREN     reduce using rule 31 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier namespace_type .)
+
+
+state 70
+
+    (33) quantifier_aux -> PROPERTY_IDENTIFIER quantifier quantifier_aux .
+    (32) quantifier_aux -> quantifier_aux . comma_and quantifier_aux
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+    DISJOINTCLASSES reduce using rule 33 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier quantifier_aux .)
+    INDIVIDUALS     reduce using rule 33 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier quantifier_aux .)
+    CLASS           reduce using rule 33 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier quantifier_aux .)
+    $end            reduce using rule 33 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier quantifier_aux .)
+    SUBCLASSOF      reduce using rule 33 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier quantifier_aux .)
+    CLOSE_PAREN     reduce using rule 33 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier quantifier_aux .)
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+  ! COMMA           [ reduce using rule 33 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier quantifier_aux .) ]
+  ! AND             [ reduce using rule 33 (quantifier_aux -> PROPERTY_IDENTIFIER quantifier quantifier_aux .) ]
+
+    comma_and                      shift and go to state 39
+
+state 71
+
+    (51) namespace_type -> NAMESPACE . TYPE
+    (52) namespace_type -> NAMESPACE . TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET
+
+    TYPE            shift and go to state 76
+
+
+state 72
+
+    (56) individuals -> INDIVIDUAL_NAME COMMA individuals .
+
+    CLOSE_CURLY     reduce using rule 56 (individuals -> INDIVIDUAL_NAME COMMA individuals .)
+    CLASS           reduce using rule 56 (individuals -> INDIVIDUAL_NAME COMMA individuals .)
+    $end            reduce using rule 56 (individuals -> INDIVIDUAL_NAME COMMA individuals .)
+
+
+state 73
+
+    (17) covered_class -> CLASS_IDENTIFIER OR covered_class .
+
+    DISJOINTCLASSES reduce using rule 17 (covered_class -> CLASS_IDENTIFIER OR covered_class .)
+    INDIVIDUALS     reduce using rule 17 (covered_class -> CLASS_IDENTIFIER OR covered_class .)
+    CLASS           reduce using rule 17 (covered_class -> CLASS_IDENTIFIER OR covered_class .)
+    $end            reduce using rule 17 (covered_class -> CLASS_IDENTIFIER OR covered_class .)
+    SUBCLASSOF      reduce using rule 17 (covered_class -> CLASS_IDENTIFIER OR covered_class .)
+
+
+state 74
+
+    (27) quantifier_aux -> comma_and OPEN_PAREN aninhada CLOSE_PAREN .
+
+    COMMA           reduce using rule 27 (quantifier_aux -> comma_and OPEN_PAREN aninhada CLOSE_PAREN .)
+    AND             reduce using rule 27 (quantifier_aux -> comma_and OPEN_PAREN aninhada CLOSE_PAREN .)
+    DISJOINTCLASSES reduce using rule 27 (quantifier_aux -> comma_and OPEN_PAREN aninhada CLOSE_PAREN .)
+    INDIVIDUALS     reduce using rule 27 (quantifier_aux -> comma_and OPEN_PAREN aninhada CLOSE_PAREN .)
+    CLASS           reduce using rule 27 (quantifier_aux -> comma_and OPEN_PAREN aninhada CLOSE_PAREN .)
+    $end            reduce using rule 27 (quantifier_aux -> comma_and OPEN_PAREN aninhada CLOSE_PAREN .)
+    SUBCLASSOF      reduce using rule 27 (quantifier_aux -> comma_and OPEN_PAREN aninhada CLOSE_PAREN .)
+    CLOSE_PAREN     reduce using rule 27 (quantifier_aux -> comma_and OPEN_PAREN aninhada CLOSE_PAREN .)
+
+
+state 75
+
+    (26) aninhada -> PROPERTY_IDENTIFIER quantifier . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> PROPERTY_IDENTIFIER quantifier . CLASS_IDENTIFIER
+    (31) quantifier_aux -> PROPERTY_IDENTIFIER quantifier . namespace_type
+    (33) quantifier_aux -> PROPERTY_IDENTIFIER quantifier . quantifier_aux
+    (51) namespace_type -> . NAMESPACE TYPE
+    (52) namespace_type -> . NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET
+    (27) quantifier_aux -> . comma_and OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> . comma_and quantifier_aux
+    (29) quantifier_aux -> . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier namespace_type
+    (32) quantifier_aux -> . quantifier_aux comma_and quantifier_aux
+    (33) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier quantifier_aux
+    (34) quantifier_aux -> . CLASS_IDENTIFIER quantifier quantifier_aux
+    (35) quantifier_aux -> . CLASS_IDENTIFIER OR quantifier_aux
+    (36) quantifier_aux -> . CLASS_IDENTIFIER comma_and quantifier_aux
+    (37) quantifier_aux -> . CLASS_IDENTIFIER
+    (38) quantifier_aux -> . PROPERTY_IDENTIFIER
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    OPEN_PAREN      shift and go to state 77
+    CLASS_IDENTIFIER shift and go to state 68
+    NAMESPACE       shift and go to state 71
+    PROPERTY_IDENTIFIER shift and go to state 25
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    quantifier_aux                 shift and go to state 70
+    namespace_type                 shift and go to state 69
+    comma_and                      shift and go to state 23
+
+state 76
+
+    (51) namespace_type -> NAMESPACE TYPE .
+    (52) namespace_type -> NAMESPACE TYPE . OPEN_BRACKET sizecheck CLOSE_BRACKET
+
+    COMMA           reduce using rule 51 (namespace_type -> NAMESPACE TYPE .)
+    AND             reduce using rule 51 (namespace_type -> NAMESPACE TYPE .)
+    DISJOINTCLASSES reduce using rule 51 (namespace_type -> NAMESPACE TYPE .)
+    INDIVIDUALS     reduce using rule 51 (namespace_type -> NAMESPACE TYPE .)
+    CLASS           reduce using rule 51 (namespace_type -> NAMESPACE TYPE .)
+    $end            reduce using rule 51 (namespace_type -> NAMESPACE TYPE .)
+    SUBCLASSOF      reduce using rule 51 (namespace_type -> NAMESPACE TYPE .)
+    CLOSE_PAREN     reduce using rule 51 (namespace_type -> NAMESPACE TYPE .)
+    OPEN_BRACKET    shift and go to state 78
+
+
+state 77
+
+    (26) aninhada -> PROPERTY_IDENTIFIER quantifier OPEN_PAREN . quantifier_aux CLOSE_PAREN
+    (29) quantifier_aux -> OPEN_PAREN . quantifier_aux CLOSE_PAREN
+    (27) quantifier_aux -> . comma_and OPEN_PAREN aninhada CLOSE_PAREN
+    (28) quantifier_aux -> . comma_and quantifier_aux
+    (29) quantifier_aux -> . OPEN_PAREN quantifier_aux CLOSE_PAREN
+    (30) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+    (31) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier namespace_type
+    (32) quantifier_aux -> . quantifier_aux comma_and quantifier_aux
+    (33) quantifier_aux -> . PROPERTY_IDENTIFIER quantifier quantifier_aux
+    (34) quantifier_aux -> . CLASS_IDENTIFIER quantifier quantifier_aux
+    (35) quantifier_aux -> . CLASS_IDENTIFIER OR quantifier_aux
+    (36) quantifier_aux -> . CLASS_IDENTIFIER comma_and quantifier_aux
+    (37) quantifier_aux -> . CLASS_IDENTIFIER
+    (38) quantifier_aux -> . PROPERTY_IDENTIFIER
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    OPEN_PAREN      shift and go to state 24
+    PROPERTY_IDENTIFIER shift and go to state 25
+    CLASS_IDENTIFIER shift and go to state 33
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    quantifier_aux                 shift and go to state 79
+    comma_and                      shift and go to state 23
+
+state 78
+
+    (52) namespace_type -> NAMESPACE TYPE OPEN_BRACKET . sizecheck CLOSE_BRACKET
+    (46) sizecheck -> . EQUAL CARDINALITY
+    (47) sizecheck -> . GREATER_THAN CARDINALITY
+    (48) sizecheck -> . LESS_THAN CARDINALITY
+    (49) sizecheck -> . GREATER_THAN EQUAL CARDINALITY
+    (50) sizecheck -> . LESS_THAN EQUAL CARDINALITY
+
+    EQUAL           shift and go to state 81
+    GREATER_THAN    shift and go to state 82
+    LESS_THAN       shift and go to state 83
+
+    sizecheck                      shift and go to state 80
+
+state 79
+
+    (26) aninhada -> PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux . CLOSE_PAREN
+    (29) quantifier_aux -> OPEN_PAREN quantifier_aux . CLOSE_PAREN
+    (32) quantifier_aux -> quantifier_aux . comma_and quantifier_aux
+    (57) comma_and -> . COMMA
+    (58) comma_and -> . AND
+
+    CLOSE_PAREN     shift and go to state 84
+    COMMA           shift and go to state 26
+    AND             shift and go to state 27
+
+    comma_and                      shift and go to state 39
+
+state 80
+
+    (52) namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck . CLOSE_BRACKET
+
+    CLOSE_BRACKET   shift and go to state 85
+
+
+state 81
+
+    (46) sizecheck -> EQUAL . CARDINALITY
+
+    CARDINALITY     shift and go to state 86
+
+
+state 82
+
+    (47) sizecheck -> GREATER_THAN . CARDINALITY
+    (49) sizecheck -> GREATER_THAN . EQUAL CARDINALITY
+
+    CARDINALITY     shift and go to state 87
+    EQUAL           shift and go to state 88
+
+
+state 83
+
+    (48) sizecheck -> LESS_THAN . CARDINALITY
+    (50) sizecheck -> LESS_THAN . EQUAL CARDINALITY
+
+    CARDINALITY     shift and go to state 89
+    EQUAL           shift and go to state 90
+
+
+state 84
+
+    (26) aninhada -> PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux CLOSE_PAREN .
+    (29) quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN .
+
+  ! reduce/reduce conflict for CLOSE_PAREN resolved using rule 26 (aninhada -> PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux CLOSE_PAREN .)
+    CLOSE_PAREN     reduce using rule 26 (aninhada -> PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux CLOSE_PAREN .)
+    COMMA           reduce using rule 29 (quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN .)
+    AND             reduce using rule 29 (quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN .)
+
+  ! CLOSE_PAREN     [ reduce using rule 29 (quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN .) ]
+
+
+state 85
+
+    (52) namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET .
+
+    COMMA           reduce using rule 52 (namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET .)
+    AND             reduce using rule 52 (namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET .)
+    DISJOINTCLASSES reduce using rule 52 (namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET .)
+    INDIVIDUALS     reduce using rule 52 (namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET .)
+    CLASS           reduce using rule 52 (namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET .)
+    $end            reduce using rule 52 (namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET .)
+    SUBCLASSOF      reduce using rule 52 (namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET .)
+    CLOSE_PAREN     reduce using rule 52 (namespace_type -> NAMESPACE TYPE OPEN_BRACKET sizecheck CLOSE_BRACKET .)
+
+
+state 86
+
+    (46) sizecheck -> EQUAL CARDINALITY .
+
+    CLOSE_BRACKET   reduce using rule 46 (sizecheck -> EQUAL CARDINALITY .)
+
+
+state 87
+
+    (47) sizecheck -> GREATER_THAN CARDINALITY .
+
+    CLOSE_BRACKET   reduce using rule 47 (sizecheck -> GREATER_THAN CARDINALITY .)
+
+
+state 88
+
+    (49) sizecheck -> GREATER_THAN EQUAL . CARDINALITY
+
+    CARDINALITY     shift and go to state 91
+
+
+state 89
+
+    (48) sizecheck -> LESS_THAN CARDINALITY .
+
+    CLOSE_BRACKET   reduce using rule 48 (sizecheck -> LESS_THAN CARDINALITY .)
+
+
+state 90
+
+    (50) sizecheck -> LESS_THAN EQUAL . CARDINALITY
+
+    CARDINALITY     shift and go to state 92
+
+
+state 91
+
+    (49) sizecheck -> GREATER_THAN EQUAL CARDINALITY .
+
+    CLOSE_BRACKET   reduce using rule 49 (sizecheck -> GREATER_THAN EQUAL CARDINALITY .)
+
+
+state 92
+
+    (50) sizecheck -> LESS_THAN EQUAL CARDINALITY .
+
+    CLOSE_BRACKET   reduce using rule 50 (sizecheck -> LESS_THAN EQUAL CARDINALITY .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for COMMA in state 22 resolved as shift
+WARNING: shift/reduce conflict for AND in state 22 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 33 resolved as shift
+WARNING: shift/reduce conflict for AND in state 33 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 53 resolved as shift
+WARNING: shift/reduce conflict for AND in state 53 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 60 resolved as shift
+WARNING: shift/reduce conflict for AND in state 60 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 62 resolved as shift
+WARNING: shift/reduce conflict for AND in state 62 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 63 resolved as shift
+WARNING: shift/reduce conflict for AND in state 63 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 64 resolved as shift
+WARNING: shift/reduce conflict for AND in state 64 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 68 resolved as shift
+WARNING: shift/reduce conflict for AND in state 68 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 70 resolved as shift
+WARNING: shift/reduce conflict for AND in state 70 resolved as shift
+WARNING: reduce/reduce conflict in state 22 resolved using rule (subclass_section -> SUBCLASSOF CLASS_IDENTIFIER)
+WARNING: rejected rule (quantifier_aux -> CLASS_IDENTIFIER) in state 22
+WARNING: reduce/reduce conflict in state 68 resolved using rule (quantifier_aux -> PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER)
+WARNING: rejected rule (quantifier_aux -> CLASS_IDENTIFIER) in state 68
+WARNING: reduce/reduce conflict in state 84 resolved using rule (aninhada -> PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux CLOSE_PAREN)
+WARNING: rejected rule (quantifier_aux -> OPEN_PAREN quantifier_aux CLOSE_PAREN) in state 84

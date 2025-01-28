@@ -26,9 +26,9 @@ def p_primitive_class(p):
     }
 
 def p_subclass_section(p):
-    '''subclass_section : SUBCLASSOF CLASS_IDENTIFIER def_descriptions
-                        | SUBCLASSOF CLASS_IDENTIFIER enum_class
-                        | SUBCLASSOF CLASS_IDENTIFIER OR covered_class
+    '''subclass_section : SUBCLASSOF quantifier_aux
+                        | SUBCLASSOF enum_class
+                        | SUBCLASSOF OR covered_class
                         | SUBCLASSOF CLASS_IDENTIFIER 
                         '''
     if len(p) == 2:
@@ -37,7 +37,7 @@ def p_subclass_section(p):
         p[0] = []  
 
 def p_disjoint_section(p):
-    '''disjoint_section : DISJOINTCLASSES disjoint_classes_list
+    '''disjoint_section : DISJOINTCLASSES quantifier_aux
                         | empty'''
     if len(p) == 3:
         p[0] = p[2] 
@@ -156,56 +156,60 @@ def p_aux_fechamento(p):
 def p_equivalentto_section(p):
     '''equivalentto_section : EQUIVALENTTO enum_class
                             | EQUIVALENTTO CLASS_IDENTIFIER OR covered_class
-                            | EQUIVALENTTO CLASS_IDENTIFIER comma_and def_descriptions
+                            | EQUIVALENTTO CLASS_IDENTIFIER def_descriptions
     '''
     if len(p) == 4: 
-        p[0] =  p[4]
+        p[0] =  p[3]
+    elif len(p) == 3: 
+        p[0] = p[3]
     else: 
         p[0] = p[2]
+    
 
 def p_def_descriptions(p):
-    '''def_descriptions : aninhada
-                        | aninhada def_descriptions
-                        | class_aux
-                        | class_aux def_descriptions 
-                        | quantifier_aux
-                        | quantifier_aux def_descriptions
+    '''def_descriptions : quantifier_aux            
     '''  
     p[0] = p[1]
     print('description')
 
 def p_aninhada(p):
-    '''aninhada :  '''
+    '''aninhada : PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux CLOSE_PAREN              
+       
+                '''
 
-    p[0] = ('aninhada', p[1], p[2], p[4])
+    p[0] = ('aninhada')
+    print('aninhada')
 
-def p_class_aux(p):
-    '''class_aux : CLASS_IDENTIFIER
-                 | CLASS_IDENTIFIER OR class_aux
-                 | CLASS_IDENTIFIER comma_and class_aux
-                 | OPEN_PAREN class_aux CLOSE_PAREN
-     '''
-    p[0] = {
-        'class': p[1]
-    }
-    print('class_aux')
+# def p_class_aux(p):
+#     '''class_aux : CLASS_IDENTIFIER
+#                  | CLASS_IDENTIFIER OR class_aux
+#                  | CLASS_IDENTIFIER comma_and class_aux
+#                  | OPEN_PAREN class_aux CLOSE_PAREN
+#      '''
+#     p[0] = {
+#         'class': p[1]
+#     }
+#     print('class_aux')
 
 def p_quantifier_aux(p):
-    '''quantifier_aux : PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
-                      | PROPERTY_IDENTIFIER quantifier namespace_type
+    '''quantifier_aux : comma_and OPEN_PAREN aninhada CLOSE_PAREN
+                      | comma_and quantifier_aux
                       | OPEN_PAREN quantifier_aux CLOSE_PAREN
-                      | OPEN_PAREN aninhada CLOSE_PAREN
+                      | PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
+                      | PROPERTY_IDENTIFIER quantifier namespace_type                 
                       | quantifier_aux comma_and quantifier_aux
                       | PROPERTY_IDENTIFIER quantifier quantifier_aux
                       | CLASS_IDENTIFIER quantifier quantifier_aux
                       | CLASS_IDENTIFIER OR quantifier_aux
                       | CLASS_IDENTIFIER comma_and quantifier_aux
                       | CLASS_IDENTIFIER
+                      | PROPERTY_IDENTIFIER
     '''
-    p[0] = {
-
-    }
-    print('quantifier_aux');
+ 
+    if len(p) == 5:
+        p[0] = p[3]
+   
+    print(len(p))
     
 
 

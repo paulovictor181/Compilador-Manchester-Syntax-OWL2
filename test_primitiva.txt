@@ -3,7 +3,7 @@ SubClassOf:
 hasBase some PizzaBase,
 hasCaloricContent some xsd:integer
 DisjointClasses:
-PizzaBase, PizzaTopping
+Pizza, PizzaBase, PizzaTopping
 Individuals:
 CustomPizza1,
 CustomPizza2
