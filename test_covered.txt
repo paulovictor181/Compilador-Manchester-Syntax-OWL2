@@ -1,0 +1,2 @@
+Class: Spiciness
+SubClassOf: Hot or Medium or Mild 

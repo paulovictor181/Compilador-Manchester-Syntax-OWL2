@@ -30,15 +30,15 @@ def p_primitive_class(p):
 
 def p_subclass_section(p):
     '''subclass_section : SUBCLASSOF enum_class
+                        | SUBCLASSOF CLASS_IDENTIFIER OR covered_class
                         | SUBCLASSOF CLASS_IDENTIFIER def_descriptions_axioma ONLY OPEN_PAREN auxiliar_fechamento CLOSE_PAREN
-                        | SUBCLASSOF OR covered_class
                         | SUBCLASSOF CLASS_IDENTIFIER 
                         | SUBCLASSOF quantifier_aux_axioma
                         '''
     if len(p) == 2:
         p[0] = p[2]  
-    elif len(p) == 3:        
-        p[0] = p[3]
+    elif len(p) == 5:
+        p[0] = p[4]
 
 
     global aberturas 
@@ -143,6 +143,7 @@ def p_covered_class(p):
             "type": "covered_class",
             "Classe": p[1],
         }
+    print('covered')
 
 def p_equivalentto_section(p):
     '''equivalentto_section : EQUIVALENTTO enum_class
@@ -150,9 +151,11 @@ def p_equivalentto_section(p):
                             | EQUIVALENTTO CLASS_IDENTIFIER aninhada 
                             | EQUIVALENTTO CLASS_IDENTIFIER only_defined
     '''
-
-    if len(p) == 4: 
-        p[0] =  p[3]
+    print(len(p))
+    if len(p) == 5:
+        p[0] =  p[4]
+    elif len(p) == 4: 
+        print(p[1],p[2],p[3])
     elif len(p) == 2: 
         p[0] = p[2]
     else: 
@@ -209,6 +212,8 @@ def p_quantifier_aux(p):
 def p_quantifier_aux_axioma(p):
     '''quantifier_aux_axioma : comma_and quantifier_aux_axioma
                             | OPEN_PAREN quantifier_aux_axioma CLOSE_PAREN
+                            | PROPERTY_IDENTIFIER quantifier_number CARDINALITY namespace_type
+                            | PROPERTY_IDENTIFIER quantifier_number CARDINALITY CLASS_IDENTIFIER
                             | PROPERTY_IDENTIFIER quantifier_geral CLASS_IDENTIFIER
                             | PROPERTY_IDENTIFIER quantifier_geral namespace_type                 
                             | quantifier_aux_axioma comma_and quantifier_aux_axioma
