@@ -29,31 +29,35 @@ def p_primitive_class(p):
     }
 
 def p_subclass_section(p):
-    '''subclass_section : SUBCLASSOF enum_class
-                        | SUBCLASSOF CLASS_IDENTIFIER def_descriptions_axioma ONLY OPEN_PAREN auxiliar_fechamento CLOSE_PAREN
+    '''subclass_section : SUBCLASSOF quantifier_aux
+                        | SUBCLASSOF enum_class
                         | SUBCLASSOF OR covered_class
                         | SUBCLASSOF CLASS_IDENTIFIER 
-                        | SUBCLASSOF quantifier_aux_axioma
+                        | SUBCLASSOF CLASS_IDENTIFIER def_descriptions ONLY OPEN_PAREN auxiliar_fechamento CLOSE_PAREN
                         '''
     if len(p) == 2:
         p[0] = p[2]  
-    elif len(p) == 3:        
-        p[0] = p[3]
-
+    elif len(p) == 4:        
+        p[0] = p[4]
+    elif len(p) == 5:
+        p[0] = p[4]
 
     global aberturas 
     global fechamentos
 
-    if len(p) == 7:
-        for t in aberturas[:]:
-            if t in fechamentos:
-                fechamentos.remove(t)
-                aberturas.remove(t)
+    print("Aberturas: ", aberturas , " Fechamentos" , fechamentos)
 
-        if (len(fechamentos) == 0) and (len(aberturas) == 0):
-            p[0] = 'Axioma'
-        else:
-            p_erro_fechamento('Erro CLASS_IDENTIFIER usadas no fechamento destoa da abertura')
+
+    for t in aberturas[:]:
+        if t in fechamentos:
+            fechamentos.remove(t)
+            aberturas.remove(t)
+
+
+    if (len(fechamentos) == 0) and (len(aberturas) == 0):
+        p[0] = 'Axioma'
+    else:
+        p_erro_fechamento('Erro CLASS_IDENTIFIER usadas no fechamento destoa da abertura')
 
 def p_erro_fechamento(p):
     print('Erro: ', p)
@@ -143,18 +147,57 @@ def p_covered_class(p):
             "type": "covered_class",
             "Classe": p[1],
         }
+    print('cheguei aqui')
+
+# def p_closure_axiom(p):
+#    '''closure_axiom : ONLY OPEN_PAREN def_descriptions CLOSE_PAREN'''
+#    p[0] = ('closure_axiom', p[1], p[3])  
+
+
+def p_aux_fechamento(p):
+    '''aux_fechamento : OPEN_PAREN PROPERTY_IDENTIFIER aux_fechamento
+                      | OR PROPERTY_IDENTIFIER aux_fechamento
+                      | PROPERTY_IDENTIFIER CLOSE_PAREN'''
+    if len(p) == 4 and p[1] == '(':
+        p[0] = ('aux_fechamento', p[2], p[3])
+    elif len(p) == 4 and p[1] == 'or':
+        p[0] = ('aux_fechamento', 'or', p[2], p[3])
+    else:
+        p[0] = ('aux_fechamento', p[1], p[2])
+
+#
+#def p_ani_interno(p):
+#    '''ani_fechamento : VALUE CLASS_IDENTIFIER CLOSE_PAREN
+#                      | VALUE CLASS_IDENTIFIER CLOSE_PAREN ani_fechamento
+#                        '''
+#    if len(p) == 4:
+#        p[0] = ('ani_fechamento', p[1], p[2])
+#    elif len(p) == 5:
+#        p[0] = ('ani_fechamento', p[1], p[2], p[4])
+#    else:
+#        p[0] = ('ani_fechamento', p[1])
+
+
+
+#def p_ani_abertura(p):
+#    '''ani_abertura : comma_and OPEN_PAREN def_descriptions CLOSE_PAREN quantifier ani_abertura
+#                    | comma_and OPEN_PAREN def_descriptions CLOSE_PAREN'''
+#    if len(p) == 3:
+#        p[0] = ('ani_abertura', p[2])
+#    else:
+#        p[0] = ('ani_abertura', p[2], p[4], p[5] )
+
+
 
 def p_equivalentto_section(p):
     '''equivalentto_section : EQUIVALENTTO enum_class
                             | EQUIVALENTTO CLASS_IDENTIFIER OR covered_class
-                            | EQUIVALENTTO CLASS_IDENTIFIER aninhada 
-                            | EQUIVALENTTO CLASS_IDENTIFIER only_defined
+                            | EQUIVALENTTO CLASS_IDENTIFIER def_descriptions 
     '''
-
     if len(p) == 4: 
         p[0] =  p[3]
-    elif len(p) == 2: 
-        p[0] = p[2]
+    elif len(p) == 3: 
+        p[0] = p[3]
     else: 
         p[0] = p[2]
     
@@ -163,31 +206,33 @@ def p_def_descriptions(p):
     '''def_descriptions : quantifier_aux            
     '''  
     p[0] = p[1]
-
-def p_def_descriptions_axioma(p):
-    '''def_descriptions_axioma : quantifier_aux_axioma            
-    '''  
-    p[0] = p[1]
-
-def p_only_defined(p):
-    '''only_defined : comma_and quantifier_aux            
-    '''  
+    print('description')
 
 def p_aninhada(p):
-    '''aninhada : comma_and OPEN_PAREN OPEN_PAREN quantifier_aux CLOSE_PAREN CLOSE_PAREN 
-                | comma_and OPEN_PAREN PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux CLOSE_PAREN CLOSE_PAREN              
-    '''
+    '''aninhada : PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux CLOSE_PAREN              
+       
+                '''
 
     p[0] = ('aninhada')
+    print('aninhada')
+
+# def p_class_aux(p):
+#     '''class_aux : CLASS_IDENTIFIER
+#                  | CLASS_IDENTIFIER OR class_aux
+#                  | CLASS_IDENTIFIER comma_and class_aux
+#                  | OPEN_PAREN class_aux CLOSE_PAREN
+#      '''
+#     p[0] = {
+#         'class': p[1]
+#     }
+#     print('class_aux')
 
 def p_quantifier_aux(p):
-    '''quantifier_aux : comma_and quantifier_aux
+    '''quantifier_aux : comma_and OPEN_PAREN aninhada CLOSE_PAREN
+                      | comma_and quantifier_aux
                       | OPEN_PAREN quantifier_aux CLOSE_PAREN
                       | PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
-                      | PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER quantifier_aux
-                      | PROPERTY_IDENTIFIER quantifier namespace_type
-                      | PROPERTY_IDENTIFIER quantifier_number CARDINALITY namespace_type
-                      | PROPERTY_IDENTIFIER quantifier_number CARDINALITY CLASS_IDENTIFIER
+                      | PROPERTY_IDENTIFIER quantifier namespace_type                 
                       | quantifier_aux comma_and quantifier_aux
                       | CLASS_IDENTIFIER quantifier quantifier_aux
                       | CLASS_IDENTIFIER OR quantifier_aux
@@ -205,51 +250,17 @@ def p_quantifier_aux(p):
     if len(p) == 4 and p.slice[1].type == 'CLASS_IDENTIFIER':
         aberturas.append(p[1])
 
-
-def p_quantifier_aux_axioma(p):
-    '''quantifier_aux_axioma : comma_and quantifier_aux_axioma
-                            | OPEN_PAREN quantifier_aux_axioma CLOSE_PAREN
-                            | PROPERTY_IDENTIFIER quantifier_geral CLASS_IDENTIFIER
-                            | PROPERTY_IDENTIFIER quantifier_geral namespace_type                 
-                            | quantifier_aux_axioma comma_and quantifier_aux_axioma
-                            | CLASS_IDENTIFIER quantifier_geral quantifier_aux_axioma
-                            | CLASS_IDENTIFIER OR quantifier_aux_axioma
-                            | PROPERTY_IDENTIFIER quantifier_geral quantifier_aux_axioma
-                            | CLASS_IDENTIFIER comma_and quantifier_aux_axioma
-                            | CLASS_IDENTIFIER
-                            | PROPERTY_IDENTIFIER
-    '''
- 
-    if len(p) == 5:
-        p[0] = p[3]
-
-    global aberturas
-
-    if len(p) == 4 and p.slice[1].type == 'CLASS_IDENTIFIER':
-        aberturas.append(p[1])
-
    
     print(len(p))
+    
+
+
+
 
 
 # Comparação
 def p_quantifier(p):
     '''quantifier : SOME
-                  | ALL
-                  | VALUE
-                  | THAT
-                  '''    
-    p[0] = p[1]
-
-def p_quantifier_number(p):
-    '''quantifier_number : MAX
-                  | MIN
-                  | EXACTLY
-                  '''    
-    p[0] = p[1]
-
-def p_quantifier_geral(p):
-    '''quantifier_geral : SOME
                   | ALL
                   | VALUE
                   | MAX
