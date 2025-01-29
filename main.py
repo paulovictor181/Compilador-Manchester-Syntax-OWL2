@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from lexer import build_lexer
 from parser import parse_input
-
+import json
 
 def read_file(file_name):
     try:
@@ -60,7 +60,7 @@ def process_file():
     # Exibir o que foi processado pelo parser (estruturas sintáticas)
     resultado_parser.delete(1.0, tk.END)
     if parsed_result:
-        resultado_parser.insert(tk.END, "\n".join(str(item) for item in parsed_result))
+        resultado_parser.insert(tk.END, json.dumps(parsed_result, indent=4) + "\n")
     else:
         resultado_parser.insert(tk.END, "Nenhuma estrutura sintática processada.")
 

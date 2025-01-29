@@ -91,7 +91,7 @@ def p_defined_class(p):
 
     if len(p) == 5:
         p[0] = {
-            "type": "defined_class",
+            "type": "defined_class\n",
             "name": p[2],
             "equivalent_to": p[3],
             "subclass_of": p[4],
@@ -110,7 +110,6 @@ def p_defined_class(p):
             "type": "defined_class",
             "name": p[2],
             "equivalent_to": p[3],
-            "aninhada": p[4],
             "subclass_of": None,
             "individuals": None,
         }
@@ -148,13 +147,14 @@ def p_covered_class(p):
 def p_equivalentto_section(p):
     '''equivalentto_section : EQUIVALENTTO enum_class
                             | EQUIVALENTTO CLASS_IDENTIFIER OR covered_class
-                            | EQUIVALENTTO CLASS_IDENTIFIER aninhada 
                             | EQUIVALENTTO CLASS_IDENTIFIER only_defined
+                            | EQUIVALENTTO CLASS_IDENTIFIER aninhada 
     '''
     print(len(p))
     if len(p) == 5:
         p[0] =  p[4]
     elif len(p) == 4: 
+        p[0] = p[3]
         print(p[1],p[2],p[3])
     elif len(p) == 2: 
         p[0] = p[2]
@@ -172,16 +172,17 @@ def p_def_descriptions_axioma(p):
     '''  
     p[0] = p[1]
 
+def p_aninhada(p):
+    '''aninhada : comma_and  OPEN_PAREN OPEN_PAREN quantifier_aux CLOSE_PAREN CLOSE_PAREN
+                | comma_and OPEN_PAREN PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux CLOSE_PAREN CLOSE_PAREN              
+    '''
+    print('aninhada')
+    p[0] = 'aninhada'
+
 def p_only_defined(p):
     '''only_defined : comma_and quantifier_aux            
     '''  
-
-def p_aninhada(p):
-    '''aninhada : comma_and OPEN_PAREN OPEN_PAREN quantifier_aux CLOSE_PAREN CLOSE_PAREN 
-                | comma_and OPEN_PAREN PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux CLOSE_PAREN CLOSE_PAREN              
-    '''
-
-    p[0] = ('aninhada')
+    print('only_definida')
 
 def p_quantifier_aux(p):
     '''quantifier_aux : comma_and quantifier_aux
