@@ -32,11 +32,151 @@ BARBOSA, Cynthia da S.; LENZ, Maikon L.; LACERDA, Paulo S. Pádua de; et al. Com
 A análise sintática é o processo após a análise léxica de uma compilação.
 O analisador sintático é o coração da compilação, pois os demais processos pós-análise sintática, como analisador semântico e gerador de código intermediário, são guiados pelas ações da etapa de análise sintática.
 
+
 ```
 BARBOSA, Cynthia da S.; LENZ, Maikon L.; LACERDA, Paulo S. Pádua de; et al. Compiladores. Porto Alegre: SAGAH, 2021. E-book. p.90. ISBN 9786556902906. 
 ```
 
-O analisador sintático verifica a estrutura do código e se ele segue a gramática da linguagem de programação. Organizando os tokens em uma árvore sintática que representa a hierarquia do código, .
+##  Funcionalidades  
+   O analisador fornecerá as seguintes funcionalidades 
+   
+- **Análise Sintática** O analisador sintático verifica a estrutura do código e se ele segue a gramática da linguagem inserida.
+
+- **Geração de Árvore Sintática**  O analisador faz a organização dos tokens encontrados em uma árvore sintática que representa a hierarquia do código;
+
+- **Classificação das Classes Ontológicas** as classificações de classes são divididas em:
+
+      1. Classe primitiva  
+           
+      2. Classe definida  
+
+      3. Classe com axioma de fechamento  
+
+      4. Classe com descrições aninhadas  
+
+      5. Classe enumerada
+
+      6. Aninhada
+
+
+- **Identificação de Erros Sintáticos** se a aplicação encontrar alguma estrutura que fuja das regras implementadas ela irá retornar um erro referente aquela parte do código, referenciando a linha e o Token inesperado, por exemplo:
+
+        Erro Sintático: Linha 401: Token inesperado 'only'
+        Erro Sintático: Linha 416: Token inesperado 'Class:'
+
+
+##  Como Funciona?  
+
+   - **Entrada:**  O analisador recebe um conjunto de lexemas a partir do arquivo .txt selecionado.
+
+   - **Processamento:** Se a sintaxe estiver correta, o analisador construirá uma árvore sintática estruturada com base no conjunto de lexemas lidos.
+
+   - **Classificação:**  As classes são definidas conforme a estrutura analisada.
+
+   - **Saída:** O analisador retorna a estrutura sintática processada e os erros sintáticos encontrados, exibindo-os em seus respectivos campos.
+
+
+
+
+## Exemplos de Ontologias Compatíveis e suas Respectivas Saídas
+
+- **Classes Primitivas**  é uma classe cujos indivíduos podem herdar suas propriedades, podendo ou não vir seguidos de DisjointClasses e Individuals, que representam classes disjuntas e indivíduos respectivamente em suas descrições
+
+   🔹 Entrada:
+   
+         Class: Pizza​ ​      
+         SubClassOf:
+         hasBase some PizzaBase,
+         hasCaloricContent some xsd:integer
+         
+         DisjointClasses:
+         PizzaBase, PizzaTopping
+         
+         Individuals:
+         CustomPizza1,
+         CustomPizza2
+  
+   🔹 Saída:
+
+- **Classes Definidas**  é uma classe que contém condições necessárias e suficientes em sua
+descrição, ou seja , a classe CheesyPizza é equivalente a Pizza e contém hasTopping com uma quatidade "some" CheeseTopping. Como na primitiva a seção DisjointClasses e Individuals são opcionais;
+    
+  🔹 Entrada:
+    
+    
+         Class: CheesyPizza
+         EquivalentTo:
+         Pizza
+         and (hasTopping some CheeseTopping)
+
+         DisjointClasses:
+         PizzaBase, PizzaTopping
+         
+         Individuals:
+         CheesyPizza1
+
+  🔹 Saída:
+
+ - **Classes com Axiomas de Fechamento**  Restringe as relações entre classes com suas propriedades ou respectivas expressões para que sejam definidas como axiomas de fechamento 
+        
+     🔹 Entrada:
+     
+         
+         Class: MargheritaPizza
+         SubClassOf:
+         NamedPizza,
+         hasTopping some MozzarellaTopping,
+         hasTopping some TomatoTopping,
+         hasTopping only (MozzarellaTopping or TomatoTopping)
+
+   🔹Saída:
+   
+
+- **Classes Cobertas**  São definidas por uma classe como sendo a superposição de suas classes filhas
+
+  🔹 Entrada:
+  
+         Class: Spiciness
+         EquivalentTo: Hot or Medium or Mild
+  
+   🔹Saída:
+
+- **Classes Enumeradas**  A classe é enumerada se ela for definida a partir de suas instâncias
+
+   🔹 Entrada:
+  
+         Class: Spiciness
+         EquivalentTo: {Hot1, Medium1, Mild1}
+
+   🔹Saída:
+
+- **Classes Aninhadas**  A classe é definida a partir da tripla composta de propriedade, quantificador e outra classe
+
+   🔹 Entrada:
+
+         Class: SpicyPizza
+         EquivalentTo:
+         Pizza
+         and (hasTopping some (hasSpiciness value Hot))
+
+   🔹Saída:
+
+
+
+
+##  Instalação e Execução  
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/analisador-sintatico.git
+cd analisador-sintatico
+
+# Instale as dependências
+pip install -r requirements.txt
+
+# Execute o analisador
+python main.py caminho/do/arquivo
+
+.
 
 ## Analisador Semântico
 
@@ -369,4 +509,3 @@ python3 main.py
     - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)  
     - [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)  
     - [Python Debugger](https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy)  
-
