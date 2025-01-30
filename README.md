@@ -162,22 +162,6 @@ descrição, ou seja , a classe CheesyPizza é equivalente a Pizza e contém has
    🔹Saída:
 
 
-
-
-##  Instalação e Execução  
-```bash
-# Clone o repositório
-git clone https://github.com/seu-usuario/analisador-sintatico.git
-cd analisador-sintatico
-
-# Instale as dependências
-pip install -r requirements.txt
-
-# Execute o analisador
-python main.py caminho/do/arquivo
-
-.
-
 ## Analisador Semântico
 
 O compilador verifica se o código faz sentido, ou seja, se as operações são válidas de acordo com as regras da linguagem, como tipos de dados compatíveis ou variáveis declaradas corretamente.
