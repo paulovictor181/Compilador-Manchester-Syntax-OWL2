@@ -4,13 +4,13 @@ Esse projeto tem como objetivo construir um compilador para reconhecimento da li
 
 # Índice 
 
-* [Compilador](##Compilador)
+* [Compilador](#Compilador)
 * [Analisador léxico](#analisador-léxico)
 * [Analisador sintático](#analisador-sintático)
 * [Analisador semântico](#analisador-semântico)
-* [Ply](##Ply)
-* [Yacc](##Yacc)
-* [Requisitos](##Requisitos/Como-usar)
+* [Ply](#Ply)
+* [Yacc](#Yacc)
+* [Requisitos](#Requisitos/Como-usar)
 
 
 ## Compilador 
