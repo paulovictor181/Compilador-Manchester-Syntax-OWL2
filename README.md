@@ -166,7 +166,7 @@ descrição, ou seja , a classe CheesyPizza é equivalente a Pizza e contém has
 
 O compilador verifica se o código faz sentido, ou seja, se as operações são válidas de acordo com as regras da linguagem, como tipos de dados compatíveis ou variáveis declaradas corretamente.
 
-## Ply - Python
+## Ply
 
 ### Introdução 
 
