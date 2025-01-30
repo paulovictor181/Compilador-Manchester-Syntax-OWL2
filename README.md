@@ -37,7 +37,7 @@ O analisador sintático é o coração da compilação, pois os demais processos
 BARBOSA, Cynthia da S.; LENZ, Maikon L.; LACERDA, Paulo S. Pádua de; et al. Compiladores. Porto Alegre: SAGAH, 2021. E-book. p.90. ISBN 9786556902906. 
 ```
 
-##  Funcionalidades  
+###  Funcionalidades  
    O analisador fornecerá as seguintes funcionalidades 
    
 - **Análise Sintática** O analisador sintático verifica a estrutura do código e se ele segue a gramática da linguagem inserida.
@@ -65,7 +65,7 @@ BARBOSA, Cynthia da S.; LENZ, Maikon L.; LACERDA, Paulo S. Pádua de; et al. Com
         Erro Sintático: Linha 416: Token inesperado 'Class:'
 
 
-##  Como Funciona?  
+###  Como Funciona?  
 
    - **Entrada:**  O analisador recebe um conjunto de lexemas a partir do arquivo .txt selecionado.
 
@@ -84,83 +84,134 @@ BARBOSA, Cynthia da S.; LENZ, Maikon L.; LACERDA, Paulo S. Pádua de; et al. Com
 
    🔹 Entrada:
    
-         Class: Pizza​ ​      
-         SubClassOf:
-         hasBase some PizzaBase,
-         hasCaloricContent some xsd:integer
-         
-         DisjointClasses:
-         PizzaBase, PizzaTopping
-         
-         Individuals:
-         CustomPizza1,
-         CustomPizza2
+            Class: Pizza​ ​      
+            SubClassOf:
+            hasBase some PizzaBase,
+            hasCaloricContent some xsd:integer
+            
+            DisjointClasses:
+            PizzaBase, PizzaTopping
+            
+            Individuals:
+            CustomPizza1,
+            CustomPizza2
   
    🔹 Saída:
-
+      
+          {
+           "type": "primitive_class",
+           "name": "Pizza",
+           "subclass_of": null,
+           "disjoint_classes": null,
+           "individuals": [
+           "CustomPizza1",
+           "CustomPizza2"
+                          ]
+           }
+         
 - **Classes Definidas**  é uma classe que contém condições necessárias e suficientes em sua
 descrição, ou seja , a classe CheesyPizza é equivalente a Pizza e contém hasTopping com uma quatidade "some" CheeseTopping. Como na primitiva a seção DisjointClasses e Individuals são opcionais;
     
   🔹 Entrada:
-    
-    
-         Class: CheesyPizza
-         EquivalentTo:
-         Pizza
-         and (hasTopping some CheeseTopping)
-
-         DisjointClasses:
-         PizzaBase, PizzaTopping
-         
-         Individuals:
-         CheesyPizza1
+        
+            Class: CheesyPizza
+            EquivalentTo:
+            Pizza and (hasTopping some CheeseTopping)
 
   🔹 Saída:
 
+           {
+           "type": "defined_class",
+           "name": "CheesyPizza",
+           "equivalent_to": null,
+           "subclass_of": null,
+           "individuals": null
+            }
+
  - **Classes com Axiomas de Fechamento**  Restringe as relações entre classes com suas propriedades ou respectivas expressões para que sejam definidas como axiomas de fechamento 
         
-     🔹 Entrada:
-     
-         
-         Class: MargheritaPizza
-         SubClassOf:
-         NamedPizza,
-         hasTopping some MozzarellaTopping,
-         hasTopping some TomatoTopping,
-         hasTopping only (MozzarellaTopping or TomatoTopping)
+   🔹 Entrada:
+   
+               Class: MargheritaPizza
+               SubClassOf:
+               NamedPizza,
+               hasTopping some MozzarellaTopping,
+               hasTopping some TomatoTopping,
+               hasTopping only (MozzarellaTopping or TomatoTopping)
 
    🔹Saída:
-   
+
+            {
+            "type": "primitive_class",
+             "name": "MargheritaPizza",
+             "subclass_of": null,
+            "disjoint_classes": [],
+            "individuals": []
+            }
+
+
+
 
 - **Classes Cobertas**  São definidas por uma classe como sendo a superposição de suas classes filhas
 
   🔹 Entrada:
   
-         Class: Spiciness
-         EquivalentTo: Hot or Medium or Mild
+            Class: Spiciness
+            EquivalentTo: Hot or Medium or Mild
   
    🔹Saída:
+        
+            {
+               "type": "primitive_class",
+              "name": "Spiciness",
+              "subclass_of": {
+                  "type": "covered_class",
+                  "Classe": "Medium"
+              },
+              "disjoint_classes": [],
+              "individuals": []
+            }
 
 - **Classes Enumeradas**  A classe é enumerada se ela for definida a partir de suas instâncias
 
    🔹 Entrada:
   
-         Class: Spiciness
-         EquivalentTo: {Hot1, Medium1, Mild1}
+            Class: Spiciness
+            EquivalentTo: {Hot1, Medium1, Mild1}
 
    🔹Saída:
+  
+           {
+           "type": "defined_class",
+           "name": "Spiciness",
+           "equivalent_to": 
+           "type": "enum_class",
+           "status": "Preenchida",
+           "individuals": [
+           "Hot1",
+           "Medium1",
+           "Mild1"
+                           ]         
+            }
 
 - **Classes Aninhadas**  A classe é definida a partir da tripla composta de propriedade, quantificador e outra classe
 
    🔹 Entrada:
 
-         Class: SpicyPizza
-         EquivalentTo:
-         Pizza
-         and (hasTopping some (hasSpiciness value Hot))
+            Class: SpicyPizza
+            EquivalentTo:
+            Pizza
+            and (hasTopping some (hasSpiciness value Hot))
 
    🔹Saída:
 
+            {
+           "type": "defined_class",
+           "name": "SpicyPizza",
+           "equivalent_to": "aninhada",
+           "subclass_of": null,
+           "individuals": null
+             }
 
 ## Analisador Semântico
 
