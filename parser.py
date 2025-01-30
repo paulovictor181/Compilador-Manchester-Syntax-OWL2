@@ -31,6 +31,7 @@ def p_primitive_class(p):
 def p_subclass_section(p):
     '''subclass_section : SUBCLASSOF enum_class
                         | SUBCLASSOF CLASS_IDENTIFIER OR covered_class
+                        | SUBCLASSOF CLASS_IDENTIFIER def_descriptions_axioma ONLY auxiliar_fechamento
                         | SUBCLASSOF CLASS_IDENTIFIER def_descriptions_axioma ONLY OPEN_PAREN auxiliar_fechamento CLOSE_PAREN
                         | SUBCLASSOF CLASS_IDENTIFIER 
                         | SUBCLASSOF quantifier_aux_axioma
@@ -44,7 +45,8 @@ def p_subclass_section(p):
     global aberturas 
     global fechamentos
 
-    if len(p) == 7:
+
+    if len(p) == 8:
         for t in aberturas[:]:
             if t in fechamentos:
                 fechamentos.remove(t)
@@ -54,6 +56,9 @@ def p_subclass_section(p):
             p[0] = 'Axioma'
         else:
             p_erro_fechamento('Erro CLASS_IDENTIFIER usadas no fechamento destoa da abertura')
+
+    print('aberturas',aberturas,'fechados',fechamentos)
+
 
 def p_erro_fechamento(p):
     print('Erro: ', p)
@@ -170,23 +175,72 @@ def p_def_descriptions(p):
 def p_def_descriptions_axioma(p):
     '''def_descriptions_axioma : quantifier_aux_axioma            
     '''  
+    print('axioma')
     p[0] = p[1]
 
 def p_aninhada(p):
-    '''aninhada : comma_and  OPEN_PAREN OPEN_PAREN quantifier_aux CLOSE_PAREN CLOSE_PAREN
-                | comma_and OPEN_PAREN PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux CLOSE_PAREN CLOSE_PAREN              
+    '''aninhada : comma_and OPEN_PAREN OPEN_PAREN quantifier_aux_aninhada CLOSE_PAREN 
+                | comma_and OPEN_PAREN PROPERTY_IDENTIFIER quantifier OPEN_PAREN quantifier_aux_aninhada_extra CLOSE_PAREN CLOSE_PAREN              
     '''
     print('aninhada')
     p[0] = 'aninhada'
 
 def p_only_defined(p):
-    '''only_defined : comma_and quantifier_aux            
+    '''only_defined : comma_and quantifier_aux           
     '''  
     print('only_definida')
 
+def p_quantifier_aux_aninhada(p):
+    '''quantifier_aux_aninhada  : comma_and quantifier_aux_aninhada
+                                | PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER quantifier_aux_aninhada
+                                | PROPERTY_IDENTIFIER quantifier namespace_type
+                                | PROPERTY_IDENTIFIER quantifier_number CARDINALITY namespace_type
+                                | PROPERTY_IDENTIFIER quantifier_number CARDINALITY CLASS_IDENTIFIER
+                                | quantifier_aux_aninhada comma_and quantifier_aux_aninhada
+                                | CLASS_IDENTIFIER quantifier quantifier_aux_aninhada
+                                | CLASS_IDENTIFIER OR quantifier_aux_aninhada
+                                | PROPERTY_IDENTIFIER quantifier quantifier_aux_aninhada
+                                | CLASS_IDENTIFIER comma_and quantifier_aux_aninhada
+                                | OPEN_PAREN quantifier_aux_aninhada CLOSE_PAREN
+                                | CLOSE_PAREN quantifier_aux_aninhada
+                                | CLASS_IDENTIFIER
+                                | PROPERTY_IDENTIFIER
+    '''
+ 
+    if len(p) == 5:
+        p[0] = p[3]
+
+    global aberturas
+
+    if len(p) == 4 and p.slice[1].type == 'CLASS_IDENTIFIER':
+        aberturas.append(p[1])
+
+def p_quantifier_aux_aninhada_extra(p):
+    '''quantifier_aux_aninhada_extra  : comma_and quantifier_aux_aninhada_extra
+                                | PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER quantifier_aux_aninhada_extra
+                                | PROPERTY_IDENTIFIER quantifier namespace_type
+                                | PROPERTY_IDENTIFIER quantifier_number CARDINALITY namespace_type
+                                | PROPERTY_IDENTIFIER quantifier_number CARDINALITY CLASS_IDENTIFIER
+                                | quantifier_aux_aninhada_extra comma_and quantifier_aux_aninhada_extra
+                                | CLASS_IDENTIFIER quantifier quantifier_aux_aninhada_extra
+                                | CLASS_IDENTIFIER OR quantifier_aux_aninhada_extra
+                                | PROPERTY_IDENTIFIER quantifier quantifier_aux_aninhada_extra
+                                | CLASS_IDENTIFIER comma_and quantifier_aux_aninhada_extra
+                                | OPEN_PAREN quantifier_aux_aninhada_extra CLOSE_PAREN
+                                | CLASS_IDENTIFIER
+                                | PROPERTY_IDENTIFIER
+    '''
+ 
+    if len(p) == 5:
+        p[0] = p[3]
+
+    global aberturas
+
+    if len(p) == 4 and p.slice[1].type == 'CLASS_IDENTIFIER':
+        aberturas.append(p[1])
+
 def p_quantifier_aux(p):
     '''quantifier_aux : comma_and quantifier_aux
-                      | OPEN_PAREN quantifier_aux CLOSE_PAREN
                       | PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER
                       | PROPERTY_IDENTIFIER quantifier CLASS_IDENTIFIER quantifier_aux
                       | PROPERTY_IDENTIFIER quantifier namespace_type
@@ -197,6 +251,7 @@ def p_quantifier_aux(p):
                       | CLASS_IDENTIFIER OR quantifier_aux
                       | PROPERTY_IDENTIFIER quantifier quantifier_aux
                       | CLASS_IDENTIFIER comma_and quantifier_aux
+                      | OPEN_PAREN quantifier_aux CLOSE_PAREN
                       | CLASS_IDENTIFIER
                       | PROPERTY_IDENTIFIER
     '''
@@ -208,6 +263,7 @@ def p_quantifier_aux(p):
 
     if len(p) == 4 and p.slice[1].type == 'CLASS_IDENTIFIER':
         aberturas.append(p[1])
+
 
 
 def p_quantifier_aux_axioma(p):
