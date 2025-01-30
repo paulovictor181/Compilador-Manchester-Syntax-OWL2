@@ -10,7 +10,7 @@ Esse projeto tem como objetivo construir um compilador para reconhecimento da li
 * [Analisador semântico](#analisador-semântico)
 * [Ply](#Ply)
 * [Yacc](#Yacc)
-* [Requisitos](#Requisitos/Como-usar)
+* [Requisitos](#Requisitos)
 
 
 ## Compilador 
@@ -418,7 +418,7 @@ Agora, para usar a produção vazia, basta usar 'empty' como símbolo. Por exemp
 
 O yacc.py usa o algoritmo de análise sintática LR(1), que lê a entrada da esquerda para a direita e faz uma derivação à direita. Durante a análise, podem ocorrer conflitos shift/reduce (quando o parser não sabe se deve deslocar ou reduzir) e reduce/reduce (quando há múltiplas opções de redução para o mesmo conjunto de tokens). Quando esses conflitos acontecem, o yacc.py gera um arquivo de depuração chamado parser.out, que contém informações detalhadas sobre os conflitos, facilitando a depuração e o ajuste da gramática.
 
-## Requisitos/Como usar
+## Requisitos
 
 Para rodar o projeto é recomendado a utilização do WSL ou uso direto do Linux, pois a maioria das distros já possuem o Python3 instalado.
 
